@@ -1,0 +1,72 @@
+<!DOCTYPE html  PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd" >
+<html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr" >
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<title>TITRE</title>
+	<script type="text/javascript" src="jquery-ui-1.8.11.custom/js/jquery-1.5.1.min.js"></script>
+	<script type="text/javascript" src="jquery-ui-1.8.11.custom/js/jquery-ui-1.8.11.custom.min.js"></script>
+	<link rel="stylesheet" media="screen" type="text/css" href="css/style.css" />
+	<link rel="stylesheet" media="screen" type="text/css" href="jquery-ui-1.8.11.custom/css/custom-theme/jquery-ui-1.8.11.custom.css" />
+	
+	<script>
+		$(function() {
+			$( "#action" ).tabs();
+			$("#postit").button();
+		});
+
+	</script>
+</head>
+<body>
+	<div id="main">
+		<div id="header">
+			<div id="alarme" class="ui-widget-content ui-corner-all">
+				alarme
+			</div>
+			<div id="logo">
+				logo
+			</div>
+		</div>
+		<div id="corps">
+			<div id="box" class="ui-widget-content ui-corner-all">
+				box
+			</div>
+			<div id="action">
+				<ul>
+					<li><a href="#tache1">Tâche 1</a><a href="http://www.google.fr" title="Fermer"><span class="ui-icon ui-icon-closethick"></span></a></li>
+					<li><a href="#tache2">Tâche 2</a><a href="http://www.google.fr" title="Fermer"><span class="ui-icon ui-icon-closethick"></span></a></li>
+					<li><a href="#tache3">Tâche 3</a><a href="http://www.google.fr" title="Fermer"><span class="ui-icon ui-icon-closethick"></span></a></li>
+				</ul>
+				<div id="tache1" class="tache">
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+					Tâche 1<br />
+				</div>
+				<div id="tache2" class="tache">
+					Tâche 2
+				</div>
+				<div id="tache3" class="tache">
+					Tâche 3
+				</div>
+			</div>
+		</div>
+	</div>
+	<div id="calendar" class="ui-widget-content ui-corner-all">
+		calendar
+	</div>
+	<div id="postit">
+		<div id="postitIcon" class="ui-icon ui-icon-circle-triangle-n"></div>
+	</div>
+</body>
+</html>
