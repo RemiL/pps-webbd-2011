@@ -1,0 +1,85 @@
+<html>
+  <head>
+	<meta http-equiv="Content-Language" content="fr">
+	<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+	<title></title>
+	<script type="text/javascript" src="http://www.google.com/jsapi"></script>
+	<script type="text/javascript">
+	google.load("gdata", "2.s");
+	google.setOnLoadCallback(function() { setTimeout(testAPI,1000); });
+	//google.setOnLoadCallback(testAPI);
+	var calendarService, scope;
+	
+	function logMeIn()
+	{
+          scope = "https://www.google.com/calendar/feeds/";
+          var token = google.accounts.user.login(scope);
+        }
+        
+        function testAPI()
+        {
+          //alert("testAPI");
+          calendarService = new google.gdata.calendar.CalendarService("test-pps");
+          //alert(google.accounts.user.checkLogin(scope));
+          if (!google.accounts.user.checkLogin(scope))
+            logMeIn();
+          else
+            alert(google.accounts.user.checkLogin(scope));
+        }
+          
+        function testAPI2()
+        {
+          // The default "private/full" feed is used to retrieve events from
+          // the primary private calendar with full projection
+          var feedUri = "https://www.google.com/calendar/feeds/default/private/full";
+          
+          // Create a CalendarEventQuery, and specify that this query is
+          // applied toward the "private/full" feed
+          var query = new google.gdata.calendar.CalendarEventQuery(feedUri);
+          
+          // Create and set the minimum and maximum start time for the date query
+          var startMin = google.gdata.DateTime.fromIso8601("2011-03-22T00:00:00.000+01:00");
+          var startMax = google.gdata.DateTime.fromIso8601("2011-03-23T00:00:00.000+01:00");
+          query.setMinimumStartTime(startMin);
+          query.setMaximumStartTime(startMax);
+          
+          // The callback that will be called when getEventsFeed() returns feed data
+          var callback = function(root) {
+          
+            // Obtain the array of matched CalendarEventEntry
+            var eventEntries = root.feed.getEntries();
+          
+            // If there is matches for the date query
+            if (eventEntries.length > 0) {
+              for (var i = 0; i < eventEntries.length; i++) {
+                var event = eventEntries[i];
+                // Print the event title of the matches
+                alert("Event title = " + event.getTitle().getText()+"\n"+event.getContent().getText()+"\n"+event.getTimes()[0].getStartTime().getDate().toLocaleString()+"\n"+event.getTimes()[0].getEndTime().getDate().getTime()-event.getTimes()[0].getStartTime().getDate().getTime());
+              }
+            } else {
+              // No match is found for the date query
+              alert("no events are matched from the query!");
+            }
+          }
+          
+          // Error handler to be invoked when getEventsFeed() produces an error
+          var handleError = function(error) {
+            alert(error);
+          }
+          
+          // Submit the request using the calendar service object. Notice the CalendarEventQuery
+          // object is passed in place of the feed URI
+          calendarService.getEventsFeed(query, callback, handleError);
+        }
+	</script>
+	<!--<script type="text/javascript" src="calculette.js"></script>-->
+  </head>
+  <body>
+    <a href="#" onclick="testAPI2();">Test API</a>
+    <img src="./google.png" /> <!-- Obligatoire pour pouvoir se logguer ! -->
+    <div id="calendar" style="width:100px;height:720px;border: solid 1px black;">
+      <div style="position:relative;top:100px;margin-left:10px;border: solid 1px cyan;width:80px;height:10px;">
+      </div>
+    </div>
+  </body>
+</html> 
