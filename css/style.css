@@ -7,8 +7,8 @@ body
 #calendar
 {
 	width: 20%;
-	margin-right: 5px;
 	padding: 3px;
+	height: 720px;
 }
 
 #main
@@ -16,7 +16,6 @@ body
 	height: 91%;
 	width: 79%;
 	float: right;
-	margin-bottom: 5px;
 }
 
 #header
@@ -33,9 +32,9 @@ body
 
 #alarme
 {
-	width: 30%;
 	padding: 3px;
 	margin-left: 69%;
+	height: 100px;
 }
 
 #corps
@@ -48,23 +47,26 @@ body
 {
 	margin-bottom: 10px;
 	padding: 3px;
+	height: 250px;
 }
 
 #action
 {
-	
+	height: 335px;
 }
 
-.fermer
+.fermerOnglet
 {
-	margin-top: 7px;
-	margin-right: 3px;
+	float: right;
+	margin-top: 8px;
+	margin-right: 8px;
 }
 
 #postit
 {
 	clear: both;
 	width: 100%;
+	margin-top: 10px;
 }
 
 #postitIcon

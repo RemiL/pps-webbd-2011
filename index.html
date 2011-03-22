@@ -13,7 +13,7 @@
 	<div id="main">
 		<div id="header">
 			<div id="logo">
-				LOGO
+				<img src="http://www.google.fr/intl/en_com/images/srpr/logo1w.png" alt="logo" />
 			</div>
 			<div id="alarme" class="ui-widget-content ui-corner-all">
 				alarme<br />aaaa<br />sss
@@ -25,9 +25,9 @@
 			</div>
 			<div id="action">
 				<ul>
-					<li><a href="#tache0">Tâche 0</a><span id="ongletTache0" class="ui-icon ui-icon-closethick fermer" onclick="fermerOnglet(0);"></span></li>
-					<li><a href="#tache1">Tâche 1</a><span id="ongletTache1" class="ui-icon ui-icon-closethick fermer" onclick="fermerOnglet(1);"></span></li>
-					<li><a href="#tache2">Tâche 2</a><span id="ongletTache2" class="ui-icon ui-icon-closethick fermer" onclick="fermerOnglet(2);"></span></li>
+					<li><div id="0" class="ui-icon ui-icon-closethick fermerOnglet" onclick="fermerOnglet(this);"></div><a href="#tache0">Tâche 0</a></li>
+					<li><div id="1" class="ui-icon ui-icon-closethick fermerOnglet" onclick="fermerOnglet(this);"></div><a href="#tache1">Tâche 1</a></li>
+					<li><div id="2" class="ui-icon ui-icon-closethick fermerOnglet" onclick="fermerOnglet(this);"></div><a href="#tache2">Tâche 2</a></li>
 				</ul>
 				<div id="tache0" class="tache">
 					Tâche 0
