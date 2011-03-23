@@ -10,24 +10,36 @@
 	<link rel="stylesheet" media="screen" type="text/css" href="jquery-ui-1.8.11.custom/css/custom-theme/jquery-ui-1.8.11.custom.css" />
 </head>
 <body>
+	<div id="panneauPostit" class="panneauPostit panneauPostitFerme ui-corner-all">
+		<div id="postit1" class="postit ui-corner-all">
+			<div class="optionsPostit">
+				<span  id="p0" onclick="alert('Supprimer Post-it');" class="ui-icon ui-icon-closethick"></span>
+				<span  id="p0" onclick="alert('Dériver en tâche');" class="ui-icon ui-icon-document"></span>
+			</div>
+			<div class="textPostit">
+				Mon premier post-it
+			</div>
+		</div>
+	</div>
 	<div id="main">
 		<div id="header">
 			<div id="logo">
 				<img src="http://www.google.fr/intl/en_com/images/srpr/logo1w.png" alt="logo" />
 			</div>
-			<div id="alarme" class="ui-widget-content ui-corner-all">
+			<div id="alarme" class="ui-corner-all">
 				alarme<br />aaaa<br />sss
 			</div>
 		</div>
 		<div id="corps">
-			<div id="box" class="ui-widget-content ui-corner-all">
+			<div id="box" class="ui-corner-all">
 				box
 			</div>
 			<div id="action">
-				<ul>
-					<li><div id="0" class="ui-icon ui-icon-closethick fermerOnglet" onclick="fermerOnglet(this);"></div><a href="#tache0">Tâche 0</a></li>
-					<li><div id="1" class="ui-icon ui-icon-closethick fermerOnglet" onclick="fermerOnglet(this);"></div><a href="#tache1">Tâche 1</a></li>
-					<li><div id="2" class="ui-icon ui-icon-closethick fermerOnglet" onclick="fermerOnglet(this);"></div><a href="#tache2">Tâche 2</a></li>
+				<ul id="listeOnglets">
+					<li><div id="i0" class="fermerOnglet" onclick="fermerOnglet(this);"><span class="ui-icon ui-icon-closethick"></span></div><a href="#tache0" class="titreOnglet" title="Tâche 0 : Aller faire un truc">Tâche 0 : Aller faire un truc</a></li>
+					<li><div id="i1" class="fermerOnglet" onclick="fermerOnglet(this);"><span class="ui-icon ui-icon-closethick"></span></div><a href="#tache1" class="titreOnglet" title="Tâche 1">Tâche 1</a></li>
+					<li><div id="i2" class="fermerOnglet" onclick="fermerOnglet(this);"><span class="ui-icon ui-icon-closethick"></span></div><a href="#tache2" class="titreOnglet" title="Tâche 2">Tâche 2</a></li>
+					<li id="ajouterOnglet"></li>
 				</ul>
 				<div id="tache0" class="tache">
 					Tâche 0
@@ -41,11 +53,10 @@
 			</div>
 		</div>
 	</div>
-	<div id="calendar" class="ui-widget-content ui-corner-all">
+	<div id="calendar" class="ui-corner-all">
 		calendar
 	</div>
-	<div id="postit">
-		<div id="postitIcon" class="ui-icon ui-icon-circle-triangle-n"></div>
+	<div id="afficherPostit">
 	</div>
 </body>
 </html>
