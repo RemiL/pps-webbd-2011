@@ -5,13 +5,13 @@ $(function() {
 			$("#ajouterOnglet").click(function() { addTab(); });
 			$("#afficherPostit").click(function() { afficherCacherPanneauPostit(); });
 			$( "#p1" ).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
-			$( "#panneauPostit" ).dblclick(function() { addPostit(event); });
+			$( "#panneauPostit" ).dblclick(function(event) { addPostit(event); });
 		});
 
 var panneauPostitOuvert = false;
 var nbPostit = 1;
 		
-function addPostit()
+function addPostit(event)
 {
 	var y = event.pageY;
 	var x = event.pageX;
@@ -22,28 +22,28 @@ function addPostit()
 	
 	if(y < 150/2)
 	{
-		postit.style.top = 0;
+		postit.style.top = 0 + "px";
 	}
 	else if(y > 724 - 150 /2)
 	{
-		postit.style.top = 724 - 150;
+		postit.style.top = 724 - 150 + "px";
 	}
 	else
 	{
-		postit.style.top = event.pageY - 8 - 150/2;
+		postit.style.top = event.pageY - 8 - 150/2 + "px";
 	}
 	
 	if(x < 150/2)
 	{
-		postit.style.left = 0;
+		postit.style.left = 0 + "px";
 	}
 	else if(x > largeur - 150/2)
 	{
-		postit.style.left = largeur - 150;
+		postit.style.left = largeur - 150 + "px";
 	}
 	else
 	{
-		postit.style.left = event.pageX - 8 - 150/2;
+		postit.style.left = event.pageX - 8 - 150/2 + "px";
 	}
 	
 	postit.innerHTML = '<div class="optionsPostit"><span onclick="supprimerPostit(this);" class="ui-icon ui-icon-closethick"></span><span onclick="deriverPostitTache(this);" class="ui-icon ui-icon-document"></span></div><div class="textPostit">Mon premier post-it</div>';
