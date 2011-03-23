@@ -39,10 +39,10 @@ function addTab()
 	ajouterOnglet.className = 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only';
 	document.getElementById('listeOnglets').appendChild(ajouterOnglet);
 }
-		
+
 function fermerOnglet(onglet)
 {
-	var index = Number(onglet.id.charAt(1));
+	var index = Number(onglet.id.substring(1, onglet.id.length));
 	for(var i=index+1; i<$( "#action" ).tabs( "length" ); i++)
 	{
 		document.getElementById('i'+i).id = 'i' + (i - 1);
