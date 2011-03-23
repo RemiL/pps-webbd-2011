@@ -11,10 +11,10 @@
 </head>
 <body>
 	<div id="panneauPostit" class="panneauPostit panneauPostitFerme ui-corner-all">
-		<div id="postit1" class="postit ui-corner-all">
+		<div id="p1" class="postit ui-corner-all">
 			<div class="optionsPostit">
-				<span  id="p0" onclick="alert('Supprimer Post-it');" class="ui-icon ui-icon-closethick"></span>
-				<span  id="p0" onclick="alert('Dériver en tâche');" class="ui-icon ui-icon-document"></span>
+				<span onclick="supprimerPostit(this);" class="ui-icon ui-icon-closethick"></span>
+				<span onclick="deriverPostitTache(this);" class="ui-icon ui-icon-document"></span>
 			</div>
 			<div class="textPostit">
 				Mon premier post-it
