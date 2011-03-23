@@ -4,11 +4,69 @@ $(function() {
 			$("#ajouterOnglet").button({ icons: {primary:'ui-icon-plusthick'}, text: false });
 			$("#ajouterOnglet").click(function() { addTab(); });
 			$("#afficherPostit").click(function() { afficherCacherPanneauPostit(); });
-			$( "#postit1" ).draggable({ containment: 'parent' }, { scroll: false });
+			$( "#p1" ).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
+			$( "#panneauPostit" ).dblclick(function() { addPostit(event); });
 		});
 
 var panneauPostitOuvert = false;
+var nbPostit = 1;
 		
+function addPostit()
+{
+	var y = event.pageY;
+	var x = event.pageX;
+	var largeur = document.body.clientWidth - 4;
+	var postit = document.createElement('div');
+	postit.id = 'p' + Number(nbPostit + 1);
+	postit.className = 'postit ui-corner-all';	
+	
+	if(y < 150/2)
+	{
+		postit.style.top = 0;
+	}
+	else if(y > 724 - 150 /2)
+	{
+		postit.style.top = 724 - 150;
+	}
+	else
+	{
+		postit.style.top = event.pageY - 8 - 150/2;
+	}
+	
+	if(x < 150/2)
+	{
+		postit.style.left = 0;
+	}
+	else if(x > largeur - 150/2)
+	{
+		postit.style.left = largeur - 150;
+	}
+	else
+	{
+		postit.style.left = event.pageX - 8 - 150/2;
+	}
+	
+	postit.innerHTML = '<div class="optionsPostit"><span onclick="supprimerPostit(this);" class="ui-icon ui-icon-closethick"></span><span onclick="deriverPostitTache(this);" class="ui-icon ui-icon-document"></span></div><div class="textPostit">Mon premier post-it</div>';
+	
+	document.getElementById('panneauPostit').appendChild(postit);
+	
+	$( "#"+postit.id ).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
+	
+	nbPostit++;
+}
+		
+function supprimerPostit(postit)
+{
+	document.getElementById("panneauPostit").removeChild(postit.parentNode.parentNode);
+}
+
+function deriverPostitTache(postit)
+{
+	afficherCacherPanneauPostit();
+	supprimerPostit(postit);
+	addTab();
+}
+
 function afficherCacherPanneauPostit()
 {
 	if(!panneauPostitOuvert)
