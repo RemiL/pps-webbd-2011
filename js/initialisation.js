@@ -10,9 +10,19 @@ $(function() {
 
 var panneauPostitOuvert = false;
 var nbPostit = 1;
+	
+function confirmerPostit()
+{
+	if(document.getElementById('nouveauTextePostit') != null)
+	{
+		var text = document.getElementById('nouveauTextePostit').value;
+		document.getElementById('nouveauTextePostit').parentNode.innerHTML = text;
+	}
+}
 		
 function addPostit(event)
 {
+	confirmerPostit();
 	var y = event.pageY;
 	var x = event.pageX;
 	var largeur = document.body.clientWidth - 4;
@@ -46,9 +56,10 @@ function addPostit(event)
 		postit.style.left = event.pageX - 8 - 150/2 + "px";
 	}
 	
-	postit.innerHTML = '<div class="optionsPostit"><span onclick="supprimerPostit(this);" class="ui-icon ui-icon-closethick"></span><span onclick="deriverPostitTache(this);" class="ui-icon ui-icon-document"></span></div><div class="textPostit">Mon premier post-it</div>';
+	postit.innerHTML = '<div class="optionsPostit"><span onclick="supprimerPostit(this);" class="ui-icon ui-icon-closethick"></span><span onclick="deriverPostitTache(this);" class="ui-icon ui-icon-document"></span></div><div class="textPostit"><textarea id="nouveauTextePostit"></textarea><input type="submit" value="Coller" onclick="confirmerPostit();" /></div>';
 	
 	document.getElementById('panneauPostit').appendChild(postit);
+	document.getElementById('nouveauTextePostit').focus();
 	
 	$( "#"+postit.id ).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
 	
