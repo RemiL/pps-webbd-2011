@@ -53,6 +53,54 @@ body
 	border: 1px #AAAAAA solid;
 }
 
+.box
+{
+	width: 200px;
+	height: 242px;
+	margin: 3px;
+	border: 1px #AAAAAA solid;
+	box-shadow: 5px 5px 5px #888;
+}
+
+.nomBox
+{
+	height: 16px;
+	margin: 3px;
+	overflow: hidden;
+}
+
+.optionsBox
+{
+	width: 40px;
+	float: right;
+	margin-left: 8px;
+}
+
+.ajouterTacheBox
+{
+	float: left;
+}
+
+.hautBox
+{
+	margin-bottom: 10px;
+}
+
+.corpsBox
+{
+	clear: both;
+	margin: 3px;
+}
+
+.tacheBox
+{
+	border: 1px #AAAAAA solid;
+	box-shadow: 1px 1px 1px #888;
+	margin-top: 3px;
+	height: 40px;
+	padding: 2px;
+}
+
 #action
 {
 	height: 334px;

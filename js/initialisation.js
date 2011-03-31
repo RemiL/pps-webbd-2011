@@ -6,6 +6,7 @@ $(function() {
 			$("#afficherPostit").click(function() { afficherCacherPanneauPostit(); });
 			$( "#p1" ).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
 			$( "#panneauPostit" ).dblclick(function(event) { addPostit(event); });
+			$( "#b1" ).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".box" });
 		});
 
 var panneauPostitOuvert = false;
@@ -84,6 +85,8 @@ function addPostit(event)
 	
 	var textarea = document.createElement('textarea');
 	textarea.id = "nouveauTextePostit";
+	textarea.cols = '13';
+	textarea.rows = '8';
 	var input = document.createElement('input');
 	input.type = 'submit';
 	input.id = 'collerPostit';
@@ -156,4 +159,14 @@ function fermerOnglet(onglet)
 	}
 
 	$( "#action" ).tabs( "remove" , index );
+}
+
+function ajouterTacheBox(box)
+{
+	alert("ajouter tache box " + box.parentNode.parentNode.parentNode.id);
+}
+
+function supprimerBox(box)
+{
+	document.getElementById("box").removeChild(box.parentNode.parentNode.parentNode);
 }
