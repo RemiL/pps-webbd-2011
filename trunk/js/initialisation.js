@@ -16,18 +16,34 @@ function confirmerPostit()
 	if(document.getElementById('nouveauTextePostit') != null)
 	{
 		var text = document.getElementById('nouveauTextePostit').value;
-		document.getElementById('nouveauTextePostit').parentNode.innerHTML = text;
+		if(text != "")
+		{
+			var zone = document.getElementById('nouveauTextePostit').parentNode;
+			zone.removeChild(document.getElementById('nouveauTextePostit'));
+			zone.removeChild(document.getElementById('collerPostit'));
+			zone.appendChild(document.createTextNode(text));
+			
+			var deriver = document.createElement('span');
+			deriver.className = 'ui-icon ui-icon-document';
+			deriver.onclick = function() { deriverPostitTache(this); };
+			zone.parentNode.firstChild.appendChild(deriver);
+		}
+		else
+		{
+			document.getElementById('panneauPostit').removeChild(document.getElementById('p'+nbPostit));
+		}
 	}
 }
-		
+
 function addPostit(event)
 {
 	confirmerPostit();
+	nbPostit++;
 	var y = event.pageY;
 	var x = event.pageX;
 	var largeur = document.body.clientWidth - 4;
 	var postit = document.createElement('div');
-	postit.id = 'p' + Number(nbPostit + 1);
+	postit.id = 'p' + nbPostit;
 	postit.className = 'postit ui-corner-all';	
 	
 	if(y < 150/2)
@@ -56,14 +72,36 @@ function addPostit(event)
 		postit.style.left = event.pageX - 8 - 150/2 + "px";
 	}
 	
-	postit.innerHTML = '<div class="optionsPostit"><span onclick="supprimerPostit(this);" class="ui-icon ui-icon-closethick"></span><span onclick="deriverPostitTache(this);" class="ui-icon ui-icon-document"></span></div><div class="textPostit"><textarea id="nouveauTextePostit"></textarea><input type="submit" value="Coller" onclick="confirmerPostit();" /></div>';
+	var options = document.createElement('div');
+	options.className = 'optionsPostit';
+	
+	var supprimer = document.createElement('span');
+	supprimer.className = 'ui-icon ui-icon-closethick';
+	supprimer.onclick = function() { supprimerPostit(this); };
+	
+	var zoneText = document.createElement('div');
+	zoneText.className = 'textPostit';
+	
+	var textarea = document.createElement('textarea');
+	textarea.id = "nouveauTextePostit";
+	var input = document.createElement('input');
+	input.type = 'submit';
+	input.id = 'collerPostit';
+	input.value = 'Coller';
+	input.onclick = function() { confirmerPostit(); };
+	
+	options.appendChild(supprimer);
+	
+	zoneText.appendChild(textarea);
+	zoneText.appendChild(input);
+	
+	postit.appendChild(options);
+	postit.appendChild(zoneText);
 	
 	document.getElementById('panneauPostit').appendChild(postit);
 	document.getElementById('nouveauTextePostit').focus();
 	
 	$( "#"+postit.id ).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
-	
-	nbPostit++;
 }
 		
 function supprimerPostit(postit)
@@ -103,7 +141,7 @@ function addTab()
 	$("#action").tabs( "add" , "#newTask"+index, '<div id="i' + index + '" class="fermerOnglet" onclick="fermerOnglet(this);"><span class="ui-icon ui-icon-closethick"></span></div><a href="#newTask' + index + '" class="titreOnglet" title="New task">New task</a>', index );
 	$("#action").tabs( "select" ,  index );
 	
-	document.getElementById('newTask'+index).innerHTML = 'New task'+index;
+	document.getElementById('newTask'+index).appendChild(document.createTextNode('New task'+index))
 	
 	ajouterOnglet.className = 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only';
 	document.getElementById('listeOnglets').appendChild(ajouterOnglet);
