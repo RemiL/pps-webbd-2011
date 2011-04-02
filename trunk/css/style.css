@@ -48,7 +48,6 @@
 #box
 {
 	margin-bottom: 10px;
-	padding: 3px;
 	height: 250px;
 	border: 1px #AAAAAA solid;
 }
@@ -58,6 +57,7 @@
 	height: 35px;
 	margin-left: 5px;
 	margin-right: 5px;
+	margin-top: 3px;
 	margin-bottom: 3px;
 }
 
@@ -80,6 +80,8 @@
 {
 	height: 209px;
 	overflow: hidden;
+	position: relative;
+	margin-left: 5px;
 }
 
 .box
@@ -88,7 +90,7 @@
 	background-color: white;
 	width: 200px;
 	height: 200px;
-	margin: 3px;
+	margin-right: 5px;
 	border: 1px #AAAAAA solid;
 	box-shadow: 5px 5px 5px #888;
 }
@@ -119,10 +121,11 @@
 
 .corpsBox
 {
+	margin-top: 3px;
 	clear: both;
 	margin-left: 3px;
 	margin-right: 3px;
-	height: 150px;
+	height: 135px;
 	overflow: hidden;
 }
 
@@ -142,7 +145,6 @@
 
 .piedBox
 {
-	height: 18px;
 	margin: 3px;
 }
 
