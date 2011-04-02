@@ -1,4 +1,4 @@
-$(function() { 
+﻿$(function() { 
 			$("#action").tabs({ tabTemplate: '<li>#{label}</li>' });
 			$("#afficherPostit").button({ icons: {primary:'ui-icon-circle-triangle-n'}, text: false });
 			$("#ajouterOnglet").button({ icons: {primary:'ui-icon-plusthick'}, text: false });
@@ -6,7 +6,6 @@ $(function() {
 			$("#afficherPostit").click(function() { afficherCacherPanneauPostit(); });
 			$( "#p1" ).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
 			$( "#panneauPostit" ).dblclick(function(event) { addPostit(event); });
-			$( "#b1" ).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".box" });
 		});
 
 var panneauPostitOuvert = false;
@@ -26,7 +25,7 @@ function confirmerPostit()
 			
 			var deriver = document.createElement('span');
 			deriver.className = 'ui-icon ui-icon-document';
-			deriver.onclick = function() { deriverPostitTache(this); };
+			deriver.onclick = function() { deriverPostitTache(zone.parentNode.id); };
 			zone.parentNode.firstChild.appendChild(deriver);
 		}
 		else
@@ -78,7 +77,7 @@ function addPostit(event)
 	
 	var supprimer = document.createElement('span');
 	supprimer.className = 'ui-icon ui-icon-closethick';
-	supprimer.onclick = function() { supprimerPostit(this); };
+	supprimer.onclick = function() { supprimerPostit(postit.id); };
 	
 	var zoneText = document.createElement('div');
 	zoneText.className = 'textPostit';
@@ -107,15 +106,15 @@ function addPostit(event)
 	$( "#"+postit.id ).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
 }
 		
-function supprimerPostit(postit)
+function supprimerPostit(idPostit)
 {
-	document.getElementById("panneauPostit").removeChild(postit.parentNode.parentNode);
+	document.getElementById("panneauPostit").removeChild(document.getElementById(idPostit));
 }
 
-function deriverPostitTache(postit)
+function deriverPostitTache(idPostit)
 {
 	afficherCacherPanneauPostit();
-	supprimerPostit(postit);
+	supprimerPostit(idPostit);
 	addTab();
 }
 
@@ -163,10 +162,58 @@ function fermerOnglet(onglet)
 
 function ajouterTacheBox(box)
 {
-	alert("ajouter tache box " + box.parentNode.parentNode.parentNode.id);
+	alert("ajouter tache box " + box.id);
 }
 
 function supprimerBox(box)
 {
-	document.getElementById("box").removeChild(box.parentNode.parentNode.parentNode);
+	document.getElementById("listeBox").removeChild(box);
+}
+
+function boxVersHaut(box)
+{
+	alert("tache box vers haut " + box.id);
+}
+
+function boxVersBas(box)
+{
+	alert("tache box vers bas " + box.id);
+}
+
+function boxVersGauche(box)
+{
+	var index = Number(box.id.substring(1, box.id.length)) - 1;
+	if(document.getElementById('b'+index) != null)
+	{
+		box.style.zIndex = 2;
+		$( "#"+box.id ).animate({marginLeft: '-=206px'}, 'slow');
+		document.getElementById('b'+index).style.zIndex = 1;
+		$( "#b" + index ).animate({marginLeft: '+=206px'}, 'slow');
+		document.getElementById('b'+index).id = box.id;
+		box.id = 'b' + index;
+	}
+}
+
+function boxVersDroite(box)
+{	
+	var index = Number(box.id.substring(1, box.id.length)) + 1;
+	if(document.getElementById('b'+index) != null)
+	{
+		box.style.zIndex = 2;
+		$( "#"+box.id ).animate({marginLeft: '+=206px'}, 'slow');
+		document.getElementById('b'+index).style.zIndex = 1;
+		$( "#b" + index ).animate({marginLeft: '-=206px'}, 'slow');
+		document.getElementById('b'+index).id = box.id;
+		box.id = 'b' + index;
+	}
+}
+
+function versGaucheListeBox() 
+{
+    alert("déplacer la liste vers la gauche");
+}
+
+function versDroiteListeBox()
+{
+    alert("déplacer la liste vers la droite");
 }
