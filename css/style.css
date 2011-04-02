@@ -1,252 +1,252 @@
 ﻿body
 {
-	font-size: 0.9em;
-	font-family: Arial, sans-serif;
+    font-size: 0.9em;
+    font-family: Arial, sans-serif;
 }
 
 #calendar
 {
-	width: 20%;
-	padding: 3px;
-	height: 720px;
-	border: 1px #AAAAAA solid;
+    width: 20%;
+    padding: 3px;
+    height: 720px;
+    border: 1px #AAAAAA solid;
 }
 
 #main
 {
-	height: 91%;
-	width: 79%;
-	float: right;
+    height: 91%;
+    width: 79%;
+    float: right;
 }
 
 #header
 {
-	margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 #logo
 {
-	float: left;
-	width: 68%;
-	text-align: center;
+    float: left;
+    width: 68%;
+    text-align: center;
 }
 
 #alarme
 {
-	padding: 3px;
-	margin-left: 69%;
-	height: 100px;
-	border: 1px #AAAAAA solid;
+    padding: 3px;
+    margin-left: 69%;
+    height: 100px;
+    border: 1px #AAAAAA solid;
 }
 
 #corps
 {
-	width: 100%;
-	clear: both;
+    width: 100%;
+    clear: both;
 }
 
 #box
 {
-	margin-bottom: 10px;
-	height: 250px;
-	border: 1px #AAAAAA solid;
+    margin-bottom: 10px;
+    height: 250px;
+    border: 1px #AAAAAA solid;
 }
 
 #hautListeBox
 {
-	height: 35px;
-	margin-left: 5px;
-	margin-right: 5px;
-	margin-top: 3px;
-	margin-bottom: 3px;
+    height: 35px;
+    margin-left: 5px;
+    margin-right: 5px;
+    margin-top: 3px;
+    margin-bottom: 3px;
 }
 
 #flechesDeplacementBox
 {
-	float: left;
+    float: left;
 }
 
 .versGaucheListeBox
 {
-	float: left;
+    float: left;
 }
 
 .versDroiteListeBox
 {
-	margin-left: 20px;
+    margin-left: 20px;
 }
 
 #listeBox
 {
-	height: 209px;
-	overflow: hidden;
-	position: relative;
-	margin-left: 5px;
+    height: 209px;
+    overflow: hidden;
+    position: relative;
+    margin-left: 5px;
 }
 
 .box
 {
-	position: absolute;
-	background-color: white;
-	width: 200px;
-	height: 200px;
-	margin-right: 5px;
-	border: 1px #AAAAAA solid;
-	box-shadow: 5px 5px 5px #888;
+    position: absolute;
+    background-color: white;
+    width: 200px;
+    height: 200px;
+    margin-right: 5px;
+    border: 1px #AAAAAA solid;
+    box-shadow: 5px 5px 5px #888;
 }
 
 .nomBox
 {
-	height: 18px;
-	margin: 3px;
-	overflow: hidden;
+    height: 18px;
+    margin: 3px;
+    overflow: hidden;
 }
 
 .optionsBox
 {
-	float: right;
-	margin-left: 8px;
-	width: 32px;
+    float: right;
+    margin-left: 8px;
+    width: 32px;
 }
 
 .ajouterTacheBox
 {
-	float: left;
+    float: left;
 }
 
 .hautBox
 {
-	margin: 3px;
+    margin: 3px;
 }
 
 .corpsBox
 {
-	margin-top: 3px;
-	clear: both;
-	margin-left: 3px;
-	margin-right: 3px;
-	height: 135px;
-	overflow: hidden;
+    margin-top: 3px;
+    clear: both;
+    margin-left: 3px;
+    margin-right: 3px;
+    height: 135px;
+    overflow: hidden;
 }
 
 .deplacerTacheBox
 {
-	margin: auto;
+    margin: auto;
 }
 
 .tacheBox
 {
-	border: 1px #AAAAAA solid;
-	box-shadow: 1px 1px 1px #888;
-	margin-top: 3px;
-	height: 35px;
-	padding: 2px;
+    border: 1px #AAAAAA solid;
+    box-shadow: 1px 1px 1px #888;
+    margin-top: 3px;
+    height: 35px;
+    padding: 2px;
 }
 
 .piedBox
 {
-	margin: 3px;
+    margin: 3px;
 }
 
 .versDroiteBox
 {
-	float: right;
+    float: right;
 }
 
 .versGaucheBox
 {
-	float: left;
+    float: left;
 }
 
 #action
 {
-	height: 334px;
+    height: 334px;
 }
 
 .fermerOnglet
 {
-	float: right;
-	margin-top: 8px;
-	margin-right: 8px;
+    float: right;
+    margin-top: 8px;
+    margin-right: 8px;
 }
 
 .titreOnglet
 {
-	overflow: hidden;
-	min-width: 200px;
+    overflow: hidden;
+    min-width: 200px;
 }
 
 #ajouterOnglet
 {
-	height: 25px;
-	width: 35px;
-	margin-top: 7px;
+    height: 25px;
+    width: 35px;
+    margin-top: 7px;
 }
 
 #afficherPostit
 {
-	clear: both;
-	width: 100%;
-	height: 20px;
-	margin-top: 10px;
+    clear: both;
+    width: 100%;
+    height: 20px;
+    margin-top: 10px;
 }
 
 .panneauPostit
 {
-	position: absolute;
-	background-color: rgba(255,255,255,0.90);
-	height: 727px;
-	top: 8px;
-	right: 8px;
-	left: 8px;
-	z-index: 10;
-	box-shadow: 5px 5px 5px #888;
-	border: 1px #AAAAAA solid;
+    position: absolute;
+    background-color: rgba(255,255,255,0.90);
+    height: 727px;
+    top: 8px;
+    right: 8px;
+    left: 8px;
+    z-index: 10;
+    box-shadow: 5px 5px 5px #888;
+    border: 1px #AAAAAA solid;
 }
 
 .panneauPostitFerme
 {
-	visibility: hidden;
+    visibility: hidden;
 }
 
 .panneauPostitOuvert
 {
-	visibility: visible;
+    visibility: visible;
 }
 
 .postit
 {
-	position: absolute;
-	height: 150px;
-	width: 150px;
-	border: 1px #EFE332 solid;
-	background-color: #FFF435;
-	box-shadow: 2px 2px 2px #888;
-	z-index: 20;
+    position: absolute;
+    height: 150px;
+    width: 150px;
+    border: 1px #EFE332 solid;
+    background-color: #FFF435;
+    box-shadow: 2px 2px 2px #888;
+    z-index: 20;
 }
 
 .textPostit
 {
-	margin-top: 5px;
-	margin-left: 5px;
-	width: 110px;
-	height: 140px;
-	overflow: hidden;
+    margin-top: 5px;
+    margin-left: 5px;
+    width: 110px;
+    height: 140px;
+    overflow: hidden;
 }
 
 .textPostit textarea
 {
-	width: 105px;
-	height: 110px;
-	background-color: #FFF47F;
+    width: 105px;
+    height: 110px;
+    background-color: #FFF47F;
 }
 
 .optionsPostit
 {
-	width: 20px;
-	float: right;
-	margin-top: 5px;
-	margin-bottom: 5px;
-	margin-left: 8px;
-	margin-right: 3px;
+    width: 20px;
+    float: right;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    margin-left: 8px;
+    margin-right: 3px;
 }
