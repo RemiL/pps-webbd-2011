@@ -13,8 +13,8 @@
 	<div id="panneauPostit" class="panneauPostit panneauPostitFerme ui-corner-all">
 		<div id="p1" class="postit ui-corner-all">
 			<div class="optionsPostit">
-				<span onclick="supprimerPostit(this);" class="ui-icon ui-icon-closethick"></span>
-				<span onclick="deriverPostitTache(this);" class="ui-icon ui-icon-document"></span>
+				<span onclick="supprimerPostit('p1');" class="ui-icon ui-icon-closethick"></span>
+				<span onclick="deriverPostitTache('p1');" class="ui-icon ui-icon-document"></span>
 			</div>
 			<div class="textPostit">
 				Mon premier post-it
@@ -24,7 +24,7 @@
 	<div id="main">
 		<div id="header">
 			<div id="logo">
-				<img src="http://www.google.fr/intl/en_com/images/srpr/logo1w.png" alt="logo" />
+				<img src="google.png" alt="logo" />
 			</div>
 			<div id="alarme" class="ui-corner-all">
 				alarme<br />aaaa<br />sss
@@ -32,20 +32,156 @@
 		</div>
 		<div id="corps">
 			<div id="box" class="ui-corner-all">
-				<div class="box ui-corner-all" id="b1">
-					<div class="hautBox">
-						<div class="optionsBox">
-							<span onclick="ajouterTacheBox(this);" class="ajouterTacheBox ui-icon ui-icon-plusthick"></span>
-							<span onclick="supprimerBox(this);" class="ui-icon ui-icon-closethick"></span>
+				<div id="hautListeBox">
+                    <div id="flechesDeplacementBox">
+					    <span onclick="versGaucheListeBox();" class="versGaucheListeBox ui-icon ui-icon-circle-triangle-w"></span>
+					    <span onclick="versDroiteListeBox();" class="versDroiteListeBox ui-icon ui-icon-circle-triangle-e"></span>
+                    </div>
+				</div>
+				<div id="listeBox">
+					<div class="box ui-corner-all" id="b1">
+						<div class="hautBox">
+							<div class="optionsBox">
+								<span onclick="ajouterTacheBox(this.parentNode.parentNode.parentNode);" class="ajouterTacheBox ui-icon ui-icon-plusthick"></span>
+								<span onclick="supprimerBox(this.parentNode.parentNode.parentNode);" class="ui-icon ui-icon-closethick"></span>
+							</div>
+							<div class="nomBox">
+								Box 1
+							</div>
 						</div>
-						<div class="nomBox">
-							Nom jgsj sdfkj gskdjfg kjsdfg kjsdkfj gskdjfgj sdfkj g
+						<div class="corpsBox">
+							<span onclick="boxVersHaut(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-n"></span>
+							<div class="tacheBox ui-corner-all">Tâche 1</div>
+							<div class="tacheBox ui-corner-all">Tâche 2</div>
+							<div class="tacheBox ui-corner-all">Tâche 3</div>
+							<div class="tacheBox ui-corner-all">Tâche 4</div>
+							<div class="tacheBox ui-corner-all">Tâche 5</div>
+						</div>
+						<div class="piedBox">
+							<span onclick="boxVersGauche(this.parentNode.parentNode);" class="versGaucheBox ui-icon ui-icon-circle-arrow-w"></span>
+							<span onclick="boxVersDroite(this.parentNode.parentNode);" class="versDroiteBox ui-icon ui-icon-circle-arrow-e"></span>
+							<span onclick="boxVersBas(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-s"></span>
 						</div>
 					</div>
-					<div class="corpsBox">
-						<div class="tacheBox ui-corner-all">Tâche 1</div>
-						<div class="tacheBox ui-corner-all">Tâche 2</div>
-						<div class="tacheBox ui-corner-all">Tâche 3</div>
+					<div class="box ui-corner-all" id="b2" style="margin-left: 209px;">
+						<div class="hautBox">
+							<div class="optionsBox">
+								<span onclick="ajouterTacheBox(this.parentNode.parentNode.parentNode);" class="ajouterTacheBox ui-icon ui-icon-plusthick"></span>
+								<span onclick="supprimerBox(this.parentNode.parentNode.parentNode);" class="ui-icon ui-icon-closethick"></span>
+							</div>
+							<div class="nomBox">
+								Box 2
+							</div>
+						</div>
+						<div class="corpsBox">
+							<span onclick="boxVersHaut(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-n"></span>
+							<div class="tacheBox ui-corner-all">Tâche 1</div>
+							<div class="tacheBox ui-corner-all">Tâche 2</div>
+							<div class="tacheBox ui-corner-all">Tâche 3</div>
+							<div class="tacheBox ui-corner-all">Tâche 4</div>
+							<div class="tacheBox ui-corner-all">Tâche 5</div>
+						</div>
+						<div class="piedBox">
+							<span onclick="boxVersGauche(this.parentNode.parentNode);" class="versGaucheBox ui-icon ui-icon-circle-arrow-w"></span>
+							<span onclick="boxVersDroite(this.parentNode.parentNode);" class="versDroiteBox ui-icon ui-icon-circle-arrow-e"></span>
+							<span onclick="boxVersBas(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-s"></span>
+						</div>
+					</div>
+					<div class="box ui-corner-all" id="b3" style="margin-left: 415px;">
+						<div class="hautBox">
+							<div class="optionsBox">
+								<span onclick="ajouterTacheBox(this.parentNode.parentNode.parentNode);" class="ajouterTacheBox ui-icon ui-icon-plusthick"></span>
+								<span onclick="supprimerBox(this.parentNode.parentNode.parentNode);" class="ui-icon ui-icon-closethick"></span>
+							</div>
+							<div class="nomBox">
+								Box 3
+							</div>
+						</div>
+						<div class="corpsBox">
+							<span onclick="boxVersHaut(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-n"></span>
+							<div class="tacheBox ui-corner-all">Tâche 1</div>
+							<div class="tacheBox ui-corner-all">Tâche 2</div>
+							<div class="tacheBox ui-corner-all">Tâche 3</div>
+							<div class="tacheBox ui-corner-all">Tâche 4</div>
+							<div class="tacheBox ui-corner-all">Tâche 5</div>
+						</div>
+						<div class="piedBox">
+							<span onclick="boxVersGauche(this.parentNode.parentNode);" class="versGaucheBox ui-icon ui-icon-circle-arrow-w"></span>
+							<span onclick="boxVersDroite(this.parentNode.parentNode);" class="versDroiteBox ui-icon ui-icon-circle-arrow-e"></span>
+							<span onclick="boxVersBas(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-s"></span>
+						</div>
+					</div>
+					<div class="box ui-corner-all" id="b4"  style="margin-left: 621px;">
+						<div class="hautBox">
+							<div class="optionsBox">
+								<span onclick="ajouterTacheBox(this.parentNode.parentNode.parentNode);" class="ajouterTacheBox ui-icon ui-icon-plusthick"></span>
+								<span onclick="supprimerBox(this.parentNode.parentNode.parentNode);" class="ui-icon ui-icon-closethick"></span>
+							</div>
+							<div class="nomBox">
+								Box 4
+							</div>
+						</div>
+						<div class="corpsBox">
+							<span onclick="boxVersHaut(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-n"></span>
+							<div class="tacheBox ui-corner-all">Tâche 1</div>
+							<div class="tacheBox ui-corner-all">Tâche 2</div>
+							<div class="tacheBox ui-corner-all">Tâche 3</div>
+							<div class="tacheBox ui-corner-all">Tâche 4</div>
+							<div class="tacheBox ui-corner-all">Tâche 5</div>
+						</div>
+						<div class="piedBox">
+							<span onclick="boxVersGauche(this.parentNode.parentNode);" class="versGaucheBox ui-icon ui-icon-circle-arrow-w"></span>
+							<span onclick="boxVersDroite(this.parentNode.parentNode);" class="versDroiteBox ui-icon ui-icon-circle-arrow-e"></span>
+							<span onclick="boxVersBas(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-s"></span>
+						</div>
+					</div>
+					<div class="box ui-corner-all" id="b5" style="margin-left: 827px;">
+						<div class="hautBox">
+							<div class="optionsBox">
+								<span onclick="ajouterTacheBox(this.parentNode.parentNode.parentNode);" class="ajouterTacheBox ui-icon ui-icon-plusthick"></span>
+								<span onclick="supprimerBox(this.parentNode.parentNode.parentNode);" class="ui-icon ui-icon-closethick"></span>
+							</div>
+							<div class="nomBox">
+								Box 5
+							</div>
+						</div>
+						<div class="corpsBox">
+							<span onclick="boxVersHaut(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-n"></span>
+							<div class="tacheBox ui-corner-all">Tâche 1</div>
+							<div class="tacheBox ui-corner-all">Tâche 2</div>
+							<div class="tacheBox ui-corner-all">Tâche 3</div>
+							<div class="tacheBox ui-corner-all">Tâche 4</div>
+							<div class="tacheBox ui-corner-all">Tâche 5</div>
+						</div>
+						<div class="piedBox">
+							<span onclick="boxVersGauche(this.parentNode.parentNode);" class="versGaucheBox ui-icon ui-icon-circle-arrow-w"></span>
+							<span onclick="boxVersDroite(this.parentNode.parentNode);" class="versDroiteBox ui-icon ui-icon-circle-arrow-e"></span>
+							<span onclick="boxVersBas(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-s"></span>
+						</div>
+					</div>
+					<div class="box ui-corner-all" id="b6" style="margin-left: 1033px;">
+						<div class="hautBox">
+							<div class="optionsBox">
+								<span onclick="ajouterTacheBox(this.parentNode.parentNode.parentNode);" class="ajouterTacheBox ui-icon ui-icon-plusthick"></span>
+								<span onclick="supprimerBox(this.parentNode.parentNode.parentNode);" class="ui-icon ui-icon-closethick"></span>
+							</div>
+							<div class="nomBox">
+								Box 6
+							</div>
+						</div>
+						<div class="corpsBox">
+							<span onclick="boxVersHaut(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-n"></span>
+							<div class="tacheBox ui-corner-all">Tâche 1</div>
+							<div class="tacheBox ui-corner-all">Tâche 2</div>
+							<div class="tacheBox ui-corner-all">Tâche 3</div>
+							<div class="tacheBox ui-corner-all">Tâche 4</div>
+							<div class="tacheBox ui-corner-all">Tâche 5</div>
+						</div>
+						<div class="piedBox">
+							<span onclick="boxVersGauche(this.parentNode.parentNode);" class="versGaucheBox ui-icon ui-icon-circle-arrow-w"></span>
+							<span onclick="boxVersDroite(this.parentNode.parentNode);" class="versDroiteBox ui-icon ui-icon-circle-arrow-e"></span>
+							<span onclick="boxVersBas(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-s"></span>
+						</div>
 					</div>
 				</div>
 			</div>

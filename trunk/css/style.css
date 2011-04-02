@@ -1,4 +1,4 @@
-body
+﻿body
 {
 	font-size: 0.9em;
 	font-family: Arial, sans-serif;
@@ -53,10 +53,41 @@ body
 	border: 1px #AAAAAA solid;
 }
 
+#hautListeBox
+{
+	height: 35px;
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 3px;
+}
+
+#flechesDeplacementBox
+{
+	float: left;
+}
+
+.versGaucheListeBox
+{
+	float: left;
+}
+
+.versDroiteListeBox
+{
+	margin-left: 20px;
+}
+
+#listeBox
+{
+	height: 209px;
+	overflow: hidden;
+}
+
 .box
 {
+	position: absolute;
+	background-color: white;
 	width: 200px;
-	height: 242px;
+	height: 200px;
 	margin: 3px;
 	border: 1px #AAAAAA solid;
 	box-shadow: 5px 5px 5px #888;
@@ -64,16 +95,16 @@ body
 
 .nomBox
 {
-	height: 16px;
+	height: 18px;
 	margin: 3px;
 	overflow: hidden;
 }
 
 .optionsBox
 {
-	width: 40px;
 	float: right;
 	margin-left: 8px;
+	width: 32px;
 }
 
 .ajouterTacheBox
@@ -83,13 +114,21 @@ body
 
 .hautBox
 {
-	margin-bottom: 10px;
+	margin: 3px;
 }
 
 .corpsBox
 {
 	clear: both;
-	margin: 3px;
+	margin-left: 3px;
+	margin-right: 3px;
+	height: 150px;
+	overflow: hidden;
+}
+
+.deplacerTacheBox
+{
+	margin: auto;
 }
 
 .tacheBox
@@ -97,8 +136,24 @@ body
 	border: 1px #AAAAAA solid;
 	box-shadow: 1px 1px 1px #888;
 	margin-top: 3px;
-	height: 40px;
+	height: 35px;
 	padding: 2px;
+}
+
+.piedBox
+{
+	height: 18px;
+	margin: 3px;
+}
+
+.versDroiteBox
+{
+	float: right;
+}
+
+.versGaucheBox
+{
+	float: left;
 }
 
 #action
