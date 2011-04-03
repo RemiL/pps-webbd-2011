@@ -1,18 +1,15 @@
 google.load("gdata", "2.s");
-// On laisse le temps au cookie d'être enregistré
-google.setOnLoadCallback(function() { setTimeout(remplirCalendrierDuJour, 500); });
+google.setOnLoadCallback(remplirCalendrierDuJour);
 
 var calendarService, scope;
 
 function connecterCalendar()
 {
     calendarService = new google.gdata.calendar.CalendarService("PPS-OneThingAtATime-0.01");
+    scope = "https://www.google.com/calendar/feeds/";
     
-    if (!google.accounts.user.checkLogin(scope))
-    {
-        scope = "https://www.google.com/calendar/feeds/";
+    if (google.accounts.user.getStatus(scope) == google.accounts.AuthSubStatus.LOGGED_OUT)
         var token = google.accounts.user.login(scope);
-    }
 }
 
 // Gestionnaire d'erreur
@@ -25,30 +22,33 @@ function getEvenementsDuJour(callback)
 {
     connecterCalendar();
     
-    // On veut récupérer tous les événements depuis le calendrier par défaut
-    var feedUri = "https://www.google.com/calendar/feeds/default/private/full";
-    
-    // Préparation de la requête
-    var query = new google.gdata.calendar.CalendarEventQuery(feedUri);
-    
-    // On souhaite récupérer les événements du jour
-    var today_start = new Date();
-    today_start.setHours(0);
-    today_start.setMinutes(0);
-    today_start.setSeconds(0);
-    today_start.setMilliseconds(0);
-    var startMin = new google.gdata.DateTime(today_start);
-    var today_end = new Date();
-    today_end.setHours(23);
-    today_end.setMinutes(59);
-    today_end.setSeconds(59);
-    today_end.setMilliseconds(999);
-    var startMax = new google.gdata.DateTime(today_end);
-    query.setMinimumStartTime(google.gdata.DateTime.toIso8601(startMin));
-    query.setMaximumStartTime(google.gdata.DateTime.toIso8601(startMax));
-    
-    // Envoi de la requête
-    calendarService.getEventsFeed(query, callback, gestErreur);
+    if (google.accounts.user.getStatus(scope) == google.accounts.AuthSubStatus.LOGGED_IN)
+    {
+        // On veut récupérer tous les événements depuis le calendrier par défaut
+        var feedUri = "https://www.google.com/calendar/feeds/default/private/full";
+        
+        // Préparation de la requête
+        var query = new google.gdata.calendar.CalendarEventQuery(feedUri);
+        
+        // On souhaite récupérer les événements du jour
+        var today_start = new Date();
+        today_start.setHours(0);
+        today_start.setMinutes(0);
+        today_start.setSeconds(0);
+        today_start.setMilliseconds(0);
+        var startMin = new google.gdata.DateTime(today_start);
+        var today_end = new Date();
+        today_end.setHours(23);
+        today_end.setMinutes(59);
+        today_end.setSeconds(59);
+        today_end.setMilliseconds(999);
+        var startMax = new google.gdata.DateTime(today_end);
+        query.setMinimumStartTime(google.gdata.DateTime.toIso8601(startMin));
+        query.setMaximumStartTime(google.gdata.DateTime.toIso8601(startMax));
+        
+        // Envoi de la requête
+        calendarService.getEventsFeed(query, callback, gestErreur);
+    }
 }
 
 function getHoraire(date)
