@@ -219,7 +219,10 @@
         </div>
     </div>
     <div id="calendar" class="ui-corner-all">
-        calendar
+        <span class="previousDay ui-icon ui-icon-circle-arrow-w" onclick="loadDay(-1);"></span>
+        <span class="nextDay ui-icon ui-icon-circle-arrow-e" onclick="loadDay(+1);"></span>
+        <div id="calendarDay"></div>
+        <div id="calendarAgenda"></div>
     </div>
     <div id="afficherPostit">
     </div>

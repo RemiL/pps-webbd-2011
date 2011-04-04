@@ -1,7 +1,9 @@
 google.load("gdata", "2.s");
-google.setOnLoadCallback(remplirCalendrierDuJour);
+google.setOnLoadCallback(function () { loadDay(0); });
 
 var calendarService, scope;
+
+var dayOffset = 0;
 
 function connecterCalendar()
 {
@@ -18,7 +20,7 @@ function gestErreur(erreur)
     alert(erreur);
 }
 
-function getEvenementsDuJour(callback)
+function getEvenementsDuJour(dayOffset, callback)
 {
     connecterCalendar();
     
@@ -31,18 +33,20 @@ function getEvenementsDuJour(callback)
         var query = new google.gdata.calendar.CalendarEventQuery(feedUri);
         
         // On souhaite récupérer les événements du jour
-        var today_start = new Date();
-        today_start.setHours(0);
-        today_start.setMinutes(0);
-        today_start.setSeconds(0);
-        today_start.setMilliseconds(0);
-        var startMin = new google.gdata.DateTime(today_start);
-        var today_end = new Date();
-        today_end.setHours(23);
-        today_end.setMinutes(59);
-        today_end.setSeconds(59);
-        today_end.setMilliseconds(999);
-        var startMax = new google.gdata.DateTime(today_end);
+        var day_start = new Date();
+        day_start.setDate(day_start.getDate() + dayOffset);
+        day_start.setHours(0);
+        day_start.setMinutes(0);
+        day_start.setSeconds(0);
+        day_start.setMilliseconds(0);
+        var startMin = new google.gdata.DateTime(day_start);
+        var day_end = new Date();
+        day_end.setDate(day_end.getDate() + dayOffset);
+        day_end.setHours(23);
+        day_end.setMinutes(59);
+        day_end.setSeconds(59);
+        day_end.setMilliseconds(999);
+        var startMax = new google.gdata.DateTime(day_end);
         query.setMinimumStartTime(google.gdata.DateTime.toIso8601(startMin));
         query.setMaximumStartTime(google.gdata.DateTime.toIso8601(startMax));
         
@@ -66,7 +70,11 @@ function getHoraire(date)
 function remplirCalendrier(root)
 {
     // Le calendrier sur la page
-    var calendrier = document.getElementById("calendar");
+    var calendrier = document.getElementById("calendarAgenda");
+    
+    // On vide les éventuelles entrées déjà présentes.
+    while (calendrier.firstChild)
+        calendrier.removeChild(calendrier.firstChild);
     
     // Les entrées à afficher supposées concerner un seul jour.
     var entrees = root.feed.getEntries();
@@ -86,8 +94,7 @@ function remplirCalendrier(root)
             
             tache = document.createElement('div');
             
-            tache.className = "tacheBox ui-corner-all";
-            tache.style.position = 'absolute';
+            tache.className = "tacheCalendar ui-corner-all";
             // On calcule le placement à partir du nombre de minutes depuis minuit (1 pixel = 2 minutes)
             tache.style.top = (entree.getTimes()[0].getStartTime().getDate().getHours()*60 + entree.getTimes()[0].getStartTime().getDate().getMinutes()) / 2 + 'px';
             // On calcule la hauteur à partir de la durée
@@ -106,7 +113,11 @@ function remplirCalendrier(root)
     }
 }
 
-function remplirCalendrierDuJour()
+function loadDay(step)
 {
-    getEvenementsDuJour(remplirCalendrier);
+    dayOffset += step;
+    var day = new Date();
+    day.setDate(day.getDate() + dayOffset);
+    document.getElementById('calendarDay').innerHTML = day.toLocaleDateString();
+    getEvenementsDuJour(dayOffset, remplirCalendrier);
 }
