@@ -8,8 +8,36 @@
 {
     width: 20%;
     padding: 3px;
-    height: 720px;
     border: 1px #AAAAAA solid;
+}
+
+#calendarDay
+{
+    text-align: center;
+    height: 24px;
+}
+
+.previousDay
+{
+    float: left;
+}
+
+.nextDay
+{
+    float: right;
+}
+
+#calendarAgenda
+{
+    position: relative;
+    height: 720px;
+}
+
+.tacheCalendar
+{
+    border: 1px #AAAAAA solid;
+    box-shadow: 1px 1px 1px #888;
+    position: absolute;
 }
 
 #main
