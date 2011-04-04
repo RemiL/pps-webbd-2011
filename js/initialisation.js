@@ -248,7 +248,7 @@ function boxVersDroite(box)
 
 function versGaucheListeBox() 
 {
-    if (document.getElementById('b1').offsetLeft % 207 == 0)
+    if (document.getElementById('b1') != undefined && document.getElementById('b1').offsetLeft % 207 == 0)
     {
         var index = 1;
 
@@ -272,7 +272,7 @@ function versGaucheListeBox()
 
 function versDroiteListeBox()
 {
-    if (document.getElementById('b1').offsetLeft % 207 == 0) 
+    if (document.getElementById('b1') != undefined && document.getElementById('b1').offsetLeft % 207 == 0) 
     {
         if (document.getElementById('b1').offsetLeft < 0)
         {
