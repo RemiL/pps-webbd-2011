@@ -9,6 +9,8 @@
     width: 20%;
     padding: 3px;
     border: 1px #AAAAAA solid;
+    padding-left: 0px;
+    padding-right: 0px;
 }
 
 #calendarDay
@@ -20,17 +22,21 @@
 .previousDay
 {
     float: left;
+    margin-left: 4px;
 }
 
 .nextDay
 {
     float: right;
+    margin-right: 4px;
 }
 
 #calendarAgenda
 {
     position: relative;
     height: 720px;
+    margin: 0px;
+    padding: 0px;
 }
 
 .tacheCalendar
@@ -38,6 +44,17 @@
     border: 1px #AAAAAA solid;
     box-shadow: 1px 1px 1px #888;
     position: absolute;
+    margin-left: 4px;
+    margin-right: 4px;
+}
+
+#calendarNowMarker
+{
+    position: absolute;
+    background-color: red;
+    width: 100%;
+    height: 1px;
+    opacity: 0.5;
 }
 
 #main

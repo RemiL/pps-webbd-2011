@@ -111,6 +111,8 @@ function remplirCalendrier(root)
             calendrier.appendChild(tache);
         }
     }
+    
+    showNowMarker(dayOffset == 0);
 }
 
 function loadDay(step)
@@ -120,4 +122,26 @@ function loadDay(step)
     day.setDate(day.getDate() + dayOffset);
     document.getElementById('calendarDay').innerHTML = day.toLocaleDateString();
     getEvenementsDuJour(dayOffset, remplirCalendrier);
+}
+
+function showNowMarker(show)
+{
+    if (show)
+    {
+        var calendarNowMarker = document.createElement('div');
+        calendarNowMarker.id = 'calendarNowMarker';
+        document.getElementById("calendarAgenda").appendChild(calendarNowMarker);
+        
+        updateNowMarker();
+        setInterval(updateNowMarker, 30000);
+    }
+    else
+        clearInterval(updateNowMarker, 30000);
+}
+
+function updateNowMarker()
+{
+    var now = new Date();
+    
+    document.getElementById('calendarNowMarker').style.top = (now.getHours()*60 + now.getMinutes()) / 2 + 'px';
 }
