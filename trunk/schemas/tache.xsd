@@ -1,0 +1,28 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:element name="task">
+  <xs:complexType>
+    <xs:sequence>
+      <xs:element name="description" type="xs:string" />
+      <xs:element name="dependancy" type="xs:string" />
+      <xs:element name="priority">
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1" />
+            <xs:maxInclusive value="5" />
+          </xs:restriction>
+        </xs:simpleType>
+        </xs:element>
+        <xs:element name="activities">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="activity" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:element>
+
+</xs:schema>
