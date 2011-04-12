@@ -161,6 +161,6 @@ Calendar.prototype =
     dateSelected: function(date)
     {
         $("#calendarDatePicker").hide();
-        this.loadDay(Math.ceil((new Date(date) - new Date()) / (24 * 3600 * 1000)));
+        this.loadDay(Math.ceil((new Date(date) - new Date()) / (24 * 3600 * 1000)) - this.dayOffset);
     }
 }
