@@ -155,7 +155,7 @@ Calendar.prototype =
     showDatePicker: function(e)
     {
         e.stopPropagation();
-        $("#calendarDatePicker").show().css({'left':e.clientX, 'top':e.clientY}).setDefaultDate(this.dayOffset);
+        $("#calendarDatePicker").show().css({'left':e.clientX, 'top':e.clientY}).datepicker('setDate', this.dayOffset);
     },
 
     dateSelected: function(date)
