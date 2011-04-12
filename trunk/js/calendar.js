@@ -12,6 +12,10 @@ function Calendar()
     // Marqueur d'heure courante
     this.calendarNowMarker = document.createElement('div');
     this.calendarNowMarker.id = 'calendarNowMarker';
+    
+    $("#calendarDatePicker").datepicker({'onSelect': bind(this.dateSelected, this)}).hide().click(function(e) { e.stopPropagation(); });
+    $("#calendarDay").click(bind(this.showDatePicker, this));
+    $("body").click(function() { $("#calendarDatePicker").hide(); });
 }
 
 Calendar.prototype =
@@ -146,5 +150,17 @@ Calendar.prototype =
         var now = new Date();
         
         this.calendarNowMarker.style.top = (now.getHours()*60 + now.getMinutes()) / 2 + 'px';
+    },
+
+    showDatePicker: function(e)
+    {
+        e.stopPropagation();
+        $("#calendarDatePicker").show().css({'left':e.clientX, 'top':e.clientY}).setDefaultDate(this.dayOffset);
+    },
+
+    dateSelected: function(date)
+    {
+        $("#calendarDatePicker").hide();
+        this.loadDay(Math.ceil((new Date(date) - new Date()) / (24 * 3600 * 1000)));
     }
 }
