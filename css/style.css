@@ -19,6 +19,12 @@
     height: 24px;
 }
 
+#calendarDatePicker
+{
+    position: fixed;
+    z-index: 3;
+}
+
 .previousDay
 {
     float: left;
