@@ -16,8 +16,8 @@ function confirmerPostit()
     if(document.getElementById('nouveauTextePostit') != null)
     {
         var text = document.getElementById('nouveauTextePostit').value;
-        if(text != "")
-        {
+        if (text != "")
+        {            
             var zone = document.getElementById('nouveauTextePostit').parentNode;
             zone.removeChild(document.getElementById('nouveauTextePostit'));
             zone.removeChild(document.getElementById('collerPostit'));
@@ -27,6 +27,14 @@ function confirmerPostit()
             deriver.className = 'ui-icon ui-icon-document';
             deriver.onclick = function() { deriverPostitTache(zone.parentNode.id); };
             zone.parentNode.firstChild.appendChild(deriver);
+
+            var postit = document.getElementById('panneauPostit').lastChild;
+            var hauteur = 750;
+            var y = postit.offsetTop + postit.offsetHeight;
+            if (y > hauteur)
+            {
+                postit.style.top = hauteur - postit.offsetHeight + "px";
+            }
         }
         else
         {
@@ -42,6 +50,7 @@ function addPostit(event)
     var y = event.pageY;
     var x = event.pageX;
     var largeur = document.body.clientWidth - 4;
+    var hauteur = 748;
     var postit = document.createElement('div');
     postit.id = 'p' + nbPostit;
     postit.className = 'postit ui-corner-all';    
@@ -50,26 +59,26 @@ function addPostit(event)
     {
         postit.style.top = 0 + "px";
     }
-    else if(y > 724 - 150 /2)
+    else if(y > hauteur - 150 /2)
     {
-        postit.style.top = 724 - 150 + "px";
+        postit.style.top = hauteur - 150 + "px";
     }
     else
     {
         postit.style.top = event.pageY - 8 - 150/2 + "px";
     }
     
-    if(x < 150/2)
+    if(x < 200/2)
     {
         postit.style.left = 0 + "px";
     }
-    else if(x > largeur - 150/2)
+    else if(x > largeur - 200/2)
     {
-        postit.style.left = largeur - 150 + "px";
+        postit.style.left = largeur - 200 + "px";
     }
     else
     {
-        postit.style.left = event.pageX - 8 - 150/2 + "px";
+        postit.style.left = event.pageX - 8 - 200/2 + "px";
     }
     
     var options = document.createElement('div');
