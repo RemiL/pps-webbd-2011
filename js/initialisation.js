@@ -132,19 +132,17 @@ function afficherCacherPanneauPostit()
         panneauPostitOuvert = false;
         $("#afficherPostit").button( "option", "icons", {primary:'ui-icon-circle-triangle-n'} );
     }
-}    
+}
 
-function addTab()
+function addTab() 
 {
     var index = $("#action").tabs( "length" );
     var ajouterOnglet = document.getElementById('ajouterOnglet');
     document.getElementById('listeOnglets').removeChild(ajouterOnglet);
 
-    $("#action").tabs("add", "#newTask" + index, 'New task', index);
+    $("#action").tabs('add', 'test.html', 'New task');
     $("#action").tabs( "select" ,  index );
-    
-    document.getElementById('newTask'+index).appendChild(document.createTextNode('New task'+index))
-    
+
     ajouterOnglet.className = 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only';
     document.getElementById('listeOnglets').appendChild(ajouterOnglet);
 }
