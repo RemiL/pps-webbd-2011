@@ -6,8 +6,15 @@
       <xs:element name="title" type="xs:string" />
       <xs:element name="beginDate" type="xs:dateTime" />
       <xs:element name="endDate" type="xs:dateTime" />
-      <xs:element name="description" type="xs:string" />
       <xs:element name="location" type="xs:string" />
+      <xs:element name="priority">
+        <xs:simpleType>
+          <xs:restriction base="xs:integer">
+            <xs:minInclusive value="1" />
+            <xs:maxInclusive value="5" />
+          </xs:restriction>
+        </xs:simpleType>
+      </xs:element>
       <xs:element name="dependancies">
         <xs:complexType>
           <xs:sequence>
@@ -22,21 +29,14 @@
           </xs:sequence>
         </xs:complexType>
       </xs:element>
-      <xs:element name="priority">
-        <xs:simpleType>
-          <xs:restriction base="xs:integer">
-            <xs:minInclusive value="1" />
-            <xs:maxInclusive value="5" />
-          </xs:restriction>
-        </xs:simpleType>
-        </xs:element>
-        <xs:element name="activities">
-          <xs:complexType>
-            <xs:sequence>
-              <xs:element name="activity" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
-            </xs:sequence>
-          </xs:complexType>
-        </xs:element>
+      <xs:element name="activities">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="activity" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="description" type="xs:string" />
     </xs:sequence>
 </xs:complexType>
 

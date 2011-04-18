@@ -149,7 +149,7 @@ function addTab()
     var ajouterOnglet = document.getElementById('ajouterOnglet');
     document.getElementById('listeOnglets').removeChild(ajouterOnglet);
 
-    $("#action").tabs('add', 'test.html', 'New task');
+    $("#action").tabs('add', 'inc/taskEditor.html', 'New task');
     $("#action").tabs( "select" ,  index );
 
     ajouterOnglet.className = 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only';
