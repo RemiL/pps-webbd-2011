@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:include schemaLocation="task.xsd" />
+
+<xs:complexType name="taskDoc">
+  <xs:complexContent>
+    <xs:extension base="task">
+      <xs:sequence>
+        <xs:element name="document">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="content" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:element name="task" type="taskDoc" />
+
+</xs:schema>
