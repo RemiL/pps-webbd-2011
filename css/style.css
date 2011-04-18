@@ -6,11 +6,12 @@
 
 #calendar
 {
-    width: 20%;
+    width: 275px;
     padding: 3px;
     border: 1px #AAAAAA solid;
     padding-left: 0px;
     padding-right: 0px;
+    float: left;
 }
 
 #calendarDay
@@ -65,9 +66,7 @@
 
 #main
 {
-    height: 91%;
-    width: 79%;
-    float: right;
+    margin-left: 285px;
 }
 
 #header
@@ -88,12 +87,6 @@
     margin-left: 69%;
     height: 100px;
     border: 1px #AAAAAA solid;
-}
-
-#corps
-{
-    width: 100%;
-    clear: both;
 }
 
 #box
@@ -214,17 +207,23 @@
     height: 364px;
 }
 
+#listeOnglets
+{
+    height: 35px;
+    overflow: hidden;
+}
+
 .fermerOnglet
 {
-    float: right;
+    margin-right: 5px;
     margin-top: 8px;
-    margin-right: 8px;
+    float: right;
 }
 
 .titreOnglet
 {
     overflow: hidden;
-    min-width: 200px;
+    width: 200px;
 }
 
 #ajouterOnglet
