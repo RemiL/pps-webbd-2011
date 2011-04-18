@@ -232,6 +232,24 @@
     margin-top: 7px;
 }
 
+.taskEditor label
+{
+    display: block;
+    float: left;
+    width: 10em;
+}
+
+.taskEditor .description
+{
+    margin-left: 10em;
+    border: 1px #AAAAAA solid;
+}
+
+.description textarea
+{
+    width: 100%;
+}
+
 #afficherPostit
 {
     clear: both;
