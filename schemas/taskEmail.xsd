@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:include schemaLocation="task.xsd" />
+
+<xs:complexType name="taskEmail">
+  <xs:complexContent>
+    <xs:extension base="task">
+      <xs:sequence>
+        <xs:element name="email">
+          <xs:complexType>
+            <xs:sequence>
+              <xs:element name="recipients">
+                <xs:complexType>
+                  <xs:sequence>
+                    <xs:element name="recipient" type="xs:string" minOccurs="0" maxOccurs="unbounded" />
+                  </xs:sequence>
+                </xs:complexType>
+              </xs:element>
+              <xs:element name="object" type="xs:string" />
+              <xs:element name="body" type="xs:string" />
+            </xs:sequence>
+          </xs:complexType>
+        </xs:element>
+      </xs:sequence>
+    </xs:extension>
+  </xs:complexContent>
+</xs:complexType>
+
+<xs:element name="task" type="taskEmail" />
+
+</xs:schema>

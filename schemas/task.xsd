@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-<xs:element name="task">
-  <xs:complexType>
+<xs:complexType name="task">
     <xs:sequence>
       <xs:element name="description" type="xs:string" />
       <xs:element name="dependancy" type="xs:string" />
@@ -22,7 +21,8 @@
           </xs:complexType>
         </xs:element>
     </xs:sequence>
-  </xs:complexType>
-</xs:element>
+</xs:complexType>
+
+<xs:element name="task" type="task" />
 
 </xs:schema>
