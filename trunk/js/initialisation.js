@@ -1,12 +1,13 @@
-﻿$(function() { 
-            $("#action").tabs({ tabTemplate: '<li>#{label}</li>' });
-            $("#afficherPostit").button({ icons: {primary:'ui-icon-circle-triangle-n'}, text: false });
-            $("#ajouterOnglet").button({ icons: {primary:'ui-icon-plusthick'}, text: false });
-            $("#ajouterOnglet").click(function() { addTab(); });
-            $("#afficherPostit").click(function() { afficherCacherPanneauPostit(); });
-            $( "#p1" ).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
-            $( "#panneauPostit" ).dblclick(function(event) { addPostit(event); });
-        });
+﻿$(function () {
+    var tab_counter = 0;
+    $("#action").tabs({ closable: true, tabTemplate: '<li><a class="titreOnglet" href="#{href}">#{label}</a></li>' });
+    $("#afficherPostit").button({ icons: {primary:'ui-icon-circle-triangle-n'}, text: false });
+    $("#ajouterOnglet").button({ icons: {primary:'ui-icon-plusthick'}, text: false });
+    $("#ajouterOnglet").click(function() { addTab(); });
+    $("#afficherPostit").click(function() { afficherCacherPanneauPostit(); });
+    $("#p1").draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
+    $("#panneauPostit").dblclick(function (event) { addPostit(event); });
+});
 
 var panneauPostitOuvert = false;
 var nbPostit = 1;
@@ -139,25 +140,14 @@ function addTab()
     var index = $("#action").tabs( "length" );
     var ajouterOnglet = document.getElementById('ajouterOnglet');
     document.getElementById('listeOnglets').removeChild(ajouterOnglet);
-    
-    $("#action").tabs( "add" , "#newTask"+index, '<div id="i' + index + '" class="fermerOnglet" onclick="fermerOnglet(this);"><span class="ui-icon ui-icon-closethick"></span></div><a href="#newTask' + index + '" class="titreOnglet" title="New task">New task</a>', index );
+
+    $("#action").tabs("add", "#newTask" + index, 'New task', index);
     $("#action").tabs( "select" ,  index );
     
     document.getElementById('newTask'+index).appendChild(document.createTextNode('New task'+index))
     
     ajouterOnglet.className = 'ui-button ui-widget ui-state-default ui-corner-all ui-button-icon-only';
     document.getElementById('listeOnglets').appendChild(ajouterOnglet);
-}
-
-function fermerOnglet(onglet)
-{
-    var index = Number(onglet.id.substring(1, onglet.id.length));
-    for(var i=index+1; i<$( "#action" ).tabs( "length" ); i++)
-    {
-        document.getElementById('i'+i).id = 'i' + (i - 1);
-    }
-
-    $( "#action" ).tabs( "remove" , index );
 }
 
 function ajouterTacheBox(box)
@@ -167,82 +157,96 @@ function ajouterTacheBox(box)
 
 function supprimerBox(box) 
 {
-    var index = Number(box.id.substring(1, box.id.length));
+    if (box.offsetLeft % 207 == 0) 
+    {
+        var index = Number(box.id.substring(1, box.id.length));
 
-    if (document.getElementById('b1').offsetLeft < 0) 
-    {
-        index--;
-    }
-    else
-    {
-        index++;
-    }
-
-    if (document.getElementById('b' + index) != null)
-    {
-        if (index < Number(box.id.substring(1, box.id.length)))
+        if (document.getElementById('b1').offsetLeft < 0) 
         {
-            while (index > 0)
-            {
-                $("#b" + index).animate({ marginLeft: '+=207px' }, 'slow');
-                index--;
-            }
+            index--;
         }
         else 
         {
-            while (document.getElementById('b' + index) != null) 
+            index++;
+        }
+
+        if (document.getElementById('b' + index) != null) 
+        {
+            if (index < Number(box.id.substring(1, box.id.length))) 
             {
-                $("#b" + index).animate({ marginLeft: '-=207px' }, 'slow');
-                index++;
+                while (index > 0) 
+                {
+                    $("#b" + index).animate({ marginLeft: '+=207px' }, 'slow');
+                    index--;
+                }
+            }
+            else {
+                while (document.getElementById('b' + index) != null) 
+                {
+                    $("#b" + index).animate({ marginLeft: '-=207px' }, 'slow');
+                    index++;
+                }
             }
         }
-    }
 
-    index = Number(box.id.substring(1, box.id.length)) + 1;
-    while (document.getElementById('b' + index) != null) 
-    {
-        document.getElementById('b' + index).id = 'b' + (index - 1);
-        index++;
-    }
+        index = Number(box.id.substring(1, box.id.length)) + 1;
+        while (document.getElementById('b' + index) != null) 
+        {
+            document.getElementById('b' + index).id = 'b' + (index - 1);
+            index++;
+        }
 
-    document.getElementById("listeBox").removeChild(box);
+        document.getElementById("listeBox").removeChild(box);
+    }
 }
 
-function boxVersHaut(box)
+function boxVersHaut(box) 
 {
-    alert("tache box vers haut " + box.id);
+    if (box.offsetLeft % 207 == 0) 
+    {
+        alert("tache box vers haut " + box.id);
+    }
 }
 
 function boxVersBas(box)
 {
-    alert("tache box vers bas " + box.id);
-}
-
-function boxVersGauche(box)
-{
-    var index = Number(box.id.substring(1, box.id.length)) - 1;
-    if(document.getElementById('b'+index) != null)
+    if (box.offsetLeft % 207 == 0) 
     {
-        box.style.zIndex = 2;
-        $( "#"+box.id ).animate({marginLeft: '-=207px'}, 'slow');
-        document.getElementById('b'+index).style.zIndex = 1;
-        $( "#b" + index ).animate({marginLeft: '+=207px'}, 'slow');
-        document.getElementById('b'+index).id = box.id;
-        box.id = 'b' + index;
+        alert("tache box vers bas " + box.id);
     }
 }
 
-function boxVersDroite(box)
-{    
-    var index = Number(box.id.substring(1, box.id.length)) + 1;
-    if(document.getElementById('b'+index) != null)
+function boxVersGauche(box) 
+{
+    if (box.offsetLeft % 207 == 0)
     {
-        box.style.zIndex = 2;
-        $( "#"+box.id ).animate({marginLeft: '+=207px'}, 'slow');
-        document.getElementById('b'+index).style.zIndex = 1;
-        $( "#b" + index ).animate({marginLeft: '-=207px'}, 'slow');
-        document.getElementById('b'+index).id = box.id;
-        box.id = 'b' + index;
+        var index = Number(box.id.substring(1, box.id.length)) - 1;
+        if(document.getElementById('b'+index) != null)
+        {
+            box.style.zIndex = 2;
+            $( "#"+box.id ).animate({marginLeft: '-=207px'}, 'slow');
+            document.getElementById('b'+index).style.zIndex = 1;
+            $( "#b" + index ).animate({marginLeft: '+=207px'}, 'slow');
+            document.getElementById('b'+index).id = box.id;
+            box.id = 'b' + index;
+        }
+    }
+}
+
+function boxVersDroite(box) 
+{
+    if (box.offsetLeft % 207 == 0) 
+    {
+        var index = Number(box.id.substring(1, box.id.length)) + 1;
+        if (document.getElementById('b' + index) != null) 
+        {
+            box.style.zIndex = 2;
+            $("#" + box.id).animate({ marginLeft: '+=207px' }, 'slow');
+            document.getElementById('b' + index).style.zIndex = 1;
+            $("#b" + index).animate({ marginLeft: '-=207px' }, 'slow');
+            document.getElementById('b' + index).id = box.id;
+            box.id = 'b' + index;
+        }
     }
 }
 
@@ -250,20 +254,13 @@ function versGaucheListeBox()
 {
     if (document.getElementById('b1') != undefined && document.getElementById('b1').offsetLeft % 207 == 0)
     {
-        var index = 1;
-
-        while(document.getElementById('b' + index) != null) 
+        if (document.getElementById('b1').offsetLeft < 0) 
         {
-            index++;
-        }
+            var index = 1;
 
-        if (document.getElementById('b' + (index - 1)).offsetLeft + 200 > document.getElementById('listeBox').offsetWidth)
-        {
-            index = 1;
-
-            while(document.getElementById('b' + index) != null)
+            while (document.getElementById('b' + index) != null) 
             {
-                $("#b" + index).animate({ marginLeft: '-=207px' }, 'slow');
+                $("#b" + index).animate({ marginLeft: '+=207px' }, 'slow');
                 index++;
             }
         }
@@ -274,13 +271,20 @@ function versDroiteListeBox()
 {
     if (document.getElementById('b1') != undefined && document.getElementById('b1').offsetLeft % 207 == 0) 
     {
-        if (document.getElementById('b1').offsetLeft < 0)
+        var index = 1;
+
+        while (document.getElementById('b' + index) != null) 
         {
-            var index = 1;
+            index++;
+        }
+
+        if (document.getElementById('b' + (index - 1)).offsetLeft + 200 > document.getElementById('listeBox').offsetWidth) 
+        {
+            index = 1;
 
             while (document.getElementById('b' + index) != null) 
             {
-                $("#b" + index).animate({ marginLeft: '+=207px' }, 'slow');
+                $("#b" + index).animate({ marginLeft: '-=207px' }, 'slow');
                 index++;
             }
         }
