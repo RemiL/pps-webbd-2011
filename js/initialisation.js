@@ -1,5 +1,4 @@
 ﻿$(function () {
-    var tab_counter = 0;
     $("#action").tabs({ closable: true, tabTemplate: '<li><a class="titreOnglet" href="#{href}">#{label}</a></li>' });
     $("#afficherPostit").button({ icons: {primary:'ui-icon-circle-triangle-n'}, text: false });
     $("#ajouterOnglet").button({ icons: {primary:'ui-icon-plusthick'}, text: false });
@@ -152,7 +151,10 @@ function addTab()
 
 function ajouterTacheBox(box)
 {
-    alert("ajouter tache box " + box.id);
+    if (box.offsetLeft % 207 == 0)
+    {
+        alert("ajouter tache box " + box.id);
+    }
 }
 
 function supprimerBox(box) 
