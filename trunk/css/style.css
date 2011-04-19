@@ -7,11 +7,21 @@
 #calendar
 {
     width: 275px;
-    padding: 3px;
     border: 1px #AAAAAA solid;
     padding-left: 0px;
     padding-right: 0px;
     float: left;
+}
+
+#calendarHeader
+{
+    padding-top: 4px;
+    margin: 3px
+}
+
+.calendarCursorHeader
+{
+    cursor: pointer;
 }
 
 #calendarDay
@@ -38,11 +48,26 @@
     margin-right: 4px;
 }
 
+#calendarTime
+{
+    float: left;
+    width: 50px;
+    height: 720px;
+}
+
+.calendarTimeHour
+{
+    height: 29px;
+    border-top: 1px solid #AAAAAA;
+    text-align: right;
+}
+
 #calendarAgenda
 {
     position: relative;
-    height: 720px;
+    height: 724px;
     margin: 0px;
+    margin-left: 50px;
     padding: 0px;
 }
 
@@ -204,7 +229,7 @@
 
 #action
 {
-    height: 364px;
+    height: 374px;
 }
 
 #listeOnglets
@@ -262,7 +287,7 @@
 {
     position: absolute;
     background-color: rgba(255,255,255,0.90);
-    height: 750px;
+    height: 760px;
     top: 8px;
     right: 8px;
     left: 8px;
