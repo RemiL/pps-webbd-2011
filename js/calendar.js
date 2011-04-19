@@ -25,7 +25,7 @@ Calendar.prototype =
         this.calendarService = new google.gdata.calendar.CalendarService('PPS-OneThingAtATime-0.01');
         
         if (google.accounts.user.getStatus(this.scope) == google.accounts.AuthSubStatus.LOGGED_OUT)
-            var token = google.accounts.user.login(scope);
+            var token = google.accounts.user.login(this.scope);
     },
     
     // Gestionnaire d'erreur

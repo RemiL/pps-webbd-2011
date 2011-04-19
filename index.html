@@ -32,10 +32,38 @@
         </div>
     </div>
     <div id="calendar" class="ui-corner-all">
-        <span class="previousDay ui-icon ui-icon-circle-arrow-w" onclick="calendar.loadDay(-1);"></span>
-        <span class="nextDay ui-icon ui-icon-circle-arrow-e" onclick="calendar.loadDay(+1);"></span>
-        <div id="calendarDatePicker"></div>
-        <div id="calendarDay"></div>
+        <div id="calendarHeader" class="ui-widget-header ui-helper-clearfix ui-corner-all">
+            <span class="previousDay ui-icon ui-icon-circle-triangle-w calendarCursorHeader" onclick="calendar.loadDay(-1);"></span>
+            <span class="nextDay ui-icon ui-icon-circle-triangle-e calendarCursorHeader" onclick="calendar.loadDay(+1);"></span>
+            <div id="calendarDatePicker"></div>
+            <div id="calendarDay" class="calendarCursorHeader"></div>
+        </div>
+        <div id="calendarTime">
+            <div class="calendarTimeHour">00:00</div>
+            <div class="calendarTimeHour">01:00</div>
+            <div class="calendarTimeHour">02:00</div>
+            <div class="calendarTimeHour">03:00</div>
+            <div class="calendarTimeHour">04:00</div>
+            <div class="calendarTimeHour">05:00</div>
+            <div class="calendarTimeHour">06:00</div>
+            <div class="calendarTimeHour">07:00</div>
+            <div class="calendarTimeHour">08:00</div>
+            <div class="calendarTimeHour">09:00</div>
+            <div class="calendarTimeHour">10:00</div>
+            <div class="calendarTimeHour">11:00</div>
+            <div class="calendarTimeHour">12:00</div>
+            <div class="calendarTimeHour">13:00</div>
+            <div class="calendarTimeHour">14:00</div>
+            <div class="calendarTimeHour">15:00</div>
+            <div class="calendarTimeHour">16:00</div>
+            <div class="calendarTimeHour">17:00</div>
+            <div class="calendarTimeHour">18:00</div>
+            <div class="calendarTimeHour">19:00</div>
+            <div class="calendarTimeHour">20:00</div>
+            <div class="calendarTimeHour">21:00</div>
+            <div class="calendarTimeHour">22:00</div>
+            <div class="calendarTimeHour">23:00</div>
+        </div>
         <div id="calendarAgenda"></div>
     </div>
     <div id="main">
