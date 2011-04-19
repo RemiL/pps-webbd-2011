@@ -2,19 +2,27 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="fr" xml:lang="fr" >
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <title>TITRE</title>
+    <title>One Thing At a Time</title>
     <script type="text/javascript" src="http://www.google.com/jsapi"></script>
     <script type="text/javascript" src="js/jquery/jquery-ui-1.8.11.custom/js/jquery-1.5.1.min.js"></script>
     <script type="text/javascript" src="js/jquery/jquery-ui-1.8.11.custom/js/jquery-ui-1.8.11.custom.min.js"></script>
     <script type="text/javascript" src="js/jquery/andrewwatts-ui.tabs.closable-9fe89a8/ui.tabs.closable.js"></script>
     <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/initialisation.js"></script>
+    <script type="text/javascript" src="js/calendarService.js"></script>
     <script type="text/javascript" src="js/calendar.js"></script>
     <script type="text/javascript">
-        var calendar;
+        var calendarService, calendar;
         
-        google.load("gdata", "2.s");
-        google.setOnLoadCallback(function () { calendar = new Calendar(); calendar.loadDay(0); });
+        function onLoadCallback()
+        {
+            calendarService = new CalendarService();
+            calendar = new Calendar(calendarService);
+            calendar.loadDay(0);
+        }
+        
+        google.load('gdata', '2.s');
+        google.setOnLoadCallback(onLoadCallback);
     </script>
     <link rel="stylesheet" media="screen" type="text/css" href="js/jquery/jquery-ui-1.8.11.custom/css/custom-theme/jquery-ui-1.8.11.custom.css" />
     <link rel="stylesheet" media="screen" type="text/css" href="css/style.css" />

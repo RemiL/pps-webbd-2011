@@ -1,9 +1,8 @@
-function Calendar()
+function Calendar(_calendarService)
 {
-    this.scope = 'https://www.google.com/calendar/feeds/';
-    this.calendarService = null;
+    this.calendarService = _calendarService;
     // On veut récupérer tous les événements depuis le calendrier par défaut
-    this.feedUri = "https://www.google.com/calendar/feeds/default/private/full";
+    this.feedUri = 'https://www.google.com/calendar/feeds/default/private/full';
     this.dayOffset = 0;
     // Element HTML correspondant au calendrier dans la page
     this.calendarAgenda = document.getElementById('calendarAgenda');
@@ -13,21 +12,13 @@ function Calendar()
     this.calendarNowMarker = document.createElement('div');
     this.calendarNowMarker.id = 'calendarNowMarker';
     
-    $("#calendarDatePicker").datepicker({'onSelect': bind(this.dateSelected, this)}).hide().click(function(e) { e.stopPropagation(); });
-    $("#calendarDay").click(bind(this.showDatePicker, this));
-    $("body").click(function() { $("#calendarDatePicker").hide(); });
+    $('#calendarDatePicker').datepicker({'onSelect': bind(this.dateSelected, this)}).hide().click(function(e) { e.stopPropagation(); });
+    $('#calendarDay').click(bind(this.showDatePicker, this));
+    $('body').click(function() { $('#calendarDatePicker').hide(); });
 }
 
 Calendar.prototype =
 {
-    connect: function()
-    {
-        this.calendarService = new google.gdata.calendar.CalendarService('PPS-OneThingAtATime-0.01');
-        
-        if (google.accounts.user.getStatus(this.scope) == google.accounts.AuthSubStatus.LOGGED_OUT)
-            var token = google.accounts.user.login(this.scope);
-    },
-    
     // Gestionnaire d'erreur
     gestErreur: function(erreur)
     {
@@ -36,9 +27,7 @@ Calendar.prototype =
 
     getEvenements: function()
     {
-        this.connect();
-        
-        if (google.accounts.user.getStatus(this.scope) == google.accounts.AuthSubStatus.LOGGED_IN)
+        if (this.calendarService.isLoggedIn())
         {
             // Préparation de la requête
             var query = new google.gdata.calendar.CalendarEventQuery(this.feedUri);
@@ -62,7 +51,7 @@ Calendar.prototype =
             query.setMaximumStartTime(google.gdata.DateTime.toIso8601(startMax));
             
             // Envoi de la requête
-            this.calendarService.getEventsFeed(query, bind(this.remplir, this), this.gestErreur);
+            this.calendarService.getService().getEventsFeed(query, bind(this.remplir, this),  bind(this.gestErreur, this));
         }
     },
 
@@ -102,7 +91,7 @@ Calendar.prototype =
                 
                 tache = document.createElement('div');
                 
-                tache.className = "tacheCalendar ui-corner-all";
+                tache.className = 'tacheCalendar ui-corner-all';
                 // On calcule le placement à partir du nombre de minutes depuis minuit (1 pixel = 2 minutes)
                 tache.style.top = (entree.getTimes()[0].getStartTime().getDate().getHours()*60 + entree.getTimes()[0].getStartTime().getDate().getMinutes()) / 2 + 'px';
                 // On calcule la hauteur à partir de la durée
@@ -155,12 +144,12 @@ Calendar.prototype =
     showDatePicker: function(e)
     {
         e.stopPropagation();
-        $("#calendarDatePicker").show().css({'left':e.clientX, 'top':e.clientY}).datepicker('setDate', this.dayOffset);
+        $('#calendarDatePicker').show().css({'left':e.clientX, 'top':e.clientY}).datepicker('setDate', this.dayOffset);
     },
 
     dateSelected: function(date)
     {
-        $("#calendarDatePicker").hide();
+        $('#calendarDatePicker').hide();
         this.loadDay(Math.ceil((new Date(date) - new Date()) / (24 * 3600 * 1000)) - this.dayOffset);
     }
 }
