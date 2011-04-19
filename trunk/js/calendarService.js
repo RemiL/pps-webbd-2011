@@ -1,0 +1,55 @@
+/*
+Surcouche pour l'objet de l'API Google du même nom.
+*/
+function CalendarService(autoconnect)
+{
+    // Objet de l'API Google
+    this.calendarService = null;
+    this.scope = 'https://www.google.com/calendar/feeds/';
+    this.appName = 'PPS-OneThingAtATime-0.01';
+    this.feedUri = 'https://www.google.com/calendar/feeds/default/owncalendars/full';
+    this.userId = null;
+    
+    if (autoconnect == true || autoconnect == undefined)
+        this.connect();
+}
+
+CalendarService.prototype =
+{
+    connect: function()
+    {
+        this.calendarService = new google.gdata.calendar.CalendarService(this.appName);
+        
+        if (google.accounts.user.getStatus(this.scope) == google.accounts.AuthSubStatus.LOGGED_OUT)
+            var token = google.accounts.user.login(this.scope);
+        else
+            this.calendarService.getOwnCalendarsFeed(this.feedUri, bind(this.setUserId, this), bind(this.gestErreur, this));
+    },
+    
+    setUserId: function(root)
+    {
+        this.userId = root.feed.getEntries()[0].getId().getValue().replace('%40', '@');
+        this.userId = this.userId.substring(this.userId.lastIndexOf('/')+1, this.userId.length);
+    },
+    
+    getUserId: function()
+    {
+        return this.userId;
+    },
+    
+    isLoggedIn: function()
+    {
+        return (google.accounts.user.getStatus(this.scope) == google.accounts.AuthSubStatus.LOGGED_IN);
+    },
+    
+    getService: function()
+    {
+        return this.calendarService;
+    },
+    
+    // Gestionnaire d'erreur
+    gestErreur: function(erreur)
+    {
+        alert(erreur);
+    }
+}
