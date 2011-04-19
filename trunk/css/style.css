@@ -65,6 +65,7 @@
 
 #calendarAgenda
 {
+    width: 225px;
     position: relative;
     height: 724px;
     margin: 0px;
@@ -79,6 +80,15 @@
     position: absolute;
     margin-left: 4px;
     margin-right: 4px;
+    width: 216px;
+    background-color: #E2E2E2;
+}
+
+.titreTacheCalendar
+{
+    height: 18px;
+    font-weight: bold; 
+    overflow: hidden;
 }
 
 #calendarNowMarker
@@ -118,15 +128,15 @@
 #box
 {
     margin-bottom: 10px;
-    height: 250px;
+    height: 248px;
     border: 1px #AAAAAA solid;
 }
 
 #hautListeBox
 {
     height: 35px;
-    margin-left: 5px;
-    margin-right: 5px;
+    margin-left: 3px;
+    margin-right: 3px;
     margin-top: 3px;
     margin-bottom: 3px;
 }
@@ -134,6 +144,8 @@
 #flechesDeplacementBox
 {
     float: left;
+    margin-top: 9px;
+    margin-left: 3px;
 }
 
 .versGaucheListeBox
@@ -146,12 +158,19 @@
     margin-left: 20px;
 }
 
+#triTaches
+{
+    float: right;
+    margin-top: 8px;
+    margin-right: 3px;
+}
+
 #listeBox
 {
     height: 209px;
     overflow: hidden;
     position: relative;
-    margin-left: 5px;
+    margin-left: 3px;
 }
 
 .box
@@ -212,6 +231,20 @@
     margin-top: 3px;
     height: 35px;
     padding: 2px;
+    overflow: hidden;
+}
+
+.dateTache
+{
+    font-size: 0.7em;   
+}
+
+.titreTache
+{
+    margin-top: 2px;
+    height: 18px;
+    font-weight: bold; 
+    overflow: hidden;
 }
 
 .piedBox
@@ -231,7 +264,7 @@
 
 #action
 {
-    height: 374px;
+    height: 376px;
 }
 
 #listeOnglets
@@ -312,8 +345,8 @@
     position: absolute;
     min-height: 150px;
     width: 200px;
-    border: 1px #EFE332 solid;
-    background-color: #FFF435;
+    border: 1px #AAAAAA solid;
+    background-color: #E2E2E2;
     box-shadow: 2px 2px 2px #888;
     z-index: 20;
 }
@@ -332,7 +365,7 @@
 {
     width: 155px;
     height: 110px;
-    background-color: #FFF47F;
+    background-color: #EBEBEB;
 }
 
 .optionsPostit

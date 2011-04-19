@@ -160,7 +160,7 @@ function ajouterTacheBox(box)
 {
     if (box.offsetLeft % 207 == 0)
     {
-        alert("ajouter tache box " + box.id);
+        addTab();
     }
 }
 
