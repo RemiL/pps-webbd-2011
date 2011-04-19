@@ -27,6 +27,6 @@
   </xs:complexContent>
 </xs:complexType>
 
-<xs:element name="task" type="taskEmail" />
+<xs:element name="taskEmail" type="taskEmail" />
 
 </xs:schema>

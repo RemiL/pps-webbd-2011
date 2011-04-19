@@ -19,6 +19,6 @@
   </xs:complexContent>
 </xs:complexType>
 
-<xs:element name="task" type="taskDoc" />
+<xs:element name="taskDoc" type="taskDoc" />
 
 </xs:schema>
