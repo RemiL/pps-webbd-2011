@@ -20,18 +20,15 @@ function Calendar(_calendarService)
 Calendar.prototype =
 {
     // Gestionnaire d'erreur
-    gestErreur: function(erreur)
-    {
+    gestErreur: function (erreur) {
         alert(erreur);
     },
 
-    getEvenements: function()
-    {
-        if (this.calendarService.isLoggedIn())
-        {
+    getEvenements: function () {
+        if (this.calendarService.isLoggedIn()) {
             // Préparation de la requête
             var query = new google.gdata.calendar.CalendarEventQuery(this.feedUri);
-            
+
             // On souhaite récupérer les événements du jour
             var day_start = new Date();
             day_start.setDate(day_start.getDate() + this.dayOffset);
@@ -49,71 +46,67 @@ Calendar.prototype =
             var startMax = new google.gdata.DateTime(day_end);
             query.setMinimumStartTime(google.gdata.DateTime.toIso8601(startMin));
             query.setMaximumStartTime(google.gdata.DateTime.toIso8601(startMax));
-            
+
             // Envoi de la requête
-            this.calendarService.getService().getEventsFeed(query, bind(this.remplir, this),  bind(this.gestErreur, this));
+            this.calendarService.getService().getEventsFeed(query, bind(this.remplir, this), bind(this.gestErreur, this));
         }
     },
 
-    getHoraire: function(date)
-    {
-        var horaire = date.getHours()+'h';
-        
+    getHoraire: function (date) {
+        var horaire = date.getHours() + 'h';
+
         if (date.getHours() < 10)
-            horaire = '0'+horaire;
+            horaire = '0' + horaire;
         if (date.getMinutes() < 10)
-            horaire = horaire+'0';
-            
-        return horaire+date.getMinutes();
+            horaire = horaire + '0';
+
+        return horaire + date.getMinutes();
     },
 
-    remplir: function(root)
-    {
+    remplir: function (root) {
         // On vide les éventuelles entrées déjà présentes.
         while (this.calendarAgenda.firstChild)
             this.calendarAgenda.removeChild(this.calendarAgenda.firstChild);
-        
+
         // Les entrées à afficher supposées concerner un seul jour.
         var entrees = root.feed.getEntries();
 
-        if (entrees.length > 0)
-        {
+        if (entrees.length > 0) {
             // Une tâche dans le calendrier
             var tache;
             // L'horaire de la tache
             var horaire;
             // Le titre de la tache
             var titre;
-            
-            for (var i = 0; i < entrees.length; i++)
-            {
+
+            for (var i = 0; i < entrees.length; i++) {
                 var entree = entrees[i];
-                
+
                 tache = document.createElement('div');
-                
                 tache.className = 'tacheCalendar ui-corner-all';
                 // On calcule le placement à partir du nombre de minutes depuis minuit (1 pixel = 2 minutes)
-                tache.style.top = (entree.getTimes()[0].getStartTime().getDate().getHours()*60 + entree.getTimes()[0].getStartTime().getDate().getMinutes()) / 2 + 'px';
+                tache.style.top = (entree.getTimes()[0].getStartTime().getDate().getHours() * 60 + entree.getTimes()[0].getStartTime().getDate().getMinutes()) / 2 + 'px';
                 // On calcule la hauteur à partir de la durée
-                tache.style.height = (entree.getTimes()[0].getEndTime().getDate().getTime() - entree.getTimes()[0].getStartTime().getDate().getTime()) / (60*2*1000) + 'px';
-                
+                tache.style.height = (entree.getTimes()[0].getEndTime().getDate().getTime() - entree.getTimes()[0].getStartTime().getDate().getTime()) / (60 * 2 * 1000) - 1 + 'px';
+
                 horaire = document.createElement('div');
-                horaire.innerHTML = this.getHoraire(entree.getTimes()[0].getStartTime().getDate())+' - '+this.getHoraire(entree.getTimes()[0].getEndTime().getDate())+ ' :';
+                horaire.className = 'dateTache';
+                horaire.appendChild(document.createTextNode(this.getHoraire(entree.getTimes()[0].getStartTime().getDate()) + ' - ' + this.getHoraire(entree.getTimes()[0].getEndTime().getDate())));
                 tache.appendChild(horaire);
-                
+
                 titre = document.createElement('div');
-                titre.innerHTML = entree.getTitle().getText();
+                titre.className = 'titreTacheCalendar';
+                titre.appendChild(document.createTextNode(entree.getTitle().getText()));
                 tache.appendChild(titre);
-                
+
                 this.calendarAgenda.appendChild(tache);
             }
         }
-        
+
         this.showNowMarker(this.dayOffset == 0);
     },
 
-    loadDay: function(step)
-    {
+    loadDay: function (step) {
         this.dayOffset += step;
         var day = new Date();
         day.setDate(day.getDate() + this.dayOffset);
@@ -121,12 +114,10 @@ Calendar.prototype =
         this.getEvenements();
     },
 
-    showNowMarker: function(show)
-    {
-        if (show)
-        {
+    showNowMarker: function (show) {
+        if (show) {
             this.calendarAgenda.appendChild(this.calendarNowMarker);
-            
+
             this.updateNowMarker();
             setInterval(bind(this.updateNowMarker, this), 30000);
         }
@@ -134,21 +125,18 @@ Calendar.prototype =
             clearInterval(bind(this.updateNowMarker, this), 30000);
     },
 
-    updateNowMarker: function()
-    {
+    updateNowMarker: function () {
         var now = new Date();
-        
-        this.calendarNowMarker.style.top = (now.getHours()*60 + now.getMinutes()) / 2 + 'px';
+
+        this.calendarNowMarker.style.top = (now.getHours() * 60 + now.getMinutes()) / 2 + 'px';
     },
 
-    showDatePicker: function(e)
-    {
+    showDatePicker: function (e) {
         e.stopPropagation();
-        $('#calendarDatePicker').show().css({'left':e.clientX, 'top':e.clientY}).datepicker('setDate', this.dayOffset);
+        $('#calendarDatePicker').show().css({ 'left': e.clientX, 'top': e.clientY }).datepicker('setDate', this.dayOffset);
     },
 
-    dateSelected: function(date)
-    {
+    dateSelected: function (date) {
         $('#calendarDatePicker').hide();
         this.loadDay(Math.ceil((new Date(date) - new Date()) / (24 * 3600 * 1000)) - this.dayOffset);
     }
