@@ -197,6 +197,7 @@
     margin-right: 3px;
     height: 135px;
     overflow: hidden;
+    position: relative;
 }
 
 .deplacerTacheBox

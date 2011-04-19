@@ -209,23 +209,23 @@ function supprimerBox(box)
     }
 }
 
-function boxVersHaut(box) 
+function boxVersHaut(box)
 {
-    if (box.offsetLeft % 207 == 0) 
+    if (box.offsetLeft % 207 == 0 && Number($("#" + box.id + " .listeTaches").css("marginTop").replace(/px/, '')) % 44 == 0 && Number($("#" + box.id + " .listeTaches").css("marginTop").replace(/px/, '')) < 0)
     {
-        alert("tache box vers haut " + box.id);
+        $("#" + box.id + " .listeTaches").animate({ marginTop: '+=44px' }, 'slow');
     }
 }
 
 function boxVersBas(box)
 {
-    if (box.offsetLeft % 207 == 0) 
+    if (box.offsetLeft % 207 == 0 && Number($("#" + box.id + " .listeTaches").css("marginTop").replace(/px/, '')) % 44 == 0 && ($("#" + box.id + " .listeTaches").height() + Number($("#" + box.id + " .listeTaches").css("marginTop").replace(/px/, ''))) > $("#" + box.id + " .corpsBox").height()) 
     {
-        alert("tache box vers bas " + box.id);
+        $("#" + box.id + " .listeTaches").animate({ marginTop: '-=44px' }, 'slow');
     }
 }
 
-function boxVersGauche(box) 
+function boxVersGauche(box)
 {
     if (box.offsetLeft % 207 == 0)
     {
