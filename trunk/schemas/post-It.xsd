@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+<xs:complexType name="postIt">
+  <xs:sequence>
+    <xs:element name="content" type="xs:string" />
+    <xs:element name="position">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="x" type="xs:nonNegativeInteger" />
+          <xs:element name="y" type="xs:nonNegativeInteger" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    <xs:element name="size">
+      <xs:complexType>
+        <xs:sequence>
+          <xs:element name="width" type="xs:positiveInteger" />
+          <xs:element name="height" type="xs:positiveInteger" />
+        </xs:sequence>
+      </xs:complexType>
+    </xs:element>
+    <xs:element name="color">
+      <xs:simpleType>
+        <xs:restriction base="xs:string">
+          <xs:pattern value="#[a-fA-F0-9]{6}"/>
+        </xs:restriction>
+      </xs:simpleType>
+    </xs:element>
+  </xs:sequence>
+</xs:complexType>
+
+</xs:schema>
