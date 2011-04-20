@@ -11,6 +11,7 @@
     <script type="text/javascript" src="js/initialisation.js"></script>
     <script type="text/javascript" src="js/calendarService.js"></script>
     <script type="text/javascript" src="js/calendar.js"></script>
+    <script type="text/javascript" src="js/task.js"></script>
     <script type="text/javascript">
         var calendarService, calendar;
         
@@ -19,6 +20,9 @@
             calendarService = new CalendarService();
             calendar = new Calendar(calendarService);
             calendar.loadDay(0);
+            
+            Task.prototype.calendarService = calendarService;
+            Task.prototype.tabs = $("#action");
         }
         
         google.load('gdata', '2.s');

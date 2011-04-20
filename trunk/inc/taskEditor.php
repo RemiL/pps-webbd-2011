@@ -1,4 +1,4 @@
-<form name="taskEditor" class="taskEditor">
+<form name="taskEditor" class="taskEditor" <?php if (isset($_GET['id'])) echo "id=\"form_{$_GET['id']}\""; ?>>
   <div>
     <label for="title">Title</label><input name="title" type="text" />
   </div>
@@ -32,4 +32,12 @@
   <div>
     <label for="description">Description</label><div class="description"><textarea name="description"></textarea></div>
   </div>
+<?php
+if (isset($_GET['id']))
+{
+    echo "<script type=\"text/javascript\">";
+    echo "Task.tasks['{$_GET['id']}'].fillEditor();";
+    echo "</script>";
+}
+?>
 </form>

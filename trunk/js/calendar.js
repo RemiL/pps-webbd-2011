@@ -78,9 +78,10 @@ Calendar.prototype =
             var horaire;
             // Le titre de la tache
             var titre;
-
+            
+            var entree, id;
             for (var i = 0; i < entrees.length; i++) {
-                var entree = entrees[i];
+                entree = entrees[i];
 
                 tache = document.createElement('div');
                 tache.className = 'tacheCalendar ui-corner-all';
@@ -98,6 +99,9 @@ Calendar.prototype =
                 titre.className = 'titreTacheCalendar';
                 titre.appendChild(document.createTextNode(entree.getTitle().getText()));
                 tache.appendChild(titre);
+                
+                tache.task = new Task(entree, tache);
+                $(tache).dblclick(function (e) { this.task.showEditor(); });
 
                 this.calendarAgenda.appendChild(tache);
             }
