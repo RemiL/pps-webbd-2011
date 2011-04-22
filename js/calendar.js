@@ -78,7 +78,7 @@ Calendar.prototype =
             var horaire;
             // Le titre de la tache
             var titre;
-            
+
             var entree, id;
             for (var i = 0; i < entrees.length; i++) {
                 entree = entrees[i];
@@ -96,10 +96,23 @@ Calendar.prototype =
                 tache.appendChild(horaire);
 
                 titre = document.createElement('div');
-                titre.className = 'titreTacheCalendar';
+
+                if (tache.style.height.replace(/px/, '') <= 14) {
+                    tache.style.height = '14px';
+                    titre.className = 'titreTacheCalendarFloat';
+                    horaire.className = 'dateTacheFloat';
+                }
+                else if (tache.style.height.replace(/px/, '') < 29) {
+                    titre.className = 'titreTacheCalendarFloat';
+                    horaire.className = 'dateTacheFloat';
+                }
+                else {
+                    titre.className = 'titreTacheCalendar';
+                }
+
                 titre.appendChild(document.createTextNode(entree.getTitle().getText()));
                 tache.appendChild(titre);
-                
+
                 tache.task = new Task(entree, tache);
                 $(tache).dblclick(function (e) { this.task.showEditor(); });
 

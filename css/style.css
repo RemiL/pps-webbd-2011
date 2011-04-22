@@ -82,6 +82,7 @@
     margin-right: 4px;
     width: 216px;
     background-color: #E2E2E2;
+    overflow: hidden;
 }
 
 .titreTacheCalendar
@@ -89,6 +90,20 @@
     height: 18px;
     font-weight: bold; 
     overflow: hidden;
+}
+
+.titreTacheCalendarFloat
+{
+    height: 18px;
+    font-weight: bold; 
+    overflow: hidden;
+    padding-left: 2px;
+}
+
+.dateTacheFloat
+{
+    font-size: 0.7em;
+    float: left;
 }
 
 #calendarNowMarker
