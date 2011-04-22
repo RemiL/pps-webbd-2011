@@ -1,0 +1,51 @@
+body
+{
+    font-size: 0.9em;
+    font-family: Arial, sans-serif;
+}
+
+#calendar
+{
+    width: 275px;
+    border: 1px #AAAAAA solid;
+    padding-left: 0px;
+    padding-right: 0px;
+    float: left;
+}
+
+#main
+{
+    margin-left: 285px;
+}
+
+#header
+{
+    margin-bottom: 10px;
+}
+
+#logo
+{
+    float: left;
+    width: 68%;
+    text-align: center;
+}
+
+#alarm
+{
+    padding: 3px;
+    margin-left: 69%;
+    height: 100px;
+    border: 1px #AAAAAA solid;
+}
+
+#box
+{
+    margin-bottom: 10px;
+    height: 248px;
+    border: 1px #AAAAAA solid;
+}
+
+#action
+{
+    height: 376px;
+}

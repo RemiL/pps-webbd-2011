@@ -91,7 +91,7 @@ Calendar.prototype =
                 tache.style.height = (entree.getTimes()[0].getEndTime().getDate().getTime() - entree.getTimes()[0].getStartTime().getDate().getTime()) / (60 * 2 * 1000) - 1 + 'px';
 
                 horaire = document.createElement('div');
-                horaire.className = 'dateTache';
+                horaire.className = 'dateTacheCalendar';
                 horaire.appendChild(document.createTextNode(this.getHoraire(entree.getTimes()[0].getStartTime().getDate()) + ' - ' + this.getHoraire(entree.getTimes()[0].getEndTime().getDate())));
                 tache.appendChild(horaire);
 
@@ -100,11 +100,11 @@ Calendar.prototype =
                 if (tache.style.height.replace(/px/, '') <= 14) {
                     tache.style.height = '14px';
                     titre.className = 'titreTacheCalendarFloat';
-                    horaire.className = 'dateTacheFloat';
+                    horaire.className = 'dateTacheCalendarFloat';
                 }
                 else if (tache.style.height.replace(/px/, '') < 29) {
                     titre.className = 'titreTacheCalendarFloat';
-                    horaire.className = 'dateTacheFloat';
+                    horaire.className = 'dateTacheCalendarFloat';
                 }
                 else {
                     titre.className = 'titreTacheCalendar';

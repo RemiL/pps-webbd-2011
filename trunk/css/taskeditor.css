@@ -1,0 +1,16 @@
+.taskEditor label
+{
+    display: block;
+    float: left;
+    width: 10em;
+}
+
+.taskEditor .description
+{
+    margin-left: 10em;
+}
+
+.description textarea
+{
+    width: 100%;
+}
