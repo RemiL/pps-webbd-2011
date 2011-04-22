@@ -1,0 +1,106 @@
+#calendarHeader
+{
+    padding-top: 4px;
+    margin: 3px
+}
+
+.calendarCursorHeader
+{
+    cursor: pointer;
+}
+
+#calendarDay
+{
+    text-align: center;
+    height: 24px;
+}
+
+#calendarDatePicker
+{
+    position: fixed;
+    z-index: 3;
+}
+
+.previousDay
+{
+    float: left;
+    margin-left: 4px;
+}
+
+.nextDay
+{
+    float: right;
+    margin-right: 4px;
+}
+
+#calendarTime
+{
+    float: left;
+    width: 50px;
+    height: 720px;
+}
+
+.calendarTimeHour
+{
+    height: 29px;
+    border-top: 1px solid #AAAAAA;
+    text-align: right;
+    font-size: 0.8em;
+}
+
+#calendarAgenda
+{
+    width: 225px;
+    position: relative;
+    height: 724px;
+    margin: 0px;
+    margin-left: 50px;
+    padding: 0px;
+}
+
+.tacheCalendar
+{
+    border: 1px #AAAAAA solid;
+    box-shadow: 1px 1px 1px #888;
+    position: absolute;
+    margin-left: 4px;
+    margin-right: 4px;
+    width: 216px;
+    background-color: #E2E2E2;
+    overflow: hidden;
+}
+
+.titreTacheCalendar
+{
+    height: 18px;
+    font-weight: bold;
+    overflow: hidden;
+}
+
+.titreTacheCalendarFloat
+{
+    height: 18px;
+    font-weight: bold;
+    overflow: hidden;
+    padding-left: 2px;
+}
+
+.dateTacheCalendarFloat
+{
+    font-size: 0.7em;
+    float: left;
+}
+
+.dateTacheCalendar
+{
+    font-size: 0.7em;
+}
+
+#calendarNowMarker
+{
+    position: absolute;
+    background-color: red;
+    width: 100%;
+    height: 1px;
+    opacity: 0.5;
+}

@@ -1,0 +1,129 @@
+#hautListeBox
+{
+    height: 35px;
+    margin-left: 3px;
+    margin-right: 3px;
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+#flechesDeplacementBox
+{
+    float: left;
+    margin-top: 9px;
+    margin-left: 3px;
+}
+
+.versGaucheListeBox
+{
+    float: left;
+}
+
+.versDroiteListeBox
+{
+    margin-left: 20px;
+}
+
+#triTaches
+{
+    float: right;
+    margin-top: 8px;
+    margin-right: 3px;
+}
+
+#listeBox
+{
+    height: 209px;
+    overflow: hidden;
+    position: relative;
+    margin-left: 3px;
+}
+
+.box
+{
+    position: absolute;
+    background-color: white;
+    width: 200px;
+    height: 200px;
+    margin-right: 5px;
+    border: 1px #AAAAAA solid;
+    box-shadow: 5px 5px 5px #888;
+}
+
+.nomBox
+{
+    height: 18px;
+    margin: 3px;
+    overflow: hidden;
+}
+
+.optionsBox
+{
+    float: right;
+    margin-left: 8px;
+    width: 32px;
+}
+
+.ajouterTacheBox
+{
+    float: left;
+}
+
+.hautBox
+{
+    margin: 3px;
+}
+
+.corpsBox
+{
+    margin-top: 3px;
+    clear: both;
+    margin-left: 3px;
+    margin-right: 3px;
+    height: 135px;
+    overflow: hidden;
+    position: relative;
+}
+
+.deplacerTacheBox
+{
+    margin: auto;
+}
+
+.tacheBox
+{
+    border: 1px #AAAAAA solid;
+    box-shadow: 1px 1px 1px #888;
+    margin-top: 3px;
+    height: 35px;
+    padding: 2px;
+    overflow: hidden;
+}
+
+.dateTache
+{
+    font-size: 0.7em;   
+}
+
+.titreTache
+{
+    margin-top: 2px;
+    height: 18px;
+    font-weight: bold; 
+    overflow: hidden;
+}
+
+.piedBox
+{
+    margin: 3px;
+}
+
+.versDroiteBox
+{
+    float: right;
+}
+
+.versGaucheBox
+{
+    float: left;
+}
