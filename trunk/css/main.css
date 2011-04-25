@@ -36,6 +36,7 @@ body
     margin-left: 69%;
     height: 100px;
     border: 1px #AAAAAA solid;
+    overflow: hidden;
 }
 
 #box
@@ -43,9 +44,11 @@ body
     margin-bottom: 10px;
     height: 248px;
     border: 1px #AAAAAA solid;
+    overflow: hidden;
 }
 
 #action
 {
     height: 376px;
+    overflow: hidden;
 }
