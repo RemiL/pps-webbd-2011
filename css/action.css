@@ -22,3 +22,22 @@
     width: 35px;
     margin-top: 7px;
 }
+
+.menuAction
+{
+    float: left;
+    width: 100px;
+    overflow: hidden;
+    margin: 3px;
+}
+
+.menuActionTab
+{
+    width: 69px;
+    height: 20px;
+}
+
+.contentMenuAction
+{
+    margin-left: 100px;
+}
