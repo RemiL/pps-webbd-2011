@@ -23,7 +23,6 @@ function addTab(title, id) {
     $("#action").append(divContent);
 
     // Ajoute l'onglet de la tâche
-    alert(divContent.id);
     $("#action").tabs('add', "#"+divContent.id, title);
     $("#action").tabs("select", Number($("#action").tabs("length")-1));
 
