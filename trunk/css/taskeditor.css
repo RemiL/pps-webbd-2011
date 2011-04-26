@@ -14,3 +14,30 @@
 {
     width: 100%;
 }
+
+.taskEditor .body
+{
+    margin-top: 2em;
+}
+
+.taskEditor .body textarea
+{
+	height: 10em;
+    width: 100%;
+}
+
+.taskEditor .button 
+{
+	text-align: center;
+}
+
+.taskEditor .button  input
+{
+	width: 10em;
+	height: 2em;
+}
+.taskEditor .recipient  input, .taskEditor .object input
+{
+	width: 25em;
+}
+
