@@ -1,10 +1,10 @@
 <div class="contentMenuAction">
-	<form  method="POST" action= "inc/sendmail.php" name="taskEditor" class="taskEditor">
+	<form  name="taskMail" class="taskEditor" onsubmit="sendMail(this, 'toto@toto.toto'); return false;">
         <div class="recipient">
-            <label for="recipient">recipient</label><input name="recipient" type="text" />
+            <label for="recipient">Recipient</label><input name="recipient" type="text" />
         </div>
         <div class="object">
-            <label for="object">object</label><input name="object" type="text" />
+            <label for="object">Object</label><input name="object" type="text" />
         </div>
         <div>
             <label for="content"></label><div class="content"><textarea name="content"></textarea></div>
