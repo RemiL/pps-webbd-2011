@@ -1,5 +1,5 @@
 <div class="contentMenuAction">
-	<form name="taskEditor" class="taskEditor" <?php if (isset($_GET['id'])) echo "id=\"form_{$_GET['id']}\""; ?>>
+	<form  method="POST" action= "inc/sendmail.php" name="taskEditor" class="taskEditor">
         <div class="recipient">
             <label for="recipient">recipient</label><input name="recipient" type="text" />
         </div>
@@ -7,19 +7,10 @@
             <label for="object">object</label><input name="object" type="text" />
         </div>
         <div>
-            <label for="body"></label><div class="body"><textarea name="body"></textarea></div>
+            <label for="content"></label><div class="content"><textarea name="content"></textarea></div>
         </div>
 		<div class="button">
-			<input value="Send" type="button" />
-        </div>
-  
-        <?php
-        if (isset($_GET['id']))
-        {
-	        echo "<script type=\"text/javascript\">";
-	        echo "Task.tasks['{$_GET['id']}'].fillEditor();";
-	        echo "</script>";
-        }
-        ?>
+			<input value="Send" type="submit" />
+        </div>		
     </form>
 </div>
