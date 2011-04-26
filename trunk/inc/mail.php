@@ -1,5 +1,5 @@
 <div class="contentMenuAction">
-	<form  name="taskMail" class="taskEditor" onsubmit="sendMail(this, 'toto@toto.toto'); return false;">
+	<form  name="taskMail" class="taskEditor" onsubmit="sendMail(this, calendarService.getUserId()); return false;">
         <div class="recipient">
             <label for="recipient">Recipient</label><input name="recipient" type="text" />
         </div>

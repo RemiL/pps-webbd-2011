@@ -14,6 +14,9 @@
         
     // L'adresse mail de l'expéditeur
     $from = $_POST["from"];
+		
+    //Déclaration de l'adresse de destination.
+	$recipient = $_POST["recipient"]; 
 	
     // Le header du message	
 	$headers = "X-Mailer: PHP/".phpversion().$eol;
@@ -27,9 +30,6 @@
 	$headers .= 'Bcc: '.$from.$eol;
 	
 	$headers .= 'Reply-To: '.$from.$eol;
-		
-    //Déclaration de l'adresse de destination.
-	$recipient = $_POST["recipient"]; 
         
 	//Définition du sujet.
 	$object = $_POST["object"];
