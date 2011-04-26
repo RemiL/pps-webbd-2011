@@ -12,6 +12,13 @@ function Task(_calendarEntry, _calendarDOMEntry)
 
 Task.tasks = new Array();
 
+Task.getId = function(calendarEntry)
+{
+  var feedUri = calendarEntry.getSelfLink().getHref();
+  
+  return feedUri.substring(feedUri.lastIndexOf('/') + 1, feedUri.length);
+}
+
 Task.prototype =
 {
     showEditor: function() {
@@ -30,6 +37,10 @@ Task.prototype =
         this.calendarEntry = root.entry;
         $('input[name="title"]', this.form).val(this.calendarEntry.getTitle().getText());
         $('textarea[name="description"]', this.form).val(this.calendarEntry.getContent().getText());
+    },
+    
+    closeEditor: function() {
+        this.tabIndex = null;
     },
     
     // Gestionnaire d'erreur

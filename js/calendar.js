@@ -1,7 +1,7 @@
 function Calendar(_calendarService)
 {
     this.calendarService = _calendarService;
-    // On veut rÈcupÈrer tous les ÈvÈnements depuis le calendrier par dÈfaut
+    // On veut r√©cup√©rer tous les √©v√©nements depuis le calendrier par d√©faut
     this.feedUri = 'https://www.google.com/calendar/feeds/default/private/full';
     this.dayOffset = 0;
     // Element HTML correspondant au calendrier dans la page
@@ -26,10 +26,10 @@ Calendar.prototype =
 
     getEvenements: function () {
         if (this.calendarService.isLoggedIn()) {
-            // PrÈparation de la requÍte
+            // Pr√©paration de la requ√™te
             var query = new google.gdata.calendar.CalendarEventQuery(this.feedUri);
 
-            // On souhaite rÈcupÈrer les ÈvÈnements du jour
+            // On souhaite r√©cup√©rer les √©v√©nements du jour
             var day_start = new Date();
             day_start.setDate(day_start.getDate() + this.dayOffset);
             day_start.setHours(0);
@@ -47,7 +47,7 @@ Calendar.prototype =
             query.setMinimumStartTime(google.gdata.DateTime.toIso8601(startMin));
             query.setMaximumStartTime(google.gdata.DateTime.toIso8601(startMax));
 
-            // Envoi de la requÍte
+            // Envoi de la requ√™te
             this.calendarService.getService().getEventsFeed(query, bind(this.remplir, this), bind(this.gestErreur, this));
         }
     },
@@ -64,15 +64,15 @@ Calendar.prototype =
     },
 
     remplir: function (root) {
-        // On vide les Èventuelles entrÈes dÈj‡ prÈsentes.
+        // On vide les √©ventuelles entr√©es d√©j√† pr√©sentes.
         while (this.calendarAgenda.firstChild)
             this.calendarAgenda.removeChild(this.calendarAgenda.firstChild);
 
-        // Les entrÈes ‡ afficher supposÈes concerner un seul jour.
+        // Les entr√©es √† afficher suppos√©es concerner un seul jour.
         var entrees = root.feed.getEntries();
 
         if (entrees.length > 0) {
-            // Une t‚che dans le calendrier
+            // Une t√¢che dans le calendrier
             var tache;
             // L'horaire de la tache
             var horaire;
@@ -85,9 +85,9 @@ Calendar.prototype =
 
                 tache = document.createElement('div');
                 tache.className = 'tacheCalendar ui-corner-all';
-                // On calcule le placement ‡ partir du nombre de minutes depuis minuit (1 pixel = 2 minutes)
+                // On calcule le placement √† partir du nombre de minutes depuis minuit (1 pixel = 2 minutes)
                 tache.style.top = (entree.getTimes()[0].getStartTime().getDate().getHours() * 60 + entree.getTimes()[0].getStartTime().getDate().getMinutes()) / 2 + 'px';
-                // On calcule la hauteur ‡ partir de la durÈe
+                // On calcule la hauteur √† partir de la dur√©e
                 tache.style.height = (entree.getTimes()[0].getEndTime().getDate().getTime() - entree.getTimes()[0].getStartTime().getDate().getTime()) / (60 * 2 * 1000) - 1 + 'px';
 
                 horaire = document.createElement('div');
@@ -113,7 +113,9 @@ Calendar.prototype =
                 titre.appendChild(document.createTextNode(entree.getTitle().getText()));
                 tache.appendChild(titre);
 
-                tache.task = new Task(entree, tache);
+                tache.task = Task.tasks[Task.getId(entree)];
+                if (tache.task == undefined)
+                  tache.task = new Task(entree, tache);
                 $(tache).dblclick(function (e) { this.task.showEditor(); });
 
                 this.calendarAgenda.appendChild(tache);

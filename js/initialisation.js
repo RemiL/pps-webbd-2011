@@ -1,5 +1,5 @@
-﻿$(function () {
-    $("#action").tabs({ closable: true, tabTemplate: '<li><a class="titreOnglet" href="#{href}">#{label}</a></li>', cache: true, idPrefix: 'ui-tabs-action' });
+$(function () {
+    $("#action").tabs({ closable: true, tabTemplate: '<li><a class="titreOnglet" href="#{href}">#{label}</a></li>', cache: true, idPrefix: 'ui-tabs-action', remove: closeTab });
     
     // Crée le bouton pour ajouter un onglet
     var boutonAjouterOnglet = document.createElement("li");
