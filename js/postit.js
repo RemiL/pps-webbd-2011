@@ -8,7 +8,14 @@ function confirmerPostit() {
             var zone = document.getElementById('nouveauTextePostit').parentNode;
             zone.removeChild(document.getElementById('nouveauTextePostit'));
             zone.removeChild(document.getElementById('collerPostit'));
-            zone.appendChild(document.createTextNode(text));
+
+            var tabText = text.split('\n');
+
+            for (var i=0; i<tabText.length; i++)
+            {
+                zone.appendChild(document.createTextNode(tabText[i]));
+                zone.appendChild(document.createElement('br'));
+            }
 
             var deriver = document.createElement('span');
             deriver.className = 'ui-icon ui-icon-document';
