@@ -75,6 +75,9 @@
     source: availableTags
     });
 
+    $( ".buttonAddInputActivities" ).unbind('click');
+    $( ".buttonAddInputDependencies" ).unbind('click');
+    $( ".buttonAddInput" ).button( "destroy" );
     $( ".buttonAddInput" ).button({icons: {primary: "ui-icon-circle-plus"}, text: false});
     $( ".buttonAddInputActivities" ).click(function() { addInputActivities(this); });
     $( ".buttonAddInputDependencies" ).click(function() { addInputDependencies(this); });
