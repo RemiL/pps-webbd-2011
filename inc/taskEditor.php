@@ -81,6 +81,12 @@
     $( ".buttonAddInput" ).button({icons: {primary: "ui-icon-circle-plus"}, text: false});
     $( ".buttonAddInputActivities" ).click(function() { addInputActivities(this); });
     $( ".buttonAddInputDependencies" ).click(function() { addInputDependencies(this); });
+	
+	$('input[name*="beginDate"]').datepicker();
+	$('input[name*="endDate"]').datepicker();
+	$('input[name*="beginTime"]').timepicker({});	
+	$('input[name*="endTime"]').timepicker({});	
+	
     <?php
         if (isset($_GET['id']))
         {
