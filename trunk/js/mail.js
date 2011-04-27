@@ -8,9 +8,9 @@ function sendMail(form, from) {
         type: "POST",
         url: "inc/sendmail.php",
         data: "from=" + from + "&recipient=" + recipient + "&object=" + object + "&content=" + content,
-        success: function () { // si l'appel a bien fonctionné
+        success: function () { // si l'appel a bien fonctionnÃ©
             // Mettre la tache en fini
-            alert("Mail send");
+            alert("Mail sent");
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert("An error has occured");
