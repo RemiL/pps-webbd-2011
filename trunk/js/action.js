@@ -33,11 +33,11 @@ function addTab(title, id) {
     // Crée l'onglet Edit
     $("#" + divContent.id).tabs({ tabTemplate: '<li><a class="menuActionTab" href="#{href}">#{label}</a></li>', cache: true, idPrefix: 'ui-tabs-action-menu' });
     $("#" + divContent.id).tabs("add", "inc/taskEditor.php" + url, "Edit");
-    // JQuery crée 2 div dont un inutil, il faut l'enlever
+    // JQuery crée 2 div dont un inutile, il faut l'enlever
     indexOngletsSecondairesOuverts++;
     $("#ui-tabs-action-menu" + Number(indexOngletsSecondairesOuverts * 2 - 1)).detach();
     $("#" + divContent.id).tabs("add", "inc/mail.php" + url, "Mail");
-    // JQuery crée 2 div dont un inutil, il faut l'enlever
+    // JQuery crée 2 div dont un inutile, il faut l'enlever
     indexOngletsSecondairesOuverts++;
     $("#ui-tabs-action-menu" + Number(indexOngletsSecondairesOuverts * 2 - 1)).detach();
     $("#" + divContent.id).tabs("add", "inc/text.php" + url, "Text");

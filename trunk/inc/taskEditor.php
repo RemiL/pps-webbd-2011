@@ -25,18 +25,23 @@
 	        </select>
         </div>
         <div>
-	        <label for="dependancies">Dependancies</label> !TODO!
+	        <label for="dependencies">Dependencies</label>
+            <input name="dependencies[]" type="text" />
+            <button class="buttonAddInput" onclick="addInputDependencies(this);">
+                <span class="ui-icon ui-icon-circle-plus"></span>
+            </button>
         </div>
         <div>
-	        <label for="activities">Activities</label> <input name="activities[]" type="text" />
-            <button class="buttonAddInput" onclick="addInput(this);">
+	        <label for="activities">Activities</label>
+            <input name="activities[]" type="text" />
+            <button class="buttonAddInput" onclick="addInputActivities(this);">
                 <span class="ui-icon ui-icon-circle-plus"></span>
             </button>
         </div>
         <div>
 	        <label for="description">Description</label><div class="description"><textarea name="description"></textarea></div>
         </div>
-        <div>
+        <div class="button">
             <input type="submit" value="Edit" />
         </div>
     </form>
@@ -68,6 +73,9 @@
     "Scheme"
     ];
     $( 'input[name*="activities[]"]' ).autocomplete({
+    source: availableTags
+    });
+    $( 'input[name*="dependencies[]"]' ).autocomplete({
     source: availableTags
     });
     <?php
