@@ -43,6 +43,14 @@ Task.prototype =
         this.tabIndex = null;
     },
     
+    save: function() {
+        this.calendarEntry.setTitle(google.gdata.atom.Text.create($('input[name="title"]', this.form).val()));
+        this.calendarEntry.setContent(google.gdata.atom.Text.create($('textarea[name="description"]', this.form).val()));
+        // TBC
+        
+        this.calendarEntry.updateEntry(function() { alert('Edition completed'); });
+    },
+    
     // Gestionnaire d'erreur
     gestErreur: function(erreur) {
         alert(erreur);

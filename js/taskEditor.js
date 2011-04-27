@@ -72,21 +72,25 @@ function addInputDependencies(button) {
     });
 }
 
-// Edit une tache
-function editTask(form)
-{
-    alert("eee");
-}
-
-//change le format de date
+// Change le type de date
 function changeDateType(elem)
 {
-	elem = elem.parentNode.parentNode.getElementsByTagName("span")[0];
-	if(elem.style.visibility == "hidden"){
-		elem.style.visibility="visible";
-	}
-	else{
-		elem.style.visibility="hidden";
-	}
-		
+    elem = elem.parentNode.parentNode.getElementsByTagName("span")[0];
+    
+    if (elem.style.visibility == "hidden")
+        elem.style.visibility = "visible";
+    else
+        elem.style.visibility = "hidden";
+}
+
+// Edite une tache
+function editTask(form)
+{
+    var taskId = form.id.split('_')[1];
+    
+    if (taskId)
+    {
+        Task.tasks[taskId].save();
+        // TBC
+    }
 }
