@@ -51,6 +51,7 @@ function addTab(title, id) {
 }
 
 function closeTab(event, ui) {
-    if (Task.tasks[ui.tab.hash.substr(1)])
-        Task.tasks[ui.tab.hash.substr(1)].closeEditor();
+    var task = Task.tasks[ui.tab.hash.split('-')[3]];
+    if (task)
+        task.closeEditor();
 }
