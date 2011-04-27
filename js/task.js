@@ -36,6 +36,7 @@ Task.prototype =
     onDataReceivedFillEditor: function(root) {
         this.calendarEntry = root.entry;
         $('input[name="title"]', this.form).val(this.calendarEntry.getTitle().getText());
+        $('input[name="location"]', this.form).val(this.calendarEntry.getLocations()[0].getValueString());
         $('textarea[name="description"]', this.form).val(this.calendarEntry.getContent().getText());
     },
     
@@ -45,6 +46,7 @@ Task.prototype =
     
     save: function() {
         this.calendarEntry.setTitle(google.gdata.atom.Text.create($('input[name="title"]', this.form).val()));
+        this.calendarEntry.getLocations()[0].setValueString($('input[name="location"]', this.form).val());
         this.calendarEntry.setContent(google.gdata.atom.Text.create($('textarea[name="description"]', this.form).val()));
         // TBC
         
