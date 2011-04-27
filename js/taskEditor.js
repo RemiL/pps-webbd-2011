@@ -1,7 +1,7 @@
 function addInputActivities(button) {
     var div = button.parentNode;
     var input = document.createElement("input");
-    input.name = "attribut[]";
+    input.name = "activities[]";
     div.removeChild(button);
     div.appendChild(input);
     div.appendChild(button);
@@ -70,4 +70,10 @@ function addInputDependencies(button) {
     $(input).autocomplete({
         source: availableTags
     });
+}
+
+// Edit une tache
+function editTask(form)
+{
+    alert("eee");
 }
