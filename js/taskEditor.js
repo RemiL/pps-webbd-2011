@@ -77,3 +77,16 @@ function editTask(form)
 {
     alert("eee");
 }
+
+//change le format de date
+function changeDateType(elem)
+{
+	elem = elem.parentNode.parentNode.getElementsByTagName("span")[0];
+	if(elem.style.visibility == "hidden"){
+		elem.style.visibility="visible";
+	}
+	else{
+		elem.style.visibility="hidden";
+	}
+		
+}
