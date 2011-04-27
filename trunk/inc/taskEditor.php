@@ -4,12 +4,19 @@
             <label for="title">Title</label><input name="title" type="text" />
         </div>
         <div>
-            <label for="beginDate">When</label>
+            <label for="beginDate">
+		    <select name="when" onchange="changeDateType(this)">
+		        <option value="1">When</option>
+		        <option value="2">Due for</option>
+		    </select>
+			</label>
             <input name="beginDate" type="text" />
             <input name="beginTime" type="text" />
+			<span>
             to
             <input name="endDate" type="text" />
             <input name="endTime" type="text" />
+			</span>
         </div>
         <div>
             <label for="location">Location</label><input name="location" type="text" />
