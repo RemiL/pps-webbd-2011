@@ -1,5 +1,5 @@
 <div class="contentMenuAction">
-    <form name="taskEditor" class="taskEditor" <?php if (isset($_GET['id'])) echo "id=\"form_{$_GET['id']}\""; ?> onsubmit="return false;">
+    <form name="taskEditor" class="taskEditor" <?php if (isset($_GET['id'])) echo "id=\"form_{$_GET['id']}\""; ?> onsubmit="editTask(this); return false;">
         <div>
             <label for="title">Title</label><input name="title" type="text" />
         </div>
@@ -27,16 +27,12 @@
         <div>
 	        <label for="dependencies">Dependencies</label>
             <input name="dependencies[]" type="text" />
-            <button class="buttonAddInput" onclick="addInputDependencies(this);">
-                <span class="ui-icon ui-icon-circle-plus"></span>
-            </button>
+            <span class="buttonAddInput buttonAddInputDependencies"></span>
         </div>
         <div>
 	        <label for="activities">Activities</label>
             <input name="activities[]" type="text" />
-            <button class="buttonAddInput" onclick="addInputActivities(this);">
-                <span class="ui-icon ui-icon-circle-plus"></span>
-            </button>
+            <span class="buttonAddInput buttonAddInputActivities"></span>
         </div>
         <div>
 	        <label for="description">Description</label><div class="description"><textarea name="description"></textarea></div>
@@ -78,6 +74,10 @@
     $( 'input[name*="dependencies[]"]' ).autocomplete({
     source: availableTags
     });
+
+    $( ".buttonAddInput" ).button({icons: {primary: "ui-icon-circle-plus"}, text: false});
+    $( ".buttonAddInputActivities" ).click(function() { addInputActivities(this); });
+    $( ".buttonAddInputDependencies" ).click(function() { addInputDependencies(this); });
     <?php
         if (isset($_GET['id']))
         {
