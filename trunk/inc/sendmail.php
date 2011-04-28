@@ -25,11 +25,11 @@
  
     $headers .= 'To: '.$recipient.$eol;
  
-	$headers .= 'From: '.$from.$eol;
+	$headers .= 'From: '.$from.$eol; // Mettre l'adresse absolue du serveur
     
 	$headers .= 'Bcc: '.$from.$eol;
 	
-	$headers .= 'Reply-To: '.$from.$eol;
+	$headers .= 'Reply-To: <'.$from.'>'.$eol;
         
 	//Définition du sujet.
 	$object = $_POST["object"];
@@ -41,6 +41,6 @@
 	$content .= $eol.$_POST["content"].$eol;
 		 
 	//Envoi de l'e-mail.
-	mail($recipient, $object, $content, $headers);
+	echo mail($recipient, $object, $content, $headers);
 ?>
 			

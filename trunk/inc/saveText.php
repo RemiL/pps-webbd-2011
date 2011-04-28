@@ -1,12 +1,13 @@
 <?php
-	if (!$f = fopen($_POST['name'].".txt", "w"))
+	if (!$f = fopen("../data/".$_POST['id']."/"."docs/".$_POST['name'].".txt", "w"))
 	{
-		echo "Echec de l'ouverture du fichier";
+		echo 0;
 		exit;
 	}
 	else
 	{
 		fputs($f, $_POST['text']);
 		fclose($f);
+        echo 1;
 	}
 ?>
