@@ -11,6 +11,6 @@
         </div>
 		<div class="button">
 			<input value="Send" type="submit" />
-        </div>		
+        </div>
     </form>
 </div>

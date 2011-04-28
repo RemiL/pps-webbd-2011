@@ -1,21 +1,23 @@
-function exportText(form) {
+function exportText(form, id) {
     var idTask = form.parentNode.parentNode.parentNode.id.split('-')[3];
     var text = form.text.value;
-
-    saveText(form);
-    window.open('inc/exportText.php?text='+encodeURI(text)+'&name='+idTask, 'pop_up', 'width=300, height=200, toolbar=no status=no');
+    saveText(form, id);
+    window.open('inc/exportText.php?id='+id+'&name='+idTask, 'pop_up', 'width=300, height=200, toolbar=no status=no');
 }
 
-function saveText(form) {
+function saveText(form, id) {
     var idTask = form.parentNode.parentNode.parentNode.id.split('-')[3];
     var text = form.text.value;
 
     $.ajax({
         type: "POST",
         url: "inc/saveText.php",
-        data: "text=" + text + "&name=" + idTask,
-        success: function () { // si l'appel a bien fonctionné
-            alert("File saved");
+        data: "text=" + text + "&name=" + idTask + "&id=" + id,
+        success: function (msg) { // si l'appel a bien fonctionné
+            if (msg == 1)
+                alert("Text saved");
+            else
+                alert("An error has occured");
         },
         error: function (jqXHR, textStatus, errorThrown) {
             alert("An error has occured");
