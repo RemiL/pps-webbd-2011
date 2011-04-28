@@ -5,7 +5,7 @@
         </div>
         <div>
             <label for="beginDate">
-		    <select name="when" onchange="changeDateType(this)">
+		    <select name="when" onchange="changeDateType(this)" onkeypress="changeDateType(this)">
 		        <option value="1">When</option>
 		        <option value="2">Due for</option>
 		    </select>
