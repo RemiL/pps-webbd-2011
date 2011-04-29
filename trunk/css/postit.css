@@ -17,16 +17,7 @@
     z-index: 10;
     box-shadow: 5px 5px 5px #888;
     border: 1px #AAAAAA solid;
-}
-
-.panneauPostitFerme
-{
     visibility: hidden;
-}
-
-.panneauPostitOuvert
-{
-    visibility: visible;
 }
 
 .postit
