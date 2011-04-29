@@ -1,7 +1,7 @@
 var indexOngletsSecondairesOuverts = 0;
 var indexOngletsOuverts = 0;
 
-function addTab(title, id) {
+function addTab(title, id, description) {
     if (title == undefined)
         title = 'New task';
 
@@ -13,6 +13,8 @@ function addTab(title, id) {
     var url = '';
     if (id != undefined)
         url += '?id=' + id;
+    if (description != undefined)
+        url += '?description=' + encodeURI(description);
 
     // Construit le div contenant les actions possibles sur la tâche
     var divContent = document.createElement("div");

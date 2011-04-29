@@ -5,7 +5,7 @@
         </div>
         <div>
             <label for="beginDate">
-		    <select name="when" onchange="changeDateType(this)" onkeypress="changeDateType(this)">
+		    <select name="when" onchange="changeDateType(this, event)" onkeydown="changeDateType(this, event)">
 		        <option value="1">When</option>
 		        <option value="2">Due for</option>
 		    </select>
@@ -42,7 +42,9 @@
             <span class="buttonAddInput buttonAddInputActivities"></span>
         </div>
         <div>
-	        <label for="description">Description</label><div class="description"><textarea name="description"></textarea></div>
+	        <label for="description">Description</label><div class="description">
+            <textarea name="description"><?php if(isset($_GET['description'])) { echo urldecode($_GET['description']); } ?></textarea>
+        </div>
         </div>
         <div class="button">
             <input type="submit" value="Edit" />

@@ -73,14 +73,30 @@ function addInputDependencies(button) {
 }
 
 // Change le type de date
-function changeDateType(elem)
+function changeDateType(elem, event)
 {
-    elem = elem.parentNode.parentNode.getElementsByTagName("span")[0];
-    
-    if (elem.style.visibility == "hidden")
-        elem.style.visibility = "visible";
-    else
-        elem.style.visibility = "hidden";
+    var code = -1;
+    if (!event)
+    {
+        event = window.event;
+    }
+    if (event.which)
+    {
+        code = event.which;
+    } else if (event.keyCode)
+    {
+        code = event.keyCode;
+    }
+
+    if (code == -1 || code == 38 ||code == 40)
+    {
+        elem = elem.parentNode.parentNode.getElementsByTagName("span")[0];
+
+        if (elem.style.visibility == "hidden" && (code == -1 || code == 38))
+            elem.style.visibility = "visible";
+        else if(code == -1 || code == 40)
+            elem.style.visibility = "hidden";
+    }
 }
 
 // Edite une tache
