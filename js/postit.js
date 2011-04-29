@@ -67,7 +67,7 @@ PostIt.prototype =
 
     fillEditor: function ()
     {
-        $('textarea[name="description"]', $('#form_' + this.id)).val(this.text);
+        $('textarea[name="description"]', $('#formPostit_' + this.id)).val(this.text);
     },
 
     close: function ()

@@ -1,5 +1,5 @@
 <div class="contentMenuAction">
-    <form name="taskEditor" class="taskEditor" <?php if (isset($_GET['id'])) { echo 'id="form_'.$_GET['id'].'"'; } else if(isset($_GET['idpostit'])) { echo 'id="form_'.$_GET['idpostit'].'"'; } ?> onsubmit="editTask(this); return false;">
+    <form name="taskEditor" class="taskEditor" <?php if (isset($_GET['id'])) { echo 'id="formTask_'.$_GET['id'].'"'; } else if(isset($_GET['idpostit'])) { echo 'id="formPostit_'.$_GET['idpostit'].'"'; } ?> onsubmit="editTask(this); return false;">
         <div>
             <label for="title">Title</label><input name="title" type="text" />
         </div>
