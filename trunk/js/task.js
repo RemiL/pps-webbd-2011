@@ -31,7 +31,7 @@ Task.prototype =
 
     fillEditor: function ()
     {
-        this.form = $('#form_' + this.id);
+        this.form = $('#formTask_' + this.id);
         this.calendarService.getService().getCalendarEntry(this.feedUri, bind(this.onDataReceivedFillEditor, this), bind(this.gestErreur, this));
     },
 
