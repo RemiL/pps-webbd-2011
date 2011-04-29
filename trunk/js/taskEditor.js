@@ -88,13 +88,13 @@ function changeDateType(elem, event)
         code = event.keyCode;
     }
 
-    if (code == -1 || code == 38 ||code == 40)
+    if (code == -1 || code == 38 ||code == 40 || code == 39 || code == 37)
     {
         elem = elem.parentNode.parentNode.getElementsByTagName("span")[0];
 
-        if (elem.style.visibility == "hidden" && (code == -1 || code == 38))
+        if (elem.style.visibility == "hidden" && (code == -1 || code == 38 || code == 37))
             elem.style.visibility = "visible";
-        else if(code == -1 || code == 40)
+        else if (code == -1 || code == 40 || code == 39)
             elem.style.visibility = "hidden";
     }
 }
