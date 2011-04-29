@@ -1,7 +1,7 @@
-function Panel(body)
+function Panel()
 {
     this.list = new Array();
-    this.body = body;
+    this.body = null;
     this.postit = null;
 }
 
@@ -98,9 +98,14 @@ Panel.prototype =
             this.body.style.visibility = 'hidden';
     },
 
-    removePostit: function (postit)
+    removePostit: function (id)
     {
-        this.list.splice(postit.id, 1);
-        this.body.removeChild(postit.body);
+        this.body.removeChild(this.list[id].body);
+        this.list.splice(id, 1);
+    },
+
+    setBody: function (body)
+    {
+        this.body = body;
     }
 }
