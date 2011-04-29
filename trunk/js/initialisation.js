@@ -1,3 +1,6 @@
+// Crée le panneau de postit
+var panel = new Panel();
+
 $(function ()
 {
     $("#action").tabs({ closable: true, tabTemplate: '<li><a class="titreOnglet" href="#{href}">#{label}</a></li>', cache: true, idPrefix: 'ui-tabs-action', remove: closeTab });
@@ -7,8 +10,7 @@ $(function ()
     boutonAjouterOnglet.id = "ajouterOnglet";
     document.getElementById("listeOnglets").appendChild(boutonAjouterOnglet);
 
-    // Crée le panneau de postit
-    var panel = new Panel(document.getElementById("panneauPostit"));
+    panel.setBody(document.getElementById("panneauPostit"));
 
     $("#afficherPostit").button({ icons: { primary: 'ui-icon-circle-triangle-n' }, text: false });
     $("#ajouterOnglet").button({ icons: { primary: 'ui-icon-plusthick' }, text: false });

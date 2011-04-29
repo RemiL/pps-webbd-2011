@@ -61,9 +61,13 @@ PostIt.prototype =
 
     createTask: function ()
     {
-        this.panel.removePostit(this);
-        addTab(null, null, this.text);
+        addTab(null, null, this.id);
         this.panel.toggle();
+    },
+
+    fillEditor: function ()
+    {
+        $('textarea[name="description"]', $('#form_' + this.id)).val(this.text);
     },
 
     close: function ()

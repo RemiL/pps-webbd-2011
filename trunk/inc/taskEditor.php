@@ -1,5 +1,5 @@
 <div class="contentMenuAction">
-    <form name="taskEditor" class="taskEditor" <?php if (isset($_GET['id'])) echo "id=\"form_{$_GET['id']}\""; ?> onsubmit="editTask(this); return false;">
+    <form name="taskEditor" class="taskEditor" <?php if (isset($_GET['id'])) { echo 'id="form_'.$_GET['id'].'"'; } else if(isset($_GET['idpostit'])) { echo 'id="form_'.$_GET['idpostit'].'"'; } ?> onsubmit="editTask(this); return false;">
         <div>
             <label for="title">Title</label><input name="title" type="text" />
         </div>
@@ -43,7 +43,7 @@
         </div>
         <div>
 	        <label for="description">Description</label><div class="description">
-            <textarea name="description"><?php if(isset($_GET['description'])) { echo urldecode($_GET['description']); } ?></textarea>
+            <textarea name="description"></textarea>
         </div>
         </div>
         <div class="button">
@@ -100,6 +100,12 @@
         if (isset($_GET['id']))
         {
 	        echo "Task.tasks['{$_GET['id']}'].fillEditor();";
+        }
+        
+        if(isset($_GET['idpostit'])) 
+        {
+            echo "panel.list[".$_GET['idpostit']."].fillEditor();";
+            echo "panel.removePostit(".$_GET['idpostit'].");";
         }
     ?>
 </script>
