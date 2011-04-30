@@ -32,7 +32,7 @@ Task.prototype =
     showEditor: function ()
     {
         if (this.tabIndex == null)
-            this.tabIndex = addTab(this.calendarEntry.getTitle().getText(), this.id) - 1;
+            this.tabIndex = addTab(this.calendarEntry.getTitle().getText(), this.id);
         else
             this.tabs.tabs('select', this.tabIndex);
     },
@@ -82,6 +82,7 @@ Task.prototype =
     create: function (_from)
     {
         this.form = _from;
+        this.tabIndex = this.tabs.tabs('option', 'selected');
         this.calendarEntry = new google.gdata.calendar.CalendarEventEntry();
         this.calendarEntry.addTime(new google.gdata.When());
         this.calendarEntry.addLocation(new google.gdata.Where());
@@ -121,6 +122,7 @@ Task.prototype =
     
     update: function ()
     {
+        this.tabIndex = this.tabs.tabs('option', 'selected');
         this.updateFromFrom();
         
         this.calendarEntry.updateEntry(bind(this.onUpdateCompleted, this), bind(this.gestErreur, this));
@@ -158,5 +160,10 @@ Task.prototype =
     gestErreur: function (erreur)
     {
         alert(erreur);
+    },
+
+    getTitle: function ()
+    {
+        return this.calendarEntry.getTitle().getText();
     }
 }

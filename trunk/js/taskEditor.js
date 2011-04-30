@@ -103,17 +103,21 @@ function changeDateType(elem, event)
 function editTask(form)
 {
     var taskId = form.id.split('_')[1];
+    var task;
     
     if (taskId)
     {
-        Task.tasks[taskId].update();
+        task = Task.tasks[taskId];
+        task.update();
         // TBC
     }
     else // new task
     {
-        var task = new Task();
+        task = new Task();
         task.create(form);
     }
+    
+    $('.ui-tabs-selected .titreOnglet', Task.tabs).html(task.getTitle());
 }
 
 // Supprime une tâche

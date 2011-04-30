@@ -65,14 +65,14 @@ function addTab(title, id, idpostit, namebox)
 
     indexOngletsOuverts++;
 
-    return indexOngletsOuverts;
+    return $("#action").tabs('option', 'selected');
 }
 
 function closeTab(event, ui)
 {
-    if (ui.tab)
+    if (ui.panel)
     {
-        var task = Task.tasks[ui.tab.hash.split('-')[3]];
+        var task = Task.tasks[$('form', ui.panel).attr('id').split('_')[1]];
         if (task)
             task.closeEditor();
     }
