@@ -1,11 +1,11 @@
 <?xml version="1.0"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-<xs:include schemaLocation="task.xsd" />
+<xs:include schemaLocation="taskBase.xsd" />
 
 <xs:complexType name="taskDoc">
   <xs:complexContent>
-    <xs:extension base="task">
+    <xs:extension base="taskBase">
       <xs:sequence>
         <xs:element name="document">
           <xs:complexType>
