@@ -1,6 +1,6 @@
 function PostIt(panel, body)
 {
-    this.id = PostIt.nbPostit;
+    this.id = String(PostIt.nbPostit);
     this.panel = panel;
     this.body = body;
     this.text = "";
@@ -54,7 +54,7 @@ PostIt.prototype =
             }
             else
             {
-                this.panel.removePostit(this);
+                this.panel.removePostit(this.id);
             }
         }
     },
@@ -72,6 +72,6 @@ PostIt.prototype =
 
     close: function ()
     {
-        this.panel.removePostit(this);
+        this.panel.removePostit(this.id);
     }
 }
