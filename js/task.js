@@ -2,8 +2,11 @@ function Task(_calendarEntry, _calendarDOMEntry)
 {
     this.calendarEntry = _calendarEntry;
     this.calendarDOMEntry = _calendarDOMEntry;
-    this.feedUri = this.calendarEntry.getSelfLink().getHref();
-    this.id = this.feedUri.substring(this.feedUri.lastIndexOf('/') + 1, this.feedUri.length);
+    if (_calendarEntry)
+    {
+        this.feedUri = this.calendarEntry.getSelfLink().getHref();
+        this.id = this.feedUri.substring(this.feedUri.lastIndexOf('/') + 1, this.feedUri.length);
+    }
     this.tabIndex = null;
     this.form = null;
 
@@ -56,7 +59,7 @@ Task.prototype =
         this.tabIndex = null;
     },
 
-    save: function ()
+    updateFromFrom: function ()
     {
         this.calendarEntry.setTitle(google.gdata.atom.Text.create($('input[name="title"]', this.form).val()));
         var start = $.datepicker.parseDate("mm/dd/yy", $('input[name="beginDate"]', this.form).val());
@@ -69,10 +72,37 @@ Task.prototype =
         this.calendarEntry.getTimes()[0].setEndTime(end);
         this.calendarEntry.getLocations()[0].setValueString($('input[name="location"]', this.form).val());
         this.calendarEntry.setContent(google.gdata.atom.Text.create($('textarea[name="description"]', this.form).val()));
+    },
 
-        this.calendarEntry.updateEntry(bind(this.onSaveCompleted, this), bind(this.gestErreur, this));
+    create: function (_from)
+    {
+        this.form = _from;
+        this.calendarEntry = new google.gdata.calendar.CalendarEventEntry();
+        this.calendarEntry.addTime(new google.gdata.When());
+        this.calendarEntry.addLocation(new google.gdata.Where());
+        this.updateFromFrom();
+        
+        this.calendarService.getService().insertEntry(this.calendar.feedUri, this.calendarEntry, bind(this.onCreationCompleted, this), bind(this.gestErreur, this), google.gdata.calendar.CalendarEventEntry);
+    },
+
+    onCreationCompleted: function (root)
+    {
+        this.calendarEntry = root.entry;
+        this.feedUri = this.calendarEntry.getSelfLink().getHref();
+        this.id = this.feedUri.substring(this.feedUri.lastIndexOf('/') + 1, this.feedUri.length);
+        this.form.id = 'form_'+this.id;
+        Task.tasks[this.id] = this;
+        
+        alert('Creation completed');
     },
     
+    save: function ()
+    {
+        this.updateFromFrom();
+        
+        this.calendarEntry.updateEntry(bind(this.onSaveCompleted, this), bind(this.gestErreur, this));
+    },
+
     onSaveCompleted: function (root)
     {
         this.calendarEntry = root.entry;

@@ -99,7 +99,7 @@ function changeDateType(elem, event)
     }
 }
 
-// Edite une tache
+// Edite une tâche
 function editTask(form)
 {
     var taskId = form.id.split('_')[1];
@@ -108,5 +108,10 @@ function editTask(form)
     {
         Task.tasks[taskId].save();
         // TBC
+    }
+    else // new task
+    {
+        var task = new Task();
+        task.create(form);
     }
 }
