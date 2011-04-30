@@ -24,6 +24,11 @@ Task.getId = function (calendarEntry)
 
 Task.prototype =
 {
+    setCalendarDOMEntry: function(_calendarDOMEntry)
+    {
+        this.calendarDOMEntry = _calendarDOMEntry;
+    },
+
     showEditor: function ()
     {
         if (this.tabIndex == null)
@@ -93,6 +98,13 @@ Task.prototype =
         this.form.id = 'form_'+this.id;
         Task.tasks[this.id] = this;
         
+        // Ajout dans le calendrier si on affiche le jour correspondant à la tâche
+        if (this.calendar.isDayShown(this.calendarEntry.getTimes()[0].getStartTime().getDate())
+            || this.calendar.isDayShown(this.calendarEntry.getTimes()[0].getEndTime().getDate()))
+        {
+            this.calendarDOMEntry = this.calendar.createTask(this.calendarEntry);
+        }
+        
         // Ajout du bouton de suppression
         var buttonDeleteTaskContainer = document.createElement("li");
         buttonDeleteTaskContainer.className = "ui-state-default ui-corner-top";
@@ -130,6 +142,9 @@ Task.prototype =
     {
         delete Task.tasks[this.id];
         this.tabs.tabs('remove',  this.tabs.tabs('option', 'selected'));
+        
+        if (this.calendarDOMEntry)
+            this.calendar.removeTask(this.calendarDOMEntry);
         
         alert('Deletion completed');
     },
