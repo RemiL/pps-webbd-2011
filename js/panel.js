@@ -81,7 +81,7 @@ Panel.prototype =
         document.getElementById('panneauPostit').appendChild(postit);
         document.getElementById('nouveauTextePostit').focus();
 
-        $(postit).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
+        $(postit).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" }, { stop: function () { objPostit.saveMove(); } });
     },
 
     loadPostit: function (text, x, y)
@@ -93,7 +93,6 @@ Panel.prototype =
         postit.style.top = y + 'px';
 
         var objPostit = new PostIt(this, postit, text, true);
-        this.postit = objPostit;
 
         var options = document.createElement('div');
         options.className = 'optionsPostit';
@@ -125,7 +124,7 @@ Panel.prototype =
 
         document.getElementById('panneauPostit').appendChild(postit);
 
-        $(postit).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
+        $(postit).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" }, { stop: function () { objPostit.saveMove(); } });
 
         this.list[objPostit.id] = objPostit;
     },
@@ -154,6 +153,22 @@ Panel.prototype =
         else
         {
             this.body.removeChild(this.list[id].body);
+
+            $.ajax({
+                type: "POST",
+                url: "inc/deletePostit.php",
+                data: "id=" + calendarService.getUserId() + "&idPostit=" + id,
+                success: function (data, status)
+                {
+                    if (data != 1)
+                        alert("An error has occured");
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert("An error has occured");
+                }
+            });
+
             delete this.list[id];
         }
     },

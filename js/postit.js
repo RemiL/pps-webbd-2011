@@ -51,6 +51,20 @@ PostIt.prototype =
 
                 this.valid = true;
                 this.panel.validPostit();
+                $.ajax({
+                    type: "POST",
+                    url: "inc/addPostit.php",
+                    data: "id=" + calendarService.getUserId() + "&idPostit=" + this.id + "&text=" + this.text + "&x=" + this.body.style.left.replace(/px/, '') + "&y=" + this.body.style.top.replace(/px/, ''),
+                    success: function (data, status)
+                    {
+                        if (data != 1)
+                            alert("An error has occured");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert("An error has occured");
+                    }
+                });
             }
             else
             {
@@ -68,6 +82,24 @@ PostIt.prototype =
     fillEditor: function ()
     {
         $('textarea[name="description"]', $('#formPostit_' + this.id)).val(this.text);
+    },
+
+    saveMove: function ()
+    {
+        $.ajax({
+            type: "POST",
+            url: "inc/movePostit.php",
+            data: "id=" + calendarService.getUserId() + "&idPostit=" + this.id + "&x=" + this.body.style.left.replace(/px/, '') + "&y=" + this.body.style.top.replace(/px/, ''),
+            success: function (data, status)
+            {
+                if (data != 1)
+                    alert("An error has occured");
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert("An error has occured");
+            }
+        });
     },
 
     close: function ()

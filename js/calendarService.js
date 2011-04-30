@@ -38,7 +38,7 @@ CalendarService.prototype =
             data: "id=" + this.userId
         });
 
-        // Cree le repertoire de l'utilisateur à la première connexion
+        // Charge les post-it
         $.ajax({
             type: "GET",
             url: "data/" + this.userId + "/postIts.xml",
