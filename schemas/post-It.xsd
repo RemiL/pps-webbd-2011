@@ -12,14 +12,6 @@
         </xs:sequence>
       </xs:complexType>
     </xs:element>
-    <xs:element name="size">
-      <xs:complexType>
-        <xs:sequence>
-          <xs:element name="width" type="xs:positiveInteger" />
-          <xs:element name="height" type="xs:positiveInteger" />
-        </xs:sequence>
-      </xs:complexType>
-    </xs:element>
     <xs:element name="color">
       <xs:simpleType>
         <xs:restriction base="xs:string">
