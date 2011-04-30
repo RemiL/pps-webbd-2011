@@ -47,14 +47,31 @@ function addTab(title, id, idpostit)
     // JQuery crée 2 div dont un inutile, il faut l'enlever
     indexOngletsSecondairesOuverts++;
     $("#ui-tabs-action-menu" + Number(indexOngletsSecondairesOuverts * 2 - 1)).detach();
+    // Création du bouton de suppression si la tâche est déjà sauvegardée
+    if (id)
+    {
+        var buttonDeleteTaskContainer = document.createElement("li");
+        buttonDeleteTaskContainer.className = "ui-state-default ui-corner-top";
+        var buttonDeleteTask = document.createElement("a");
+        buttonDeleteTask.className = "menuActionTab";
+        buttonDeleteTask.href = "#"+id;
+        buttonDeleteTask.onclick = function(event) { deleteTask(this); event.preventDefault(); event.stopPropagation(); };
+        buttonDeleteTask.appendChild(document.createTextNode("Delete"));
+        buttonDeleteTaskContainer.appendChild(buttonDeleteTask);
+        ulContent.appendChild(buttonDeleteTaskContainer);
+    }
 
     indexOngletsOuverts++;
 
     return indexOngletsOuverts;
 }
 
-function closeTab(event, ui) {
-    var task = Task.tasks[ui.tab.hash.split('-')[3]];
-    if (task)
-        task.closeEditor();
+function closeTab(event, ui)
+{
+    if (ui.tab)
+    {
+        var task = Task.tasks[ui.tab.hash.split('-')[3]];
+        if (task)
+            task.closeEditor();
+    }
 }

@@ -27,7 +27,7 @@ Task.prototype =
     showEditor: function ()
     {
         if (this.tabIndex == null)
-            this.tabIndex = addTab(this.calendarEntry.getTitle().getText(), this.id);
+            this.tabIndex = addTab(this.calendarEntry.getTitle().getText(), this.id) - 1;
         else
             this.tabs.tabs('select', this.tabIndex);
     },
@@ -93,6 +93,17 @@ Task.prototype =
         this.form.id = 'form_'+this.id;
         Task.tasks[this.id] = this;
         
+        // Ajout du bouton de suppression
+        var buttonDeleteTaskContainer = document.createElement("li");
+        buttonDeleteTaskContainer.className = "ui-state-default ui-corner-top";
+        var buttonDeleteTask = document.createElement("a");
+        buttonDeleteTask.className = "menuActionTab";
+        buttonDeleteTask.href = "#"+this.id;
+        buttonDeleteTask.onclick = function() { deleteTask(this); event.preventDefault(); event.stopPropagation(); };
+        buttonDeleteTask.appendChild(document.createTextNode("Delete"));
+        buttonDeleteTaskContainer.appendChild(buttonDeleteTask);
+        this.form.parentNode.parentNode.parentNode.getElementsByTagName('ul')[0].appendChild(buttonDeleteTaskContainer);
+        
         alert('Creation completed');
     },
     
@@ -108,6 +119,19 @@ Task.prototype =
         this.calendarEntry = root.entry;
         
         alert('Edition completed');
+    },
+
+    delete: function ()
+    {
+        this.calendarEntry.deleteEntry(bind(this.onDeleteCompleted, this), bind(this.gestErreur, this));
+    },
+
+    onDeleteCompleted: function ()
+    {
+        delete Task.tasks[this.id];
+        this.tabs.tabs('remove',  this.tabs.tabs('option', 'selected'));
+        
+        alert('Deletion completed');
     },
 
     // Gestionnaire d'erreur

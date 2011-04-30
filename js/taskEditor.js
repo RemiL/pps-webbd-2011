@@ -115,3 +115,11 @@ function editTask(form)
         task.create(form);
     }
 }
+
+// Supprime une tâche
+function deleteTask(button)
+{
+    var taskId = button.href.split('#')[1];
+    
+    Task.tasks[taskId].delete();
+}
