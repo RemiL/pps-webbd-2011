@@ -86,7 +86,7 @@ Panel.prototype =
 
     validPostit: function ()
     {
-        this.list.push(this.postit);
+        this.list[this.postit.id] = this.postit;
         this.postit = null;
     },
 
@@ -100,8 +100,16 @@ Panel.prototype =
 
     removePostit: function (id)
     {
-        this.body.removeChild(this.list[id].body);
-        this.list.splice(id, 1);
+        if (this.postit != null && id == this.postit.id)
+        {
+            this.body.removeChild(this.postit.body);
+            this.postit = null;
+        }
+        else
+        {
+            this.body.removeChild(this.list[id].body);
+            delete this.list[id];
+        }
     },
 
     setBody: function (body)
