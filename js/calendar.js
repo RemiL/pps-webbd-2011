@@ -113,29 +113,30 @@ Calendar.prototype =
         task.className = 'tacheCalendar ui-corner-all';
         // On calcule le placement à partir du nombre de minutes depuis minuit (1 pixel = 2 minutes)
         task.style.top = (entry.getTimes()[0].getStartTime().getDate().getHours() * 60 + entry.getTimes()[0].getStartTime().getDate().getMinutes()) / 2 + 'px';
-        // On calcule la hauteur à partir de la durée
-        task.style.height = (entry.getTimes()[0].getEndTime().getDate().getTime() - entry.getTimes()[0].getStartTime().getDate().getTime()) / (60 * 2 * 1000) - 1 + 'px';
+        // On calcule la hauteur à partir de la durée (-1 pour la bordure)
+        var height = (entry.getTimes()[0].getEndTime().getDate().getTime() - entry.getTimes()[0].getStartTime().getDate().getTime()) / (60 * 2 * 1000) - 1;
+        // On limite la "petitesse" de la tâche
+        if (height < 14)
+            height = 14;
+        task.style.height = height + 'px';
 
         // L'horaire de la tâche
         var horaire = document.createElement('div');
-        horaire.className = 'dateTacheCalendar';
         horaire.appendChild(document.createTextNode(this.getHoraire(entry.getTimes()[0].getStartTime().getDate()) + ' - ' + this.getHoraire(entry.getTimes()[0].getEndTime().getDate())));
         task.appendChild(horaire);
 
         // Le titre de la tâche
         var title = document.createElement('div');
 
-        if (task.style.height.replace(/px/, '') <= 14) {
-            task.style.height = '14px';
+        if (parseInt(task.style.height) < 29)
+        {
             title.className = 'titreTacheCalendarFloat';
             horaire.className = 'dateTacheCalendarFloat';
         }
-        else if (task.style.height.replace(/px/, '') < 29) {
-            title.className = 'titreTacheCalendarFloat';
-            horaire.className = 'dateTacheCalendarFloat';
-        }
-        else {
+        else
+        {
             title.className = 'titreTacheCalendar';
+            horaire.className = 'dateTacheCalendar';
         }
 
         title.appendChild(document.createTextNode(entry.getTitle().getText()));
@@ -164,13 +165,31 @@ Calendar.prototype =
 
     updateTask: function (entry, task)
     {
+        var horaire = task.childNodes[0];
+        var title = task.childNodes[1];
+        
         // On calcule le placement à partir du nombre de minutes depuis minuit (1 pixel = 2 minutes)
         task.style.top = (entry.getTimes()[0].getStartTime().getDate().getHours() * 60 + entry.getTimes()[0].getStartTime().getDate().getMinutes()) / 2 + 'px';
-        // On calcule la hauteur à partir de la durée
-        task.style.height = (entry.getTimes()[0].getEndTime().getDate().getTime() - entry.getTimes()[0].getStartTime().getDate().getTime()) / (60 * 2 * 1000) - 1 + 'px';
+        // On calcule la hauteur à partir de la durée (-1 pour la bordure)
+        var height = (entry.getTimes()[0].getEndTime().getDate().getTime() - entry.getTimes()[0].getStartTime().getDate().getTime()) / (60 * 2 * 1000) - 1;
+        // On limite la "petitesse" de la tâche
+        if (height < 14)
+            height = 14;
+        task.style.height = height + 'px';
         
-        task.childNodes[0].innerHTML = this.getHoraire(entry.getTimes()[0].getStartTime().getDate())+' - '+this.getHoraire(entry.getTimes()[0].getEndTime().getDate());
-        task.childNodes[1].innerHTML = entry.getTitle().getText();
+        if (parseInt(task.style.height) < 29)
+        {
+            title.className = 'titreTacheCalendarFloat';
+            horaire.className = 'dateTacheCalendarFloat';
+        }
+        else
+        {
+            title.className = 'titreTacheCalendar';
+            horaire.className = 'dateTacheCalendar';
+        }
+        
+        horaire.innerHTML = this.getHoraire(entry.getTimes()[0].getStartTime().getDate())+' - '+this.getHoraire(entry.getTimes()[0].getEndTime().getDate());
+        title.innerHTML = entry.getTitle().getText();
     },
 
     removeTask: function (task)
