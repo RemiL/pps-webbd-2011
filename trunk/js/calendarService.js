@@ -41,7 +41,7 @@ CalendarService.prototype =
         // Cree le repertoire de l'utilisateur à la première connexion
         $.ajax({
             type: "GET",
-            url: "data/" + this.userId + "/postits.xml",
+            url: "data/" + this.userId + "/postIts.xml",
             dataType: "xml",
             cache: false,
             complete: function (data, status)

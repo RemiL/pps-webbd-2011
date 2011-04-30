@@ -110,11 +110,9 @@ Panel.prototype =
         zoneText.className = 'textPostit';
 
         // Ajoute le texte
-        alert(text);
         var tabText = text.split('\n');
         for (var i = 0; i < tabText.length; i++)
         {
-            alert(tabText[i]);
             zoneText.appendChild(document.createTextNode(tabText[i]));
             zoneText.appendChild(document.createElement('br'));
         }
