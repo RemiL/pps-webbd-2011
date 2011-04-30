@@ -74,6 +74,11 @@ function closeTab(event, ui)
     {
         var task = Task.tasks[$('form', ui.panel).attr('id').split('_')[1]];
         if (task)
-            task.closeEditor();
+        {
+            var closed = task.closeEditor();
+            
+            for (id in Task.tasks)
+                Task.tasks[id].updateTabIndexAfterTabClosed(closed);
+        }
     }
 }

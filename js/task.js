@@ -61,7 +61,16 @@ Task.prototype =
 
     closeEditor: function ()
     {
+        var sav = this.tabIndex;
         this.tabIndex = null;
+        
+        return sav;
+    },
+
+    updateTabIndexAfterTabClosed: function (closed)
+    {
+        if (this.tabIndex > closed)
+            this.tabIndex--;
     },
 
     updateFromFrom: function ()
