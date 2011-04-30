@@ -55,6 +55,7 @@
     height: 18px;
     margin: 3px;
     overflow: hidden;
+    font-weight: bold;
 }
 
 .optionsBox

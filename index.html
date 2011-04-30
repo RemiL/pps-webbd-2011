@@ -13,6 +13,7 @@
     <script type="text/javascript" src="js/postit.js"></script>
     <script type="text/javascript" src="js/panel.js"></script>
     <script type="text/javascript" src="js/box.js"></script>
+    <script type="text/javascript" src="js/listbox.js"></script>
     <script type="text/javascript" src="js/calendarService.js"></script>
     <script type="text/javascript" src="js/task.js"></script>
     <script type="text/javascript" src="js/calendar.js"></script>
@@ -96,12 +97,12 @@
         <div id="box" class="ui-corner-all">
             <div id="hautListeBox" class="ui-widget-header ui-helper-clearfix ui-corner-all">
                 <div id="flechesDeplacementBox">
-                    <span onclick="versGaucheListeBox();" class="versGaucheListeBox ui-icon ui-icon-circle-triangle-w"></span>
-                    <span onclick="versDroiteListeBox();" class="versDroiteListeBox ui-icon ui-icon-circle-triangle-e"></span>
+                    <span class="versGaucheListeBox ui-icon ui-icon-circle-triangle-w"></span>
+                    <span class="versDroiteListeBox ui-icon ui-icon-circle-triangle-e"></span>
                 </div>
                 <div id="triTaches">
-                    <label for="tri">Try by : </label>
-                    <select name="tri" id="SelectTri">
+                    <label for="sort">Sorted by : </label>
+                    <select name="sort" id="Tri">
                         <option value="date increasing">date increasing</option>
                         <option value="date decreasing">date decreasing</option>
                         <option value="priority">Priority</option>
@@ -109,7 +110,7 @@
                 </div>
             </div>
             <div id="listeBox">
-                <div class="box ui-corner-all" id="b1">
+                <!--<div class="box ui-corner-all" id="b1">
                     <div class="hautBox">
                         <div class="optionsBox">
                             <span onclick="ajouterTacheBox(this.parentNode.parentNode.parentNode);" class="ajouterTacheBox ui-icon ui-icon-plusthick"></span>
@@ -366,7 +367,7 @@
                         <span onclick="boxVersDroite(this.parentNode.parentNode);" class="versDroiteBox ui-icon ui-icon-circle-arrow-e"></span>
                         <span onclick="boxVersBas(this.parentNode.parentNode);" class="deplacerTacheBox ui-icon ui-icon-carat-1-s"></span>
                     </div>
-                </div>
+                </div>-->
             </div>
         </div>
         <div id="action">
