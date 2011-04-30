@@ -24,7 +24,7 @@ $(function ()
     listBox.addBox("toty");
     listBox.addBox("totu");
     listBox.addBox("totou");
-    listBox.addBox("totoyy");
+    listBox.addBox("totouuu");
     listBox.list["toto"].addTask();
     listBox.list["toto"].addTask();
     listBox.list["toto"].addTask();

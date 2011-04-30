@@ -1,10 +1,10 @@
-function PostIt(panel, body)
+function PostIt(panel, body, text, valid)
 {
     this.id = String(PostIt.nbPostit);
     this.panel = panel;
     this.body = body;
-    this.text = "";
-    this.valid = false;
+    this.text = text;
+    this.valid = valid;
     PostIt.nbPostit++;
 }
 

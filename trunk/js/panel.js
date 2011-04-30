@@ -20,7 +20,7 @@ Panel.prototype =
         var postit = document.createElement('div');
         postit.className = 'postit ui-corner-all';
 
-        var objPostit = new PostIt(this, postit);
+        var objPostit = new PostIt(this, postit, "", false);
         this.postit = objPostit;
 
         if (y < 150 / 2)
@@ -82,6 +82,54 @@ Panel.prototype =
         document.getElementById('nouveauTextePostit').focus();
 
         $(postit).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
+    },
+
+    loadPostit: function (text, x, y)
+    {
+        var postit = document.createElement('div');
+        postit.className = 'postit ui-corner-all';
+
+        postit.style.left = x + 'px';
+        postit.style.top = y + 'px';
+
+        var objPostit = new PostIt(this, postit, text, true);
+        this.postit = objPostit;
+
+        var options = document.createElement('div');
+        options.className = 'optionsPostit';
+
+        var supprimer = document.createElement('span');
+        supprimer.className = 'ui-icon ui-icon-closethick';
+        supprimer.onclick = function () { objPostit.close(); };
+
+        var deriver = document.createElement('span');
+        deriver.className = 'ui-icon ui-icon-document';
+        deriver.onclick = function () { objPostit.createTask(); };
+
+        var zoneText = document.createElement('div');
+        zoneText.className = 'textPostit';
+
+        // Ajoute le texte
+        alert(text);
+        var tabText = text.split('\n');
+        for (var i = 0; i < tabText.length; i++)
+        {
+            alert(tabText[i]);
+            zoneText.appendChild(document.createTextNode(tabText[i]));
+            zoneText.appendChild(document.createElement('br'));
+        }
+
+        options.appendChild(supprimer);
+        options.appendChild(deriver);
+
+        postit.appendChild(options);
+        postit.appendChild(zoneText);
+
+        document.getElementById('panneauPostit').appendChild(postit);
+
+        $(postit).draggable({ containment: 'parent' }, { scroll: false }, { stack: ".postit" });
+
+        this.list[objPostit.id] = objPostit;
     },
 
     validPostit: function ()

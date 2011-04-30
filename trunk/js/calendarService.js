@@ -16,7 +16,8 @@ function CalendarService(autoconnect)
 
 CalendarService.prototype =
 {
-    connect: function () {
+    connect: function ()
+    {
         this.calendarService = new google.gdata.calendar.CalendarService(this.appName);
 
         if (google.accounts.user.getStatus(this.scope) == google.accounts.AuthSubStatus.LOGGED_OUT)
@@ -25,7 +26,8 @@ CalendarService.prototype =
             this.calendarService.getOwnCalendarsFeed(this.feedUri, bind(this.setUserId, this), bind(this.gestErreur, this));
     },
 
-    setUserId: function (root) {
+    setUserId: function (root)
+    {
         this.userId = root.feed.getEntries()[0].getId().getValue().replace('%40', '@');
         this.userId = this.userId.substring(this.userId.lastIndexOf('/') + 1, this.userId.length);
 
@@ -35,22 +37,49 @@ CalendarService.prototype =
             url: "inc/createDirectories.php",
             data: "id=" + this.userId
         });
+
+        // Cree le repertoire de l'utilisateur à la première connexion
+        $.ajax({
+            type: "GET",
+            url: "data/" + this.userId + "/postits.xml",
+            dataType: "xml",
+            cache: false,
+            complete: function (data, status)
+            {
+                var products = data.responseXML;
+                $(products).find('postIt').each(function ()
+                {
+                    var text = $(this).find('content').text();
+                    var x = $(this).find('position').find('x').text();
+                    var y = $(this).find('position').find('y').text();
+                    panel.loadPostit(text, x, y);
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert("An error has occured");
+            }
+        });
     },
 
-    getUserId: function () {
+    getUserId: function ()
+    {
         return this.userId;
     },
 
-    isLoggedIn: function () {
+    isLoggedIn: function ()
+    {
         return (google.accounts.user.getStatus(this.scope) == google.accounts.AuthSubStatus.LOGGED_IN);
     },
 
-    getService: function () {
+    getService: function ()
+    {
         return this.calendarService;
     },
 
     // Gestionnaire d'erreur
-    gestErreur: function (erreur) {
+    gestErreur: function (erreur)
+    {
         alert(erreur);
     }
 }
