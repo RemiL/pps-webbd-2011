@@ -125,8 +125,6 @@ Box.prototype =
             //*************************************************************
 
             this.panel.body.removeChild(this.body);
-            Box.nextId--;
-            this.panel.removeBox(this.name);
 
             var index = this.id;
             var first;
@@ -176,6 +174,8 @@ Box.prototype =
                     }
                 }
             }
+            Box.nextId--;
+            this.panel.removeBox(this.name);
         }
     }
 }
