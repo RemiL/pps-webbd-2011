@@ -32,13 +32,21 @@ Task.prototype =
     fillEditor: function ()
     {
         this.form = $('#formTask_' + this.id);
-        this.calendarService.getService().getCalendarEntry(this.feedUri, bind(this.onDataReceivedFillEditor, this), bind(this.gestErreur, this));
+        /* Workaround pour un bug de l'API Google :
+         * this.calendarService.getService().getCalendarEntry(this.feedUri, bind(this.onDataReceivedFillEditor, this), bind(this.gestErreur, this));
+         * ne retourne pas un objet complet, il manque getTimes() ... donc on utilise la fonction générique */
+        this.calendarService.getService().getEntry(this.feedUri, bind(this.onDataReceivedFillEditor, this), bind(this.gestErreur, this), google.gdata.calendar.CalendarEventEntry, true);
     },
 
     onDataReceivedFillEditor: function (root)
     {
         this.calendarEntry = root.entry;
+        
         $('input[name="title"]', this.form).val(this.calendarEntry.getTitle().getText());
+        $('input[name="beginDate"]', this.form).val($.datepicker.formatDate("mm/dd/yy", this.calendarEntry.getTimes()[0].getStartTime().getDate()));
+        $('input[name="beginTime"]', this.form).val(this.calendarEntry.getTimes()[0].getStartTime().getDate().toTimeString().substr(0, 5));
+        $('input[name="endDate"]', this.form).val($.datepicker.formatDate("mm/dd/yy", this.calendarEntry.getTimes()[0].getEndTime().getDate()));
+        $('input[name="endTime"]', this.form).val(this.calendarEntry.getTimes()[0].getEndTime().getDate().toTimeString().substr(0, 5));
         $('input[name="location"]', this.form).val(this.calendarEntry.getLocations()[0].getValueString());
         $('textarea[name="description"]', this.form).val(this.calendarEntry.getContent().getText());
     },
@@ -51,11 +59,25 @@ Task.prototype =
     save: function ()
     {
         this.calendarEntry.setTitle(google.gdata.atom.Text.create($('input[name="title"]', this.form).val()));
+        var start = $.datepicker.parseDate("mm/dd/yy", $('input[name="beginDate"]', this.form).val());
+        start.setHours($('input[name="beginTime"]', this.form).val().split(':')[0]);
+        start.setMinutes($('input[name="beginTime"]', this.form).val().split(':')[1]);
+        this.calendarEntry.getTimes()[0].setStartTime(start);
+        var end = $.datepicker.parseDate("mm/dd/yy", $('input[name="endDate"]', this.form).val());
+        end.setHours($('input[name="endTime"]', this.form).val().split(':')[0]);
+        end.setMinutes($('input[name="endTime"]', this.form).val().split(':')[1]);
+        this.calendarEntry.getTimes()[0].setEndTime(end);
         this.calendarEntry.getLocations()[0].setValueString($('input[name="location"]', this.form).val());
         this.calendarEntry.setContent(google.gdata.atom.Text.create($('textarea[name="description"]', this.form).val()));
-        // TBC
 
-        this.calendarEntry.updateEntry(function () { alert('Edition completed'); });
+        this.calendarEntry.updateEntry(bind(this.onSaveCompleted, this), bind(this.gestErreur, this));
+    },
+    
+    onSaveCompleted: function (root)
+    {
+        this.calendarEntry = root.entry;
+        
+        alert('Edition completed');
     },
 
     // Gestionnaire d'erreur
