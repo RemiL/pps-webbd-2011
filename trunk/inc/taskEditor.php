@@ -38,7 +38,7 @@
         </div>
         <div>
             <label for="activities">Activities</label>
-            <input name="activities[]" type="text" />
+            <input name="activities[]" type="text" <?php if(isset($_GET['namebox'])) { echo 'value="'.$_GET['namebox'].'"'; } ?> />
             <span class="buttonAddInput buttonAddInputActivities"></span>
         </div>
         <div>
@@ -101,8 +101,7 @@
         {
             echo "Task.tasks['{$_GET['id']}'].fillEditor();";
         }
-        
-        if(isset($_GET['idpostit'])) 
+        else if(isset($_GET['idpostit'])) 
         {
             echo "panel.list[".$_GET['idpostit']."].fillEditor();";
             echo "panel.removePostit(".$_GET['idpostit'].");";

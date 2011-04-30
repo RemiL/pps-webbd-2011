@@ -1,112 +1,180 @@
-function ajouterTacheBox(box) {
-    if (box.offsetLeft % 207 == 0) {
-        addTab();
-    }
+function Box(name, body, listTask, panel)
+{
+    this.name = name;
+    this.id = Box.nextId;
+    this.list = new Array();
+    this.listBody = new Array();
+    this.body = body;
+    this.listTask = listTask;
+    this.panel = panel;
+
+    Box.nextId++;
 }
 
-function supprimerBox(box) {
-    if (box.offsetLeft % 207 == 0) {
-        var index = Number(box.id.substring(1, box.id.length));
+Box.nextId = 0;
 
-        if (document.getElementById('b1').offsetLeft < 0) {
-            index--;
-        }
-        else {
-            index++;
-        }
+Box.prototype =
+{
+    addTask: function (task)
+    {
+        // TODO avec les objets task
+        //***************************
 
-        if (document.getElementById('b' + index) != null) {
-            if (index < Number(box.id.substring(1, box.id.length))) {
-                while (index > 0) {
-                    $("#b" + index).animate({ marginLeft: '+=207px' }, 'slow');
-                    index--;
-                }
+        //this.list[task.id] = task;
+
+        // ajouter au dom
+        var divTask = document.createElement('div');
+        divTask.className = "tacheBox ui-corner-all";
+
+        var date = document.createElement('div');
+        date.className = "dateTache";
+        //date.appendChild(document.createTextNode());
+
+        var titre = document.createElement('div');
+        titre.className = "titreTache";
+        //titre.appendChild(document.createTextNode(calendarEntry.getTitle().getText()));
+
+        divTask.appendChild(date);
+        divTask.appendChild(titre);
+
+        this.listTask.appendChild(divTask);
+
+        //this.listBody[task.id] = divTask;
+    },
+
+    removeTask: function (task)
+    {
+        this.panelthis.removeChild(listBody[task.id]);
+        delete this.listBody[task.id];
+        delete this.list[task.id];
+    },
+
+    moveLeft: function ()
+    {
+        if (this.body.offsetLeft % 207 == 0)
+        {
+            var previous = null;
+            for (var i in this.panel.list)
+            {
+                if (this.panel.list[i].id == (this.id - 1))
+                    previous = this.panel.list[i];
             }
-            else {
-                while (document.getElementById('b' + index) != null) {
-                    $("#b" + index).animate({ marginLeft: '-=207px' }, 'slow');
-                    index++;
-                }
+            if (previous != null)
+            {
+                this.body.style.zIndex = 2;
+                $(this.body).animate({ marginLeft: '-=207px' }, 'slow');
+                previous.body.style.zIndex = 1;
+                $(previous.body).animate({ marginLeft: '+=207px' }, 'slow');
+                previous.id = this.id;
+                this.id--;
             }
         }
+    },
 
-        index = Number(box.id.substring(1, box.id.length)) + 1;
-        while (document.getElementById('b' + index) != null) {
-            document.getElementById('b' + index).id = 'b' + (index - 1);
-            index++;
+    moveRight: function ()
+    {
+        if (this.body.offsetLeft % 207 == 0)
+        {
+            var next = null;
+            for (var i in this.panel.list)
+            {
+                if (this.panel.list[i].id == (this.id + 1))
+                    next = this.panel.list[i];
+            }
+            if (next != null)
+            {
+                this.body.style.zIndex = 2;
+                $(this.body).animate({ marginLeft: '+=207px' }, 'slow');
+                next.body.style.zIndex = 1;
+                $(next.body).animate({ marginLeft: '-=207px' }, 'slow');
+                next.id = this.id;
+                this.id++;
+            }
         }
+    },
 
-        document.getElementById("listeBox").removeChild(box);
-    }
-}
-
-function boxVersHaut(box) {
-    if (box.offsetLeft % 207 == 0 && Number($("#" + box.id + " .listeTaches").css("marginTop").replace(/px/, '')) % 44 == 0 && Number($("#" + box.id + " .listeTaches").css("marginTop").replace(/px/, '')) < 0) {
-        $("#" + box.id + " .listeTaches").animate({ marginTop: '+=44px' }, 'slow');
-    }
-}
-
-function boxVersBas(box) {
-    if (box.offsetLeft % 207 == 0 && Number($("#" + box.id + " .listeTaches").css("marginTop").replace(/px/, '')) % 44 == 0 && ($("#" + box.id + " .listeTaches").height() + Number($("#" + box.id + " .listeTaches").css("marginTop").replace(/px/, ''))) > $("#" + box.id + " .corpsBox").height()) {
-        $("#" + box.id + " .listeTaches").animate({ marginTop: '-=44px' }, 'slow');
-    }
-}
-
-function boxVersGauche(box) {
-    if (box.offsetLeft % 207 == 0) {
-        var index = Number(box.id.substring(1, box.id.length)) - 1;
-        if (document.getElementById('b' + index) != null) {
-            box.style.zIndex = 2;
-            $("#" + box.id).animate({ marginLeft: '-=207px' }, 'slow');
-            document.getElementById('b' + index).style.zIndex = 1;
-            $("#b" + index).animate({ marginLeft: '+=207px' }, 'slow');
-            document.getElementById('b' + index).id = box.id;
-            box.id = 'b' + index;
+    moveTaskTop: function ()
+    {
+        if (this.body.offsetLeft % 207 == 0 && Number($(this.listTask).css("marginTop").replace(/px/, '')) % 44 == 0 && Number($(this.listTask).css("marginTop").replace(/px/, '')) < 0)
+        {
+            $(this.listTask).animate({ marginTop: '+=44px' }, 'slow');
         }
-    }
-}
+    },
 
-function boxVersDroite(box) {
-    if (box.offsetLeft % 207 == 0) {
-        var index = Number(box.id.substring(1, box.id.length)) + 1;
-        if (document.getElementById('b' + index) != null) {
-            box.style.zIndex = 2;
-            $("#" + box.id).animate({ marginLeft: '+=207px' }, 'slow');
-            document.getElementById('b' + index).style.zIndex = 1;
-            $("#b" + index).animate({ marginLeft: '-=207px' }, 'slow');
-            document.getElementById('b' + index).id = box.id;
-            box.id = 'b' + index;
+    moveTaskBottom: function ()
+    {
+        if (this.body.offsetLeft % 207 == 0 && Number($(this.listTask).css("marginTop").replace(/px/, '')) % 44 == 0 && ($(this.listTask).height() + Number($(this.listTask).css("marginTop").replace(/px/, ''))) > $(".corpsBox", this.body).height())
+        {
+            $(this.listTask).animate({ marginTop: '-=44px' }, 'slow');
         }
-    }
-}
+    },
 
-function versGaucheListeBox() {
-    if (document.getElementById('b1') != undefined && document.getElementById('b1').offsetLeft % 207 == 0) {
-        if (document.getElementById('b1').offsetLeft < 0) {
-            var index = 1;
+    createTask: function ()
+    {
+        if (this.body.offsetLeft % 207 == 0)
+        {
+            addTab(null, null, null, this.name);
+        }
+    },
 
-            while (document.getElementById('b' + index) != null) {
-                $("#b" + index).animate({ marginLeft: '+=207px' }, 'slow');
+    close: function ()
+    {
+        if (this.body.offsetLeft % 207 == 0)
+        {
+            // Supprimer cette activity à toutes les taches de la box TODO
+            //*************************************************************
+
+            this.panel.body.removeChild(this.body);
+            Box.nextId--;
+            this.panel.removeBox(this.name);
+
+            var index = this.id;
+            var first;
+            for (var i in this.panel.list)
+            {
+                if (this.panel.list[i].id == 0)
+                    first = this.panel.list[i];
+            }
+            if (first.body.offsetLeft < 0)
+            {
+                index--;
+            }
+            else
+            {
                 index++;
             }
-        }
-    }
-}
 
-function versDroiteListeBox() {
-    if (document.getElementById('b1') != undefined && document.getElementById('b1').offsetLeft % 207 == 0) {
-        var index = 1;
+            var boxMove = null;
 
-        while (document.getElementById('b' + index) != null) {
-            index++;
-        }
+            for (var i in this.panel.list)
+            {
+                if (this.panel.list[i].id == index)
+                    boxMove = this.panel.list[i];
+            }
 
-        if (document.getElementById('b' + (index - 1)).offsetLeft + 200 > document.getElementById('listeBox').offsetWidth) {
-            index = 1;
-
-            while (document.getElementById('b' + index) != null) {
-                $("#b" + index).animate({ marginLeft: '-=207px' }, 'slow');
-                index++;
+            if (boxMove != null)
+            {
+                if (index < this.id)
+                {
+                    for (var i in this.panel.list)
+                    {
+                        if (this.panel.list[i].id <= index)
+                            $(this.panel.list[i].body).animate({ marginLeft: '+=207px' }, 'slow');
+                        else
+                            this.panel.list[i].id--;
+                    }
+                }
+                else
+                {
+                    for (var i in this.panel.list)
+                    {
+                        if (this.panel.list[i].id >= index)
+                        {
+                            $(this.panel.list[i].body).animate({ marginLeft: '-=207px' }, 'slow');
+                            this.panel.list[i].id--;
+                        }
+                    }
+                }
             }
         }
     }
