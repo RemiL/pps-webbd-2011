@@ -55,6 +55,12 @@ Task.prototype =
         $('input[name="beginTime"]', this.form).val(this.calendarEntry.getTimes()[0].getStartTime().getDate().toTimeString().substr(0, 5));
         $('input[name="endDate"]', this.form).val($.datepicker.formatDate("mm/dd/yy", this.calendarEntry.getTimes()[0].getEndTime().getDate()));
         $('input[name="endTime"]', this.form).val(this.calendarEntry.getTimes()[0].getEndTime().getDate().toTimeString().substr(0, 5));
+        // Si les dates sont identiques alors on a un tâche avec une date limite
+        if (this.calendarEntry.getTimes()[0].getStartTime().getDate().getTime() == this.calendarEntry.getTimes()[0].getEndTime().getDate().getTime())
+        {
+            $('select[name="dateType"]', this.form).val('d');
+            $('span', this.form).css('visibility', 'hidden');
+        }
         $('input[name="location"]', this.form).val(this.calendarEntry.getLocations()[0].getValueString());
         $('textarea[name="description"]', this.form).val(this.calendarEntry.getContent().getText());
     },
@@ -80,9 +86,15 @@ Task.prototype =
         start.setHours($('input[name="beginTime"]', this.form).val().split(':')[0]);
         start.setMinutes($('input[name="beginTime"]', this.form).val().split(':')[1]);
         this.calendarEntry.getTimes()[0].setStartTime(start);
-        var end = $.datepicker.parseDate("mm/dd/yy", $('input[name="endDate"]', this.form).val());
-        end.setHours($('input[name="endTime"]', this.form).val().split(':')[0]);
-        end.setMinutes($('input[name="endTime"]', this.form).val().split(':')[1]);
+        var end;
+        if ($('select[name="dateType"]', this.form).val() == 'w') // créneau horaire
+        {
+            end = $.datepicker.parseDate("mm/dd/yy", $('input[name="endDate"]', this.form).val());
+            end.setHours($('input[name="endTime"]', this.form).val().split(':')[0]);
+            end.setMinutes($('input[name="endTime"]', this.form).val().split(':')[1]);
+        }
+        else // date limite --> tâche "jalon" avec date de fin égale à date de début
+            end = start;
         this.calendarEntry.getTimes()[0].setEndTime(end);
         this.calendarEntry.getLocations()[0].setValueString($('input[name="location"]', this.form).val());
         this.calendarEntry.setContent(google.gdata.atom.Text.create($('textarea[name="description"]', this.form).val()));
@@ -107,6 +119,8 @@ Task.prototype =
         this.id = this.feedUri.substring(this.feedUri.lastIndexOf('/') + 1, this.feedUri.length);
         this.form.id = 'form_'+this.id;
         Task.tasks[this.id] = this;
+        
+        this.onDataReceivedFillEditor(root);
         
         // Ajout dans le calendrier si on affiche le jour correspondant à la tâche
         if (this.calendar.isDayShown(this.calendarEntry.getTimes()[0].getStartTime().getDate())
@@ -140,6 +154,8 @@ Task.prototype =
     onUpdateCompleted: function (root)
     {
         this.calendarEntry = root.entry;
+        
+        this.onDataReceivedFillEditor(root);
         
         // Mise à jour dans le calendrier si besoin
         if (this.calendarDOMEntry)

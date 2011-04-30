@@ -5,10 +5,10 @@
         </div>
         <div>
             <label for="beginDate">
-            <select name="when" onchange="changeDateType(this, event)" onkeydown="changeDateType(this, event)">
-                <option value="1">When</option>
-                <option value="2">Due for</option>
-            </select>
+                <select name="dateType" onchange="changeDateType(this, event)" onkeydown="changeDateType(this, event)">
+                    <option value="w">When</option>
+                    <option value="d">Due for</option>
+                </select>
             </label>
             <input name="beginDate" type="text" />
             <input name="beginTime" type="text" />
