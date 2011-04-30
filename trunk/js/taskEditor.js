@@ -106,7 +106,7 @@ function editTask(form)
     
     if (taskId)
     {
-        Task.tasks[taskId].save();
+        Task.tasks[taskId].update();
         // TBC
     }
     else // new task
