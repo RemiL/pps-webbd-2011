@@ -162,6 +162,17 @@ Calendar.prototype =
         this.getEvenements();
     },
 
+    updateTask: function (entry, task)
+    {
+        // On calcule le placement à partir du nombre de minutes depuis minuit (1 pixel = 2 minutes)
+        task.style.top = (entry.getTimes()[0].getStartTime().getDate().getHours() * 60 + entry.getTimes()[0].getStartTime().getDate().getMinutes()) / 2 + 'px';
+        // On calcule la hauteur à partir de la durée
+        task.style.height = (entry.getTimes()[0].getEndTime().getDate().getTime() - entry.getTimes()[0].getStartTime().getDate().getTime()) / (60 * 2 * 1000) - 1 + 'px';
+        
+        task.childNodes[0].innerHTML = this.getHoraire(entry.getTimes()[0].getStartTime().getDate())+' - '+this.getHoraire(entry.getTimes()[0].getEndTime().getDate());
+        task.childNodes[1].innerHTML = entry.getTitle().getText();
+    },
+
     removeTask: function (task)
     {
         this.calendarAgenda.removeChild(task);

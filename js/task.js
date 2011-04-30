@@ -119,16 +119,20 @@ Task.prototype =
         alert('Creation completed');
     },
     
-    save: function ()
+    update: function ()
     {
         this.updateFromFrom();
         
-        this.calendarEntry.updateEntry(bind(this.onSaveCompleted, this), bind(this.gestErreur, this));
+        this.calendarEntry.updateEntry(bind(this.onUpdateCompleted, this), bind(this.gestErreur, this));
     },
 
-    onSaveCompleted: function (root)
+    onUpdateCompleted: function (root)
     {
         this.calendarEntry = root.entry;
+        
+        // Mise à jour dans le calendrier si besoin
+        if (this.calendarDOMEntry)
+            this.calendar.updateTask(this.calendarEntry, this.calendarDOMEntry);
         
         alert('Edition completed');
     },
@@ -143,6 +147,7 @@ Task.prototype =
         delete Task.tasks[this.id];
         this.tabs.tabs('remove',  this.tabs.tabs('option', 'selected'));
         
+        // Suppression du calendrier si besoin
         if (this.calendarDOMEntry)
             this.calendar.removeTask(this.calendarDOMEntry);
         
