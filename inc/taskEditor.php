@@ -77,10 +77,10 @@
     "Scala",
     "Scheme"
     ];
-    $( 'input[name*="activities[]"]' ).autocomplete({
+    $( 'input[name="activities[]"]' ).autocomplete({
     source: availableTags
     });
-    $( 'input[name*="dependencies[]"]' ).autocomplete({
+    $( 'input[name="dependencies[]"]' ).autocomplete({
     source: availableTags
     });
 
@@ -91,10 +91,10 @@
     $( ".buttonAddInputActivities" ).click(function() { addInputActivities(this); });
     $( ".buttonAddInputDependencies" ).click(function() { addInputDependencies(this); });
 	
-	$('input[name*="beginDate"]').datepicker();
-	$('input[name*="endDate"]').datepicker();
-	$('input[name*="beginTime"]').timepicker({});	
-	$('input[name*="endTime"]').timepicker({});	
+	$('input[name="beginDate"]').datepicker();
+	$('input[name="endDate"]').datepicker();
+	$('input[name="beginTime"]').timepicker({});
+	$('input[name="endTime"]').timepicker({});
 	
     <?php
         if (isset($_GET['id']))
