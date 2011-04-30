@@ -39,6 +39,8 @@ Box.prototype =
 
         this.listTask.appendChild(divTask);
 
+        //divTask.ondblclick = function () { task.showEditor() };
+
         //this.listBody[task.id] = divTask;
     },
 
