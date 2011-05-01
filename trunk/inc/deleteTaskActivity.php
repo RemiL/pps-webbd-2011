@@ -1,4 +1,5 @@
 <?php
+    // Supprime une task d'une activité
     $path = "../data/" . $_POST['id'] . "/activities.xml";
     
     $xml = simplexml_load_file($path);
@@ -6,10 +7,12 @@
     $i = 0;
     $j = 0;
 
+    // Recherche l'activité correspondant à l'index voulu
     foreach ($xml->activity as $activity) 
     {
         if($activity->index == $_POST['index'])
         {
+            // Recherche la task à supprimer et la supprime
             foreach ($activity->tasks[0] as $task) 
             {
                 if($task == $_POST['idTask'])
@@ -23,6 +26,7 @@
         $i++;
     }
 
+    // Retourne 1 si l'écriture s'est bien passée
     if (!$f = fopen($path, 'w'))
     {
 	    echo 0;

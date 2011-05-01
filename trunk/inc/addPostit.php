@@ -1,4 +1,5 @@
 <?php
+    // Ajoute un postit à la liste
     $path = "../data/" . $_POST['id'] . "/postIts.xml";
     
     $xml = simplexml_load_file($path);
@@ -9,6 +10,7 @@
     $position->addChild('x', $_POST['x']);
     $position->addChild('y', $_POST['y']);
     
+    // Retourne 1 si l'écriture s'est bien passée
     if (!$f = fopen($path, 'w'))
     {
 	    echo 0;
