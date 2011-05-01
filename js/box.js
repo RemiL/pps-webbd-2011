@@ -79,7 +79,7 @@ Box.prototype =
                 $.ajax({
                     type: "POST",
                     url: "inc/moveActivity.php",
-                    data: "id=" + "groupecmt07@gmail.com" + "&index=" + previous.id + "&newIndex=" + this.id,
+                    data: "id=" + calendarService.getUserId() + "&index=" + previous.id + "&newIndex=" + this.id,
                     success: function (data, status)
                     {
                         if (data != 1)
@@ -118,7 +118,7 @@ Box.prototype =
                 $.ajax({
                     type: "POST",
                     url: "inc/moveActivity.php",
-                    data: "id=" + "groupecmt07@gmail.com" + "&index=" + next.id + "&newIndex=" + this.id,
+                    data: "id=" + calendarService.getUserId() + "&index=" + next.id + "&newIndex=" + this.id,
                     success: function (data, status)
                     {
                         if (data != 1)
