@@ -87,11 +87,18 @@ ListBox.prototype =
         piedBox.appendChild(versBasBox);
 
         this.list[name] = box;
+        
+        return box;
     },
 
     removeBox: function (name)
     {
         delete this.list[name];
+    },
+
+    getBox: function (name)
+    {
+        return this.list[name];
     },
 
     moveLeft: function ()

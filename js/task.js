@@ -10,6 +10,11 @@ function Task(_calendarEntry, _calendarDOMEntry)
     this.tabIndex = null;
     this.form = null;
 
+    // Activities auxquelles la tâche est attachée
+    this.activities = new Array();
+    // Sauvegarde
+    this.newActivities = null;
+
     Task.tasks[this.id] = this;
 }
 
@@ -66,6 +71,17 @@ Task.prototype =
         var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
         $('select[name="priority"]', this.form).val(xmlTask.getElementsByTagName('priority')[0].innerHTML)
         $('textarea[name="description"]', this.form).val(xmlTask.getElementsByTagName('description')[0].innerHTML)
+        
+        // On supprime tous les champs d'activities sauf le premier
+        $('input[name="activities[]:gt(0)"]', this.form).remove();
+        var activities = xmlTask.getElementsByTagName('activity');
+        var button = $('.buttonAddInputActivities', this.form).get(0);
+        for (var i=0; i<activities.length; i++)
+        {
+            if (i > 0) // Si on a plus d'une activity on rajoute des champs.
+                addInputActivities(button);
+            $('input[name="activities[]"]:last', this.form).val(activities[i].innerHTML);
+        }
     },
 
     closeEditor: function ()
@@ -101,9 +117,9 @@ Task.prototype =
         this.calendarEntry.getTimes()[0].setEndTime(end);
         this.calendarEntry.getLocations()[0].setValueString($('input[name="location"]', this.form).val());
         
-        var taskXML = this.createXML();
+        this.newActivities = $('input[name="activities[]"]', this.form).map( function(i) { if ($(this).val()) return $(this).val(); else { if (i) $(this).remove(); return null; } } ).get();
         
-        this.calendarEntry.getContent().setText(xmlToString(taskXML));
+        this.calendarEntry.getContent().setText(xmlToString(this.createXML()));
     },
 
     createXML: function()
@@ -112,18 +128,38 @@ Task.prototype =
         var title = document.createElement('title');
         title.appendChild(document.createTextNode(this.calendarEntry.getTitle().getText()));
         taskXML.appendChild(title);
+        
         var beginDate = document.createElement('beginDate');
         beginDate.appendChild(document.createTextNode(google.gdata.DateTime.toIso8601(this.calendarEntry.getTimes()[0].getStartTime())));
         taskXML.appendChild(beginDate);
         var endDate = document.createElement('endDate');
         endDate.appendChild(document.createTextNode(google.gdata.DateTime.toIso8601(this.calendarEntry.getTimes()[0].getEndTime())));
         taskXML.appendChild(endDate);
+        
         var location = document.createElement('location');
         location.appendChild(document.createTextNode(this.calendarEntry.getLocations()[0].getValueString()));
         taskXML.appendChild(location);
+        
         var priority = document.createElement('priority');
         priority.appendChild(document.createTextNode($('select[name="priority"]', this.form).val()));
         taskXML.appendChild(priority);
+        
+        var activities = document.createElement('activities');
+        var counts = new Array();
+        var activity;
+        for (i in this.newActivities)
+        {
+            if (!counts[this.newActivities[i]]) // on ne veut pas de doublons
+            {
+                counts[this.newActivities[i]] = 1;
+                
+                activity = document.createElement('activity');
+                activity.appendChild(document.createTextNode(this.newActivities[i]));
+                activities.appendChild(activity);
+            }
+        }
+        taskXML.appendChild(activities);
+        
         var description = document.createElement('description');
         description.appendChild(document.createTextNode($('textarea[name="description"]', this.form).val()));
         taskXML.appendChild(description);
@@ -162,6 +198,9 @@ Task.prototype =
             this.calendarDOMEntry = this.calendar.createTask(this.calendarEntry);
         }
         
+        // Mise à jour des activities
+        this.updateActivities();
+        
         // Ajout du bouton de suppression
         var buttonDeleteTaskContainer = document.createElement("li");
         buttonDeleteTaskContainer.className = "ui-state-default ui-corner-top";
@@ -194,12 +233,17 @@ Task.prototype =
         if (this.calendarDOMEntry)
             this.calendar.updateTask(this.calendarEntry, this.calendarDOMEntry);
         
+        // Mise à jour des activities
+        this.updateActivities();
+        
         alert('Edition completed');
     },
 
     delete: function ()
     {
         this.calendarEntry.deleteEntry(bind(this.onDeleteCompleted, this), bind(this.gestErreur, this));
+        // On enlève les activities de la tâche.
+        this.newActivities = new Array();
     },
 
     onDeleteCompleted: function ()
@@ -211,7 +255,37 @@ Task.prototype =
         if (this.calendarDOMEntry)
             this.calendar.removeTask(this.calendarDOMEntry);
         
+        // Mise à jour des activities
+        this.updateActivities();
+        
         alert('Deletion completed');
+    },
+
+    updateActivities: function()
+    {
+        var box;
+        
+        // Attache la tâche aux activities
+        for (i in this.newActivities)
+        {
+            if ($.inArray(this.newActivities[i], this.activities) == -1)
+            {
+                box = this.boxList.getBox(this.newActivities[i])
+                if (!box)
+                    box = this.boxList.addBox(this.newActivities[i]);
+                
+                box.addTask(this);
+            }
+        }
+        
+        // Suppression de la tâche des activities plus utilisées
+        for (i in this.activities)
+        {
+            if ($.inArray(this.activities[i], this.newActivities) == -1)
+                this.boxList.getBox(this.activities[i]).removeTask(this);
+        }
+        
+        this.activities = this.newActivities;
     },
 
     // Gestionnaire d'erreur
@@ -223,5 +297,15 @@ Task.prototype =
     getTitle: function ()
     {
         return this.calendarEntry.getTitle().getText();
+    },
+
+    getTimeSlot: function ()
+    {
+        var timeSlot = this.calendarEntry.getTimes()[0].getStartTime().getDate().toTimeString().substr(0, 5);
+        
+        if (this.calendarEntry.getTimes()[0].getStartTime().getDate().getTime() != this.calendarEntry.getTimes()[0].getEndTime().getDate().getTime())
+            timeSlot += ' - ' + this.calendarEntry.getTimes()[0].getEndTime().getDate().toTimeString().substr(0, 5);
+        
+        return timeSlot;
     }
 }

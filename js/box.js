@@ -2,6 +2,7 @@ function Box(name, body, listTask, panel)
 {
     this.name = name;
     this.id = Box.nextId;
+    this.tasksNumber = 0;
     this.list = new Array();
     this.listBody = new Array();
     this.body = body;
@@ -17,38 +18,41 @@ Box.prototype =
 {
     addTask: function (task)
     {
-        // TODO avec les objets task
-        //***************************
+        if (!this.list[task.id]) // On n'ajoute pas deux fois la même tâche.
+        {
+            this.list[task.id] = task;
+            this.tasksNumber++;
 
-        //this.list[task.id] = task;
+            // ajout au DOM
+            var divTask = document.createElement('div');
+            divTask.className = "tacheBox ui-corner-all";
 
-        // ajouter au dom
-        var divTask = document.createElement('div');
-        divTask.className = "tacheBox ui-corner-all";
+            var date = document.createElement('div');
+            date.className = "dateTache";
+            date.appendChild(document.createTextNode(task.getTimeSlot()));
 
-        var date = document.createElement('div');
-        date.className = "dateTache";
-        //date.appendChild(document.createTextNode());
+            var titre = document.createElement('div');
+            titre.className = "titreTache";
+            titre.appendChild(document.createTextNode(task.getTitle()));
 
-        var titre = document.createElement('div');
-        titre.className = "titreTache";
-        //titre.appendChild(document.createTextNode(calendarEntry.getTitle().getText()));
+            divTask.appendChild(date);
+            divTask.appendChild(titre);
 
-        divTask.appendChild(date);
-        divTask.appendChild(titre);
+            this.listTask.appendChild(divTask);
 
-        this.listTask.appendChild(divTask);
+            // TODO divTask.ondblclick = function () { task.showEditor() };
 
-        //divTask.ondblclick = function () { task.showEditor() };
-
-        //this.listBody[task.id] = divTask;
+            this.listBody[task.id] = divTask;
+        }
     },
 
     removeTask: function (task)
     {
-        this.panel.removeChild(listBody[task.id]);
+        this.listTask.removeChild(this.listBody[task.id]);
         delete this.listBody[task.id];
         delete this.list[task.id];
+        if (--this.tasksNumber == 0)
+            this.close();
     },
 
     moveLeft: function ()
