@@ -16,20 +16,6 @@ $(function ()
     panel.setBody(document.getElementById("panneauPostit"));
     listBox.setBody(document.getElementById("listeBox"));
 
-    listBox.addBox("toto");
-    listBox.addBox("tota");
-    listBox.addBox("tote");
-    listBox.addBox("totr");
-    listBox.addBox("tott");
-    listBox.addBox("toty");
-    listBox.addBox("totu");
-    listBox.addBox("totou");
-    listBox.addBox("totouuu");
-    listBox.list["toto"].addTask();
-    listBox.list["toto"].addTask();
-    listBox.list["toto"].addTask();
-    listBox.list["toto"].addTask();
-
     $("#box .versGaucheListeBox").click(function () { listBox.moveLeft(); });
     $("#box .versDroiteListeBox").click(function () { listBox.moveRight(); });
     $("#afficherPostit").button({ icons: { primary: 'ui-icon-circle-triangle-n' }, text: false });
