@@ -6,32 +6,12 @@ function addInputActivities(button) {
     div.appendChild(input);
     div.appendChild(button);
 
-    var availableTags = [
-    "ActionScript",
-    "AppleScript",
-    "Asp",
-    "BASIC",
-    "C",
-    "C++",
-    "Clojure",
-    "COBOL",
-    "ColdFusion",
-    "Erlang",
-    "Fortran",
-    "Groovy",
-    "Haskell",
-    "Java",
-    "JavaScript",
-    "Lisp",
-    "Perl",
-    "PHP",
-    "Python",
-    "Ruby",
-    "Scala",
-    "Scheme"
-    ];
+    var activitiesNames = new Array();
+
+    for(var name in listBox.list)
+        activitiesNames.push(name);
     $(input).autocomplete({
-        source: availableTags
+        source: activitiesNames
     });
 }
 

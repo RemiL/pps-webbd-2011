@@ -54,35 +54,16 @@
 </div>
 
 <script type="text/javascript">
-    var availableTags = [
-    "ActionScript",
-    "AppleScript",
-    "Asp",
-    "BASIC",
-    "C",
-    "C++",
-    "Clojure",
-    "COBOL",
-    "ColdFusion",
-    "Erlang",
-    "Fortran",
-    "Groovy",
-    "Haskell",
-    "Java",
-    "JavaScript",
-    "Lisp",
-    "Perl",
-    "PHP",
-    "Python",
-    "Ruby",
-    "Scala",
-    "Scheme"
-    ];
+    var activitiesNames = new Array();
+
+    for(var name in listBox.list)
+        activitiesNames.push(name);
+    
     $( 'input[name="activities[]"]' ).autocomplete({
-    source: availableTags
+    source: activitiesNames
     });
     $( 'input[name="dependencies[]"]' ).autocomplete({
-    source: availableTags
+    source: activitiesNames
     });
 
     $( ".buttonAddInputActivities" ).unbind('click');
@@ -91,12 +72,12 @@
     $( ".buttonAddInput" ).button({icons: {primary: "ui-icon-circle-plus"}, text: false});
     $( ".buttonAddInputActivities" ).click(function() { addInputActivities(this); });
     $( ".buttonAddInputDependencies" ).click(function() { addInputDependencies(this); });
-    
+
     $('input[name="beginDate"]').datepicker();
     $('input[name="endDate"]').datepicker();
     $('input[name="beginTime"]').timepicker({});
     $('input[name="endTime"]').timepicker({});
-    
+
     <?php
         if (isset($_GET['id']))
         {
