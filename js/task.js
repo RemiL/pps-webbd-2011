@@ -62,7 +62,10 @@ Task.prototype =
             $('span', this.form).css('visibility', 'hidden');
         }
         $('input[name="location"]', this.form).val(this.calendarEntry.getLocations()[0].getValueString());
-        $('textarea[name="description"]', this.form).val(this.calendarEntry.getContent().getText());
+        
+        var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
+        $('select[name="priority"]', this.form).val(xmlTask.getElementsByTagName('priority')[0].innerHTML)
+        $('textarea[name="description"]', this.form).val(xmlTask.getElementsByTagName('description')[0].innerHTML)
     },
 
     closeEditor: function ()
@@ -81,7 +84,7 @@ Task.prototype =
 
     updateFromFrom: function ()
     {
-        this.calendarEntry.setTitle(google.gdata.atom.Text.create($('input[name="title"]', this.form).val()));
+        this.calendarEntry.getTitle().setText($('input[name="title"]', this.form).val());
         var start = $.datepicker.parseDate("mm/dd/yy", $('input[name="beginDate"]', this.form).val());
         start.setHours($('input[name="beginTime"]', this.form).val().split(':')[0]);
         start.setMinutes($('input[name="beginTime"]', this.form).val().split(':')[1]);
@@ -97,7 +100,35 @@ Task.prototype =
             end = start;
         this.calendarEntry.getTimes()[0].setEndTime(end);
         this.calendarEntry.getLocations()[0].setValueString($('input[name="location"]', this.form).val());
-        this.calendarEntry.setContent(google.gdata.atom.Text.create($('textarea[name="description"]', this.form).val()));
+        
+        var taskXML = this.createXML();
+        
+        this.calendarEntry.getContent().setText(xmlToString(taskXML));
+    },
+
+    createXML: function()
+    {
+        var taskXML = document.createElement('task');
+        var title = document.createElement('title');
+        title.appendChild(document.createTextNode(this.calendarEntry.getTitle().getText()));
+        taskXML.appendChild(title);
+        var beginDate = document.createElement('beginDate');
+        beginDate.appendChild(document.createTextNode(google.gdata.DateTime.toIso8601(this.calendarEntry.getTimes()[0].getStartTime())));
+        taskXML.appendChild(beginDate);
+        var endDate = document.createElement('endDate');
+        endDate.appendChild(document.createTextNode(google.gdata.DateTime.toIso8601(this.calendarEntry.getTimes()[0].getEndTime())));
+        taskXML.appendChild(endDate);
+        var location = document.createElement('location');
+        location.appendChild(document.createTextNode(this.calendarEntry.getLocations()[0].getValueString()));
+        taskXML.appendChild(location);
+        var priority = document.createElement('priority');
+        priority.appendChild(document.createTextNode($('select[name="priority"]', this.form).val()));
+        taskXML.appendChild(priority);
+        var description = document.createElement('description');
+        description.appendChild(document.createTextNode($('textarea[name="description"]', this.form).val()));
+        taskXML.appendChild(description);
+        
+        return taskXML;
     },
 
     create: function (_from)
@@ -105,8 +136,10 @@ Task.prototype =
         this.form = _from;
         this.tabIndex = this.tabs.tabs('option', 'selected');
         this.calendarEntry = new google.gdata.calendar.CalendarEventEntry();
+        this.calendarEntry.setTitle(new google.gdata.atom.Text());
         this.calendarEntry.addTime(new google.gdata.When());
         this.calendarEntry.addLocation(new google.gdata.Where());
+        this.calendarEntry.setContent(new google.gdata.atom.Text());
         this.updateFromFrom();
         
         this.calendarService.getService().insertEntry(this.calendar.feedUri, this.calendarEntry, bind(this.onCreationCompleted, this), bind(this.gestErreur, this), google.gdata.calendar.CalendarEventEntry);

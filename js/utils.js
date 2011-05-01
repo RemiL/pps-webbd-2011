@@ -18,3 +18,30 @@ function bind(methode,contexte)
         args.push(arguments[i]);
     return (function(){methode.apply(contexte,args.concat(toArray(arguments)));});
 }
+
+/*
+Transforme un document XML en chaine de caractères.
+*/
+function xmlToString(xmlNode)
+{
+    try
+    {
+        // Gecko- and Webkit-based browsers (Firefox, Chrome), Opera.
+        return (new XMLSerializer()).serializeToString(xmlNode);
+    }
+    catch (e)
+    {
+        try
+        {
+            // Internet Explorer.
+            return xmlNode.xml;
+        }
+        catch (e)
+        {  
+            //Other browsers without XML Serializer
+            alert('Xmlserializer not supported');
+        }
+    }
+    
+    return false;
+}
