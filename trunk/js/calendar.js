@@ -11,6 +11,8 @@ function Calendar(_calendarService)
     // Marqueur d'heure courante
     this.calendarNowMarker = document.createElement('div');
     this.calendarNowMarker.id = 'calendarNowMarker';
+    this.calendarNowMarker.pos = null;
+    this.calendarNowMarker.oldPos = null;
     
     $('#calendarDatePicker').datepicker({'onSelect': bind(this.dateSelected, this)}).hide().click(function(e) { e.stopPropagation(); });
     $('#calendarDay').click(bind(this.showDatePicker, this));
@@ -210,8 +212,14 @@ Calendar.prototype =
 
     updateNowMarker: function () {
         var now = new Date();
-
-        this.calendarNowMarker.style.top = (now.getHours() * 60 + now.getMinutes()) / 2 + 'px';
+        
+        this.calendarNowMarker.oldPos = this.calendarNowMarker.pos;
+        this.calendarNowMarker.pos = (now.getHours() * 60 + now.getMinutes()) / 2;
+        this.calendarNowMarker.style.top = this.calendarNowMarker.pos + 'px';
+        
+        // Changement de jour
+        if (this.calendarNowMarker.oldPos > this.calendarNowMarker.pos)
+            this.loadDay(0);
     },
 
     showDatePicker: function (e) {
