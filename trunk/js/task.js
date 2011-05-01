@@ -6,6 +6,7 @@ function Task(_calendarEntry, _calendarDOMEntry)
     {
         this.feedUri = this.calendarEntry.getSelfLink().getHref();
         this.id = this.feedUri.substring(this.feedUri.lastIndexOf('/') + 1, this.feedUri.length);
+        this.completed = false;
     }
     this.tabIndex = null;
     this.form = null;
@@ -242,7 +243,7 @@ Task.prototype =
         var buttonDeleteTask = document.createElement("a");
         buttonDeleteTask.className = "menuActionTab";
         buttonDeleteTask.href = "#"+this.id;
-        buttonDeleteTask.onclick = function() { deleteTask(this); event.preventDefault(); event.stopPropagation(); };
+        buttonDeleteTask.onclick = function(event) { deleteTask(this); event.preventDefault(); event.stopPropagation(); };
         buttonDeleteTask.appendChild(document.createTextNode("Delete"));
         buttonDeleteTaskContainer.appendChild(buttonDeleteTask);
         this.form.parentNode.parentNode.parentNode.getElementsByTagName('ul')[0].appendChild(buttonDeleteTaskContainer);
@@ -253,7 +254,7 @@ Task.prototype =
         var buttonCompletedTask = document.createElement("a");
         buttonCompletedTask.className = "menuActionTab";
         buttonCompletedTask.href = "#"+this.id;
-        buttonCompletedTask.onclick = function() { markAsCompletedTask(this); event.preventDefault(); event.stopPropagation(); };
+        buttonCompletedTask.onclick = function(event) { markAsCompletedTask(this); event.preventDefault(); event.stopPropagation(); };
         buttonCompletedTask.appendChild(document.createTextNode("Completed"));
         buttonCompletedTaskContainer.appendChild(buttonCompletedTask);
         this.form.parentNode.parentNode.parentNode.getElementsByTagName('ul')[0].appendChild(buttonCompletedTaskContainer);
@@ -290,6 +291,11 @@ Task.prototype =
         this.calendarEntry.deleteEntry(bind(this.onDeleteCompleted, this), bind(this.gestErreur, this));
         // On enlève les activities de la tâche.
         this.newActivities = new Array();
+    },
+
+    complete: function ()
+    {
+        this.completed = true;
     },
 
     onDeleteCompleted: function ()
