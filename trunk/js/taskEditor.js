@@ -82,21 +82,28 @@ function changeDateType(elem, event)
 // Edite une tâche
 function editTask(form)
 {
-    var taskId = form.id.split('_')[1];
-    var task = taskId ? Task.tasks[taskId] : null;
-    
-    if (task)
+    if(form.title.value != "" && form.beginDate.value != "" && form.beginTime.value != "" && form.endDate.value != "" && form.endTime.value != "")
     {
-        task.update();
-        // TBC
-    }
-    else // new task
-    {
-        task = new Task();
-        task.create(form);
-    }
+        var taskId = form.id.split('_')[1];
+        var task = taskId ? Task.tasks[taskId] : null;
     
-    $('.ui-tabs-selected .titreOnglet', Task.tabs).html(task.getTitle());
+        if (task)
+        {
+            task.update();
+            // TBC
+        }
+        else // new task
+        {
+            task = new Task();
+            task.create(form);
+        }
+    
+        $('.ui-tabs-selected .titreOnglet', Task.tabs).html(task.getTitle());
+    }
+    else
+    {
+        alert("Title and dates must not be empty");
+    }
 }
 
 // Supprime une tâche
