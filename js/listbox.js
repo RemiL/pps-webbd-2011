@@ -11,15 +11,43 @@ ListBox.prototype =
         this.body = body;
     },
 
-    fill: function ()
+    loadFromXML: function (userId)
     {
-        // TODO crée toutes les box et les remplit de leurs taches
-        //*********************************************************
+        var thisListBox = this;
+        
+        $.ajax({
+            type: "GET",
+            url: "data/" + userId + "/activities.xml",
+            dataType: "xml",
+            cache: false,
+            complete: function (data, status)
+            {
+                var products = data.responseXML;
+                $(products).find('activity').each(function ()
+                {
+                    var name = $(this).find('name').text();
+                    var index = Number($(this).find('index').text());
+                    var box = thisListBox.addBox(name, index);
+                    $(this).find('task').each(function ()
+                    {
+                        var task = Task.tasks[$(this).text()];
+                        if (task)
+                            box.addTask(task, false);
+                        else
+                            Task.newTaskForBox($(this).text(), box);
+                    });
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert("An error has occured");
+            }
+        });
     },
 
-    addBox: function (name)
+    addBox: function (name, _index)
     {
-        var index = Box.nextId;
+        var index = (_index != undefined) ? _index : Box.nextId;
 
         for (var i in this.list)
         {
@@ -35,7 +63,7 @@ ListBox.prototype =
         var listeTaches = document.createElement('div');
         listeTaches.className = "listeTaches";
 
-        var box = new Box(name, divBox, listeTaches, this);
+        var box = new Box(name, index, divBox, listeTaches, this);
 
         var hautBox = document.createElement('div');
         hautBox.className = "hautBox";
@@ -89,21 +117,24 @@ ListBox.prototype =
         this.list[name] = box;
         
         // Ajoute la nouvelle activity au fichier xml de sauvegarde
-        $.ajax({
-            type: 'POST',
-            url: 'inc/addActivity.php',
-            data: 'id=' + calendarService.getUserId() + '&name=' + name + '&index=' + index,
-            async: false,
-            success: function (data, status)
-            {
-                if (data != 1)
+        if (_index == undefined)
+        {
+            $.ajax({
+                type: 'POST',
+                url: 'inc/addActivity.php',
+                data: 'id=' + calendarService.getUserId() + '&name=' + name + '&index=' + index,
+                async: false,
+                success: function (data, status)
+                {
+                    if (data != 1)
+                        alert('An error has occured');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
                     alert('An error has occured');
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert('An error has occured');
-            }
-        });
+                }
+            });
+        }
         
         return box;
     },

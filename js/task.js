@@ -12,6 +12,14 @@ function Task(_calendarEntry, _calendarDOMEntry)
 
     // Activities auxquelles la tâche est attachée
     this.activities = new Array();
+    if (_calendarEntry)
+    {
+        // On met à jour les activities pour la première utilisation
+        var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
+        var activities = xmlTask.getElementsByTagName('activity');
+        for (var i=0; i<activities.length; i++)
+            this.activities.push(activities[i].innerHTML);
+    }
     // Sauvegarde
     this.newActivities = null;
 
@@ -27,9 +35,16 @@ Task.getId = function (calendarEntry)
     return feedUri.substring(feedUri.lastIndexOf('/') + 1, feedUri.length);
 }
 
+Task.newTaskForBox = function (id, box)
+{
+    var task = new Task();
+
+    Task.prototype.calendarService.getService().getEntry('https://www.google.com/calendar/feeds/default/private/full/'+id, bind(task.onTaskForBoxReceived, task, box), bind(task.gestErreur, task), google.gdata.calendar.CalendarEventEntry, true);
+}
+
 Task.prototype =
 {
-    setCalendarDOMEntry: function(_calendarDOMEntry)
+    setCalendarDOMEntry: function (_calendarDOMEntry)
     {
         this.calendarDOMEntry = _calendarDOMEntry;
     },
@@ -122,7 +137,7 @@ Task.prototype =
         this.calendarEntry.getContent().setText(xmlToString(this.createXML()));
     },
 
-    createXML: function()
+    createXML: function ()
     {
         var taskXML = document.createElement('task');
         var title = document.createElement('title');
@@ -261,7 +276,7 @@ Task.prototype =
         alert('Deletion completed');
     },
 
-    updateActivities: function()
+    updateActivities: function ()
     {
         var box;
         
@@ -286,6 +301,22 @@ Task.prototype =
         }
         
         this.activities = this.newActivities;
+    },
+
+    onTaskForBoxReceived: function (box, root)
+    {
+        this.calendarEntry = root.entry;
+        this.feedUri = this.calendarEntry.getSelfLink().getHref();
+        this.id = this.feedUri.substring(this.feedUri.lastIndexOf('/') + 1, this.feedUri.length);
+        Task.tasks[this.id] = this;
+        
+        // On met à jour les activities pour la première utilisation
+        var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
+        var activities = xmlTask.getElementsByTagName('activity');
+        for (var i=0; i<activities.length; i++)
+            this.activities.push(activities[i].innerHTML);
+        
+        box.addTask(this, false);
     },
 
     // Gestionnaire d'erreur
