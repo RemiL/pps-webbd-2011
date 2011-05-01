@@ -12,8 +12,10 @@ PostIt.nbPostit = 0;
 
 PostIt.prototype =
 {
+    // Sauvegarde le postit
     save: function ()
     {
+        // Si le postit n'a pas déjà été validé, on peut l'enregistrer
         if (!this.valid)
         {
             var text1 = $('textarea[name="textPostit"]', this.body).val();
@@ -51,6 +53,8 @@ PostIt.prototype =
 
                 this.valid = true;
                 this.panel.validPostit();
+
+                // Ajoute l'entrée au fichier xml
                 $.ajax({
                     type: "POST",
                     url: "inc/addPostit.php",
@@ -73,19 +77,24 @@ PostIt.prototype =
         }
     },
 
+    // Dérive le postit en tâche
     createTask: function ()
     {
+        // Crée un nouvel onglet et ferme le panneau
         addTab(null, null, this.id);
         this.panel.toggle();
     },
 
+    // Remplit le formulaire d'édition de tâche avec les informations du postit
     fillEditor: function ()
     {
         $('textarea[name="description"]', $('#formPostit_' + this.id)).val(this.text);
     },
 
+    // Sauvegarde la position du postit
     saveMove: function ()
     {
+        // Modifie la position dans le fichier xml
         $.ajax({
             type: "POST",
             url: "inc/movePostit.php",
@@ -102,6 +111,7 @@ PostIt.prototype =
         });
     },
 
+    // Ferme le postit
     close: function ()
     {
         this.panel.removePostit(this.id);
