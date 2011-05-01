@@ -1,4 +1,7 @@
 <?php
+// Envoie un mail
+
+// Configure les saut de ligne en fonction du serveur
 if (strtoupper(substr(PHP_OS,0,3)=='WIN')) 
 { 
 	$eol="\r\n"; 
@@ -34,7 +37,7 @@ $headers .= 'Reply-To: <'.$from.'>'.$eol;
 //Définition du sujet.
 $object = $_POST["object"];
 		 
-//Déclaration des messages au format texte
+//Déclaration du message au format texte
 $content = $eol;
 $content .= "Content-Type: text/plain; charset=UTF-8".$eol;
 $content .= "Content-Transfer-Encoding: 8bit".$eol;

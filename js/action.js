@@ -41,17 +41,22 @@ function addTab(title, id, idpostit, namebox)
     // JQuery crée 2 div dont un inutile, il faut l'enlever
     indexOngletsSecondairesOuverts++;
     $("#ui-tabs-action-menu" + Number(indexOngletsSecondairesOuverts * 2 - 1)).detach();
-    $("#" + divContent.id).tabs("add", "inc/mail.php" + url, "Mail");
-    // JQuery crée 2 div dont un inutile, il faut l'enlever
-    indexOngletsSecondairesOuverts++;
-    $("#ui-tabs-action-menu" + Number(indexOngletsSecondairesOuverts * 2 - 1)).detach();
-    $("#" + divContent.id).tabs("add", "inc/text.php" + url, "Text");
-    // JQuery crée 2 div dont un inutile, il faut l'enlever
-    indexOngletsSecondairesOuverts++;
-    $("#ui-tabs-action-menu" + Number(indexOngletsSecondairesOuverts * 2 - 1)).detach();
-    // Création du bouton de suppression si la tâche est déjà sauvegardée
+
+    // Si la tâche est déjà sauvegardée
     if (id)
     {
+        // Crée l'onglet Mail
+        $("#" + divContent.id).tabs("add", "inc/mail.php", "Mail");
+        // JQuery crée 2 div dont un inutile, il faut l'enlever
+        indexOngletsSecondairesOuverts++;
+        $("#ui-tabs-action-menu" + Number(indexOngletsSecondairesOuverts * 2 - 1)).detach();
+        // Crée l'onglet Text
+        $("#" + divContent.id).tabs("add", "inc/text.php?id=" + calendarService.getUserId() + "&name=" + id, "Text");
+        // JQuery crée 2 div dont un inutile, il faut l'enlever
+        indexOngletsSecondairesOuverts++;
+        $("#ui-tabs-action-menu" + Number(indexOngletsSecondairesOuverts * 2 - 1)).detach();
+
+        // Création du bouton de suppression
         var buttonDeleteTaskContainer = document.createElement("li");
         buttonDeleteTaskContainer.className = "ui-state-default ui-corner-top";
         var buttonDeleteTask = document.createElement("a");
