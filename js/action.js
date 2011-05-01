@@ -12,16 +12,16 @@ function addTab(title, id, idpostit, namebox)
 
     // Construit l'url avec l'id de la tache
     var url = '';
-    if (id != undefined)
+    if (id)
         url += '?id=' + id;
-    else if (idpostit != undefined)
+    else if (idpostit)
         url += '?idpostit=' + idpostit;
-    else if (namebox != undefined)
+    else if (namebox)
         url += '?namebox=' + namebox;
 
     // Construit le div contenant les actions possibles sur la tâche
     var divContent = document.createElement("div");
-    divContent.id = "ui-tabs-action-" + ((id != undefined) ? id : indexOngletsOuverts);
+    divContent.id = "ui-tabs-action-" + (id ? id : indexOngletsOuverts);
     var ulContent = document.createElement("ul");
     ulContent.className = "menuAction";
     divContent.appendChild(ulContent);
