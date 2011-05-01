@@ -1,10 +1,10 @@
 <div class="contentMenuAction">
     <form name="taskEditor" class="taskEditor" <?php if (isset($_GET['id'])) { echo 'id="formTask_'.$_GET['id'].'"'; } else if(isset($_GET['idpostit'])) { echo 'id="formPostit_'.$_GET['idpostit'].'"'; } ?> onsubmit="editTask(this); return false;">
         <div>
-            <label for="title">Title</label><input name="title" type="text" />
+            <label>Title</label><input name="title" type="text" />
         </div>
         <div>
-            <label for="beginDate">
+            <label>
                 <select name="dateType" onchange="changeDateType(this, event)" onkeydown="changeDateType(this, event)">
                     <option value="w">When</option>
                     <option value="d">Due for</option>
@@ -13,16 +13,16 @@
             <input name="beginDate" type="text" />
             <input name="beginTime" type="text" />
             <span>
-            to
-            <input name="endDate" type="text" />
-            <input name="endTime" type="text" />
+                to
+                <input name="endDate" type="text" />
+                <input name="endTime" type="text" />
             </span>
         </div>
         <div>
-            <label for="location">Location</label><input name="location" type="text" />
+            <label>Location</label><input name="location" type="text" />
         </div>
         <div>
-            <label for="priority">Priority</label>
+            <label>Priority</label>
             <select name="priority">
                 <option value="5">very high</option>
                 <option value="4">high</option>
@@ -32,19 +32,20 @@
             </select>
         </div>
         <div>
-            <label for="dependencies">Dependencies</label>
+            <label>Dependencies</label>
             <input name="dependencies[]" type="text" />
             <span class="buttonAddInput buttonAddInputDependencies"></span>
         </div>
         <div>
-            <label for="activities">Activities</label>
+            <label>Activities</label>
             <input name="activities[]" type="text" <?php if(isset($_GET['namebox'])) { echo 'value="'.$_GET['namebox'].'"'; } ?> />
             <span class="buttonAddInput buttonAddInputActivities"></span>
         </div>
         <div>
-            <label for="description">Description</label><div class="description">
-            <textarea name="description"></textarea>
-        </div>
+            <label>Description</label>
+            <div class="description">
+                <textarea name="description"></textarea>
+            </div>
         </div>
         <div class="button">
             <input type="submit" value="Save" />
