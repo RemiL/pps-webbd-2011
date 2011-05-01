@@ -46,7 +46,7 @@ Box.prototype =
 
     removeTask: function (task)
     {
-        this.panelthis.removeChild(listBody[task.id]);
+        this.panel.removeChild(listBody[task.id]);
         delete this.listBody[task.id];
         delete this.list[task.id];
     },
