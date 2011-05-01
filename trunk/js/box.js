@@ -71,8 +71,25 @@ Box.prototype =
                 $(this.body).animate({ marginLeft: '-=207px' }, 'slow');
                 previous.body.style.zIndex = 1;
                 $(previous.body).animate({ marginLeft: '+=207px' }, 'slow');
+
                 previous.id = this.id;
                 this.id--;
+
+                // Modifie l'index de la box courante dans le fichier xml
+                $.ajax({
+                    type: "POST",
+                    url: "inc/moveActivity.php",
+                    data: "id=" + "groupecmt07@gmail.com" + "&index=" + previous.id + "&newIndex=" + this.id,
+                    success: function (data, status)
+                    {
+                        if (data != 1)
+                            alert("An error has occured");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert("An error has occured");
+                    }
+                });
             }
         }
     },
@@ -93,8 +110,25 @@ Box.prototype =
                 $(this.body).animate({ marginLeft: '+=207px' }, 'slow');
                 next.body.style.zIndex = 1;
                 $(next.body).animate({ marginLeft: '-=207px' }, 'slow');
+
                 next.id = this.id;
                 this.id++;
+
+                // Modifie l'index de la box courante dans le fichier xml
+                $.ajax({
+                    type: "POST",
+                    url: "inc/moveActivity.php",
+                    data: "id=" + "groupecmt07@gmail.com" + "&index=" + next.id + "&newIndex=" + this.id,
+                    success: function (data, status)
+                    {
+                        if (data != 1)
+                            alert("An error has occured");
+                    },
+                    error: function (jqXHR, textStatus, errorThrown)
+                    {
+                        alert("An error has occured");
+                    }
+                });
             }
         }
     },
