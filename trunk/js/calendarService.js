@@ -23,43 +23,23 @@ CalendarService.prototype =
         if (google.accounts.user.getStatus(this.scope) == google.accounts.AuthSubStatus.LOGGED_OUT)
             var token = google.accounts.user.login(this.scope);
         else
-            this.calendarService.getOwnCalendarsFeed(this.feedUri, bind(this.setUserId, this), bind(this.gestErreur, this));
+            this.calendarService.getOwnCalendarsFeed(this.feedUri, bind(this.onConnect, this), bind(this.gestErreur, this));
     },
 
-    setUserId: function (root)
+    onConnect: function (root)
     {
         this.userId = root.feed.getEntries()[0].getId().getValue().replace('%40', '@');
         this.userId = this.userId.substring(this.userId.lastIndexOf('/') + 1, this.userId.length);
 
-        // Cree le repertoire de l'utilisateur à la première connexion
+        // Crée le repertoire de l'utilisateur à la première connexion
         $.ajax({
             type: "POST",
             url: "inc/createDirectories.php",
             data: "id=" + this.userId
         });
 
-        // Charge les post-it
-        $.ajax({
-            type: "GET",
-            url: "data/" + this.userId + "/postIts.xml",
-            dataType: "xml",
-            cache: false,
-            complete: function (data, status)
-            {
-                var products = data.responseXML;
-                $(products).find('postIt').each(function ()
-                {
-                    var text = $(this).find('content').text();
-                    var x = $(this).find('position').find('x').text();
-                    var y = $(this).find('position').find('y').text();
-                    panel.loadPostit(text, x, y);
-                });
-            },
-            error: function (jqXHR, textStatus, errorThrown)
-            {
-                alert("An error has occured");
-            }
-        });
+        // Charge les post-its
+        panel.loadPostits(this.userId);
     },
 
     getUserId: function ()
