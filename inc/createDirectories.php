@@ -20,7 +20,21 @@ if (!file_exists($filename))
         $text = str_replace('&lt', '<', $text);
         fputs($f, $text);
 	    fclose($f);
-        echo 1;
+        
+        if (!$f = fopen($filename.'/activities.xml', 'w'))
+        {
+	        echo 0;
+	        exit;
+        }
+        else
+        { 
+            $text = '&lt?xml version="1.0" encoding="utf-8"?&gt&ltactivities&gt&lt/activities&gt';
+            $text = str_replace('&gt', '>', $text);
+            $text = str_replace('&lt', '<', $text);
+            fputs($f, $text);
+	        fclose($f);
+            echo 1;
+        }
     }
 }
 ?>
