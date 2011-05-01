@@ -14,7 +14,7 @@ ListBox.prototype =
     loadFromXML: function (userId)
     {
         var thisListBox = this;
-        
+
         $.ajax({
             type: "GET",
             url: "data/" + userId + "/activities.xml",
@@ -115,7 +115,7 @@ ListBox.prototype =
         piedBox.appendChild(versBasBox);
 
         this.list[name] = box;
-        
+
         // Ajoute la nouvelle activity au fichier xml de sauvegarde
         if (_index == undefined)
         {
@@ -135,7 +135,7 @@ ListBox.prototype =
                 }
             });
         }
-        
+
         return box;
     },
 
@@ -157,7 +157,7 @@ ListBox.prototype =
                 alert('An error has occured');
             }
         });
-        
+
         delete this.list[name];
     },
 
