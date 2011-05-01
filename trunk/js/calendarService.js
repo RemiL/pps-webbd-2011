@@ -38,6 +38,9 @@ CalendarService.prototype =
             data: "id=" + this.userId
         });
 
+        // Charge les box
+        listBox.loadFromXML(this.userId);
+
         // Charge les post-its
         panel.loadPostits(this.userId);
     },
