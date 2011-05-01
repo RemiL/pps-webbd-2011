@@ -22,27 +22,27 @@
 
 .taskEditor .content textarea
 {
-	height: 10em;
+    height: 10em;
     width: 99%;
 }
 
-.taskEditor .button 
+.taskEditor .button
 {
-	text-align: center;
+    text-align: center;
 }
 
-.taskEditor .button  input
+.taskEditor .button input
 {
-	width: 10em;
-	height: 2em;
+    width: 10em;
+    height: 2em;
 }
-.taskEditor .recipient  input, .taskEditor .object input
+.taskEditor .recipient input, .taskEditor .object input
 {
-	width: 25em;
+    width: 25em;
 }
 
 .taskEditor .champTexte
 {
-	width: 99%;
+    width: 99%;
     height: 250px;
 }

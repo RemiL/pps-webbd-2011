@@ -42,6 +42,14 @@
             <span class="buttonAddInput buttonAddInputActivities"></span>
         </div>
         <div>
+            <label>Task type : <br /><br /><br /></label>
+            <div>
+                <input type="radio" checked="checked" name="type" value="basic" /> Basic<br />
+                <input type="radio" name="type" value="text" /> Text<br />
+                <input type="radio" name="type" value="mail" /> Mail
+            </div>
+        </div>
+        <div>
             <label>Description</label>
             <div class="description">
                 <textarea name="description"></textarea>
