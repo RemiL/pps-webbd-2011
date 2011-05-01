@@ -14,11 +14,14 @@ function Task(_calendarEntry, _calendarDOMEntry)
     this.activities = new Array();
     if (_calendarEntry)
     {
-        // On met à jour les activities pour la première utilisation
-        var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
-        var activities = xmlTask.getElementsByTagName('activity');
-        for (var i=0; i<activities.length; i++)
-            this.activities.push(activities[i].innerHTML);
+        try
+        {
+            // On met à jour les activities pour la première utilisation
+            var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
+            var activities = xmlTask.getElementsByTagName('activity');
+            for (var i=0; i<activities.length; i++)
+                this.activities.push(activities[i].innerHTML);
+        } catch (e) { }
     }
     // Sauvegarde
     this.newActivities = null;
@@ -83,19 +86,25 @@ Task.prototype =
         }
         $('input[name="location"]', this.form).val(this.calendarEntry.getLocations()[0].getValueString());
         
-        var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
-        $('select[name="priority"]', this.form).val(xmlTask.getElementsByTagName('priority')[0].innerHTML)
-        $('textarea[name="description"]', this.form).val(xmlTask.getElementsByTagName('description')[0].innerHTML)
-        
-        // On supprime tous les champs d'activities sauf le premier
-        $('input[name="activities[]"]:gt(0)', this.form).remove();
-        var activities = xmlTask.getElementsByTagName('activity');
-        var button = $('.buttonAddInputActivities', this.form).get(0);
-        for (var i=0; i<activities.length; i++)
+        try
         {
-            if (i > 0) // Si on a plus d'une activity on rajoute des champs.
-                addInputActivities(button);
-            $('input[name="activities[]"]:last', this.form).val(activities[i].innerHTML);
+            var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
+            $('select[name="priority"]', this.form).val(xmlTask.getElementsByTagName('priority')[0].innerHTML);
+            $('textarea[name="description"]', this.form).val(xmlTask.getElementsByTagName('description')[0].innerHTML);
+            
+            // On supprime tous les champs d'activities sauf le premier
+            $('input[name="activities[]"]:gt(0)', this.form).remove();
+            var activities = xmlTask.getElementsByTagName('activity');
+            var button = $('.buttonAddInputActivities', this.form).get(0);
+            for (var i=0; i<activities.length; i++)
+            {
+                if (i > 0) // Si on a plus d'une activity on rajoute des champs.
+                    addInputActivities(button);
+                $('input[name="activities[]"]:last', this.form).val(activities[i].innerHTML);
+            }
+        } catch (e)
+        {
+            $('textarea[name="description"]', this.form).val(this.calendarEntry.getContent().getText());
         }
     },
 
@@ -311,11 +320,13 @@ Task.prototype =
         Task.tasks[this.id] = this;
         
         // On met à jour les activities pour la première utilisation
-        var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
-        var activities = xmlTask.getElementsByTagName('activity');
-        for (var i=0; i<activities.length; i++)
-            this.activities.push(activities[i].innerHTML);
-        
+        try
+        {
+            var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
+            var activities = xmlTask.getElementsByTagName('activity');
+            for (var i=0; i<activities.length; i++)
+                this.activities.push(activities[i].innerHTML);
+        } catch (e) { }
         box.addTask(this, false);
     },
 
