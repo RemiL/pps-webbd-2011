@@ -73,7 +73,7 @@ Task.prototype =
         $('textarea[name="description"]', this.form).val(xmlTask.getElementsByTagName('description')[0].innerHTML)
         
         // On supprime tous les champs d'activities sauf le premier
-        $('input[name="activities[]:gt(0)"]', this.form).remove();
+        $('input[name="activities[]"]:gt(0)', this.form).remove();
         var activities = xmlTask.getElementsByTagName('activity');
         var button = $('.buttonAddInputActivities', this.form).get(0);
         for (var i=0; i<activities.length; i++)

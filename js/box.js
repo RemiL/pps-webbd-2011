@@ -43,6 +43,23 @@ Box.prototype =
             // TODO divTask.ondblclick = function () { task.showEditor() };
 
             this.listBody[task.id] = divTask;
+            
+            // Ajoute la nouvelle tâche à l'activity dans le fichier xml de sauvegarde
+            $.ajax({
+                type: 'POST',
+                url: 'inc/addTaskActivity.php',
+                data: 'id=' + calendarService.getUserId() + '&index=' + this.id + '&idTask=' + task.id,
+                async: false,
+                success: function (data, status)
+                {
+                    if (data != 1)
+                        alert('An error has occured');
+                },
+                error: function (jqXHR, textStatus, errorThrown)
+                {
+                    alert('An error has occured');
+                }
+            });
         }
     },
 
@@ -53,6 +70,23 @@ Box.prototype =
         delete this.list[task.id];
         if (--this.tasksNumber == 0)
             this.close();
+        
+        // Supprime la tâche de l'activity dans le fichier xml de sauvegarde
+        $.ajax({
+            type: 'POST',
+            url: 'inc/deleteTaskActivity.php',
+            data: 'id=' + calendarService.getUserId() + '&index=' + this.id + '&idTask=' + task.id,
+            async: false,
+            success: function (data, status)
+            {
+                if (data != 1)
+                    alert('An error has occured');
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('An error has occured');
+            }
+        });
     },
 
     moveLeft: function ()
@@ -80,6 +114,7 @@ Box.prototype =
                     type: "POST",
                     url: "inc/moveActivity.php",
                     data: "id=" + calendarService.getUserId() + "&index=" + previous.id + "&newIndex=" + this.id,
+                    async: false,
                     success: function (data, status)
                     {
                         if (data != 1)
@@ -119,6 +154,7 @@ Box.prototype =
                     type: "POST",
                     url: "inc/moveActivity.php",
                     data: "id=" + calendarService.getUserId() + "&index=" + next.id + "&newIndex=" + this.id,
+                    async: false,
                     success: function (data, status)
                     {
                         if (data != 1)

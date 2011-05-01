@@ -88,11 +88,45 @@ ListBox.prototype =
 
         this.list[name] = box;
         
+        // Ajoute la nouvelle activity au fichier xml de sauvegarde
+        $.ajax({
+            type: 'POST',
+            url: 'inc/addActivity.php',
+            data: 'id=' + calendarService.getUserId() + '&name=' + name + '&index=' + index,
+            async: false,
+            success: function (data, status)
+            {
+                if (data != 1)
+                    alert('An error has occured');
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('An error has occured');
+            }
+        });
+        
         return box;
     },
 
     removeBox: function (name)
     {
+        // Supprime l'activity du fichier xml de sauvegarde
+        $.ajax({
+            type: 'POST',
+            url: 'inc/deleteActivity.php',
+            data: 'id=' + calendarService.getUserId() + '&index=' + this.list[name].id,
+            async: false,
+            success: function (data, status)
+            {
+                if (data != 1)
+                    alert('An error has occured');
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert('An error has occured');
+            }
+        });
+        
         delete this.list[name];
     },
 
