@@ -67,16 +67,19 @@ function addTab(title, id, idpostit, namebox)
         buttonDeleteTaskContainer.appendChild(buttonDeleteTask);
         ulContent.appendChild(buttonDeleteTaskContainer);
 
-        // Ajout du bouton completed
-        var buttonCompletedTaskContainer = document.createElement("li");
-        buttonCompletedTaskContainer.className = "ui-state-default ui-corner-top";
-        var buttonCompletedTask = document.createElement("a");
-        buttonCompletedTask.className = "menuActionTab";
-        buttonCompletedTask.href = "#"+id;
-        buttonCompletedTask.onclick = function () { markAsCompletedTask(this); event.preventDefault(); event.stopPropagation(); };
-        buttonCompletedTask.appendChild(document.createTextNode("Completed"));
-        buttonCompletedTaskContainer.appendChild(buttonCompletedTask);
-        ulContent.appendChild(buttonCompletedTaskContainer);
+        if (Task.tasks[id].completed == false)
+        {
+            // Ajout du bouton completed
+            var buttonCompletedTaskContainer = document.createElement("li");
+            buttonCompletedTaskContainer.className = "ui-state-default ui-corner-top";
+            var buttonCompletedTask = document.createElement("a");
+            buttonCompletedTask.className = "menuActionTab";
+            buttonCompletedTask.href = "#" + id;
+            buttonCompletedTask.onclick = function (event) { markAsCompletedTask(this); event.preventDefault(); event.stopPropagation(); };
+            buttonCompletedTask.appendChild(document.createTextNode("Completed"));
+            buttonCompletedTaskContainer.appendChild(buttonCompletedTask);
+            ulContent.appendChild(buttonCompletedTaskContainer);
+        }
     }
 
     indexOngletsOuverts++;

@@ -113,3 +113,11 @@ function deleteTask(button)
     
     Task.tasks[taskId].delete();
 }
+
+// Marque une task comme finie
+function markAsCompletedTask(button)
+{
+    var taskId = button.href.split('#')[1];
+    
+    Task.tasks[taskId].complete();
+}
