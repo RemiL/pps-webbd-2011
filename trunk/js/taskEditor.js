@@ -8,7 +8,7 @@ function addInputActivities(button) {
 
     var activitiesNames = new Array();
 
-    for(var name in listBox.list)
+    for (var name in listBox.list)
         activitiesNames.push(name);
     $(input).autocomplete({
         source: activitiesNames
@@ -83,11 +83,10 @@ function changeDateType(elem, event)
 function editTask(form)
 {
     var taskId = form.id.split('_')[1];
-    var task;
+    var task = taskId ? Task.tasks[taskId] : null;
     
-    if (taskId)
+    if (task)
     {
-        task = Task.tasks[taskId];
         task.update();
         // TBC
     }
