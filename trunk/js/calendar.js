@@ -179,13 +179,25 @@ Calendar.prototype =
 
     updateTask: function (entry, task)
     {
+        var dayStart = this.getTodayStart();
+        dayStart.setDate(dayStart.getDate() + this.dayOffset);
+        var dayEnd = this.getTodayEnd();
+        dayEnd.setDate(dayEnd.getDate() + this.dayOffset);
+        
         var horaire = task.childNodes[0];
         var title = task.childNodes[1];
         
         // On calcule le placement à partir du nombre de minutes depuis minuit (1 pixel = 2 minutes)
-        task.style.top = (entry.getTimes()[0].getStartTime().getDate().getHours() * 60 + entry.getTimes()[0].getStartTime().getDate().getMinutes()) / 2 + 'px';
+        if (dayStart <= entry.getTimes()[0].getStartTime().getDate())
+            task.style.top = (entry.getTimes()[0].getStartTime().getDate().getHours() * 60 + entry.getTimes()[0].getStartTime().getDate().getMinutes()) / 2 + 'px';
+        else // si la tâche commence au jour précédent
+            task.style.top = '0px';
         // On calcule la hauteur à partir de la durée (-1 pour la bordure)
         var height = (entry.getTimes()[0].getEndTime().getDate().getTime() - entry.getTimes()[0].getStartTime().getDate().getTime()) / (60 * 2 * 1000) - 1;
+        if (dayStart > entry.getTimes()[0].getStartTime().getDate())
+            height -= (dayStart - entry.getTimes()[0].getStartTime().getDate()) / (60 * 2 * 1000);
+        else if (entry.getTimes()[0].getEndTime().getDate() > dayEnd)
+            height -= (entry.getTimes()[0].getEndTime().getDate() - dayEnd) / (60 * 2 * 1000);
         // On limite la "petitesse" de la tâche
         if (height < 14)
             height = 14;
