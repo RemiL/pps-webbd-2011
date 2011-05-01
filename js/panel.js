@@ -137,6 +137,34 @@ Panel.prototype =
         this.list[objPostit.id] = objPostit;
     },
 
+    // Charge les post-its sauvegardés
+    loadPostits: function(userId)
+    {
+        var thisPanel = this;
+        
+        $.ajax({
+            type: "GET",
+            url: "data/" + userId + "/postIts.xml",
+            dataType: "xml",
+            cache: false,
+            complete: function (data, status)
+            {
+                var products = data.responseXML;
+                $(products).find('postIt').each(function ()
+                {
+                    var text = $(this).find('content').text();
+                    var x = $(this).find('position').find('x').text();
+                    var y = $(this).find('position').find('y').text();
+                    thisPanel.loadPostit(text, x, y);
+                });
+            },
+            error: function (jqXHR, textStatus, errorThrown)
+            {
+                alert("An error has occured");
+            }
+        });
+    },
+
     // Valide le postit en cours de création
     validPostit: function ()
     {
