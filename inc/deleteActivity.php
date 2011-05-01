@@ -5,19 +5,26 @@
     $xml = simplexml_load_file($path);
 
     $i = 0;
+    $j = -1;
 
-    // Recherche l'activity qui correspond à l'index voulu et le supprime
+    // Recherche l'activity qui correspond Ã  l'index voulu et le supprime
     foreach ($xml->activity as $activity) 
     {
         if($activity->index == $_POST['index'])
         {
-            unset($xml->activity[$i]);
-            break;
+            $j = $i;
+        }
+        else if($activity->index > $_POST['index'])
+        {
+            $activity->index = $activity->index - 1;
         }
         $i++;
     }
+    
+    if($j != -1)
+        unset($xml->activity[$j]);
 
-    // Retourne 1 si l'écriture dans le fichier s'est bien passée
+    // Retourne 1 si l'Ã©criture dans le fichier s'est bien passÃ©e
     if (!$f = fopen($path, 'w'))
     {
 	    echo 0;
