@@ -224,6 +224,17 @@ Task.prototype =
         
         // Mise à jour des activities
         this.updateActivities();
+
+        // Crée l'onglet Mail
+        $(this.form.parentNode.parentNode.parentNode).tabs("add", "inc/mail.php", "Mail");
+        // JQuery crée 2 div dont un inutile, il faut l'enlever
+        //indexOngletsSecondairesOuverts++;
+        //$("#ui-tabs-action-menu" + Number(indexOngletsSecondairesOuverts * 2 - 1)).detach();
+        // Crée l'onglet Text
+        $(this.form.parentNode.parentNode.parentNode).tabs("add", "inc/text.php?id=" + calendarService.getUserId() + "&name=" + this.id, "Text");
+        // JQuery crée 2 div dont un inutile, il faut l'enlever
+        //indexOngletsSecondairesOuverts++;
+        //$("#ui-tabs-action-menu" + Number(indexOngletsSecondairesOuverts * 2 - 1)).detach();
         
         // Ajout du bouton de suppression
         var buttonDeleteTaskContainer = document.createElement("li");
@@ -236,6 +247,17 @@ Task.prototype =
         buttonDeleteTaskContainer.appendChild(buttonDeleteTask);
         this.form.parentNode.parentNode.parentNode.getElementsByTagName('ul')[0].appendChild(buttonDeleteTaskContainer);
         
+        // Ajout du bouton completed
+        var buttonCompletedTaskContainer = document.createElement("li");
+        buttonCompletedTaskContainer.className = "ui-state-default ui-corner-top";
+        var buttonCompletedTask = document.createElement("a");
+        buttonCompletedTask.className = "menuActionTab";
+        buttonCompletedTask.href = "#"+this.id;
+        buttonCompletedTask.onclick = function() { markAsCompletedTask(this); event.preventDefault(); event.stopPropagation(); };
+        buttonCompletedTask.appendChild(document.createTextNode("Completed"));
+        buttonCompletedTaskContainer.appendChild(buttonCompletedTask);
+        this.form.parentNode.parentNode.parentNode.getElementsByTagName('ul')[0].appendChild(buttonCompletedTaskContainer);
+
         alert('Creation completed');
     },
     
