@@ -66,6 +66,14 @@ Box.prototype =
         }
     },
 
+    updateTask: function (task)
+    {
+        // Date
+        this.listBody[task.id].childNodes[0].innerHTML = task.getDate()+' | '+task.getTimeSlot();
+        // Titre
+        this.listBody[task.id].childNodes[1].innerHTML = task.getTitle();
+    },
+
     removeTask: function (task)
     {
         this.listTask.removeChild(this.listBody[task.id]);
