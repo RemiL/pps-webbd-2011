@@ -14,3 +14,11 @@
 		<input type="button" value="Export" onClick="exportText(this.parentNode, calendarService.getUserId());" />
 	</form>
 </div>
+<script type="text/javascript">
+<?php
+    if (isset($_GET['idTask']))
+    {
+        echo "Task.tasks['{$_GET['idTask']}'].completedForm();";
+    }
+?>
+</script>

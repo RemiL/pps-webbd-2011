@@ -90,6 +90,7 @@
         if (isset($_GET['id']))
         {
             echo "Task.tasks['{$_GET['id']}'].fillEditor();";
+            echo "Task.tasks['{$_GET['id']}'].completedForm();";
         }
         else if(isset($_GET['idpostit'])) 
         {
