@@ -44,9 +44,9 @@
         <div>
             <label>Task type : <br /><br /><br /></label>
             <div>
-                <input type="radio" checked="checked" name="type" value="basic" /> Basic
-                <input type="radio" name="type" value="text" /> Text
-                <input type="radio" name="type" value="mail" /> Mail
+                <input type="radio" checked="checked" name="type" value="task" /> Basic
+                <input type="radio" name="type" value="taskDoc" /> Text
+                <input type="radio" name="type" value="taskEmail" /> Mail
             </div>
         </div>
         <div>
