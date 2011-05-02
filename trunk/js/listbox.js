@@ -1,3 +1,4 @@
+// Une liste de box
 function ListBox()
 {
     this.list = new Array();
@@ -6,15 +7,18 @@ function ListBox()
 
 ListBox.prototype =
 {
+    // Initialise l'élément DOM représentant le corps de la liste
     setBody: function (body)
     {
         this.body = body;
     },
 
+    // Charge la liste depuis le fichier XML
     loadFromXML: function (userId)
     {
         var thisListBox = this;
 
+        // Charge le fichier XML via ajax et crée les box
         $.ajax({
             type: "GET",
             url: "data/" + userId + "/activities.xml",
@@ -48,6 +52,7 @@ ListBox.prototype =
         });
     },
 
+    // Ajoute une box à la liste
     addBox: function (name, _index)
     {
         var index = (_index != undefined) ? _index : Box.nextId;
@@ -58,6 +63,7 @@ ListBox.prototype =
                 index--;
         }
 
+        // Ajoute la box au DOM
         var divBox = document.createElement('div');
         divBox.className = "box ui-corner-all";
         divBox.style.marginLeft = (index * 207) + 'px';
@@ -119,7 +125,7 @@ ListBox.prototype =
 
         this.list[name] = box;
 
-        // Ajoute la nouvelle activity au fichier xml de sauvegarde
+        // Ajoute la nouvelle activity au fichier xml de sauvegarde si c'est une nouvelle box
         if (_index == undefined)
         {
             $.ajax({
@@ -142,6 +148,7 @@ ListBox.prototype =
         return box;
     },
 
+    // Supprime une box
     removeBox: function (name)
     {
         // Supprime l'activity du fichier xml de sauvegarde
@@ -164,11 +171,13 @@ ListBox.prototype =
         delete this.list[name];
     },
 
+    // Retourne une box en fonction de son nom
     getBox: function (name)
     {
         return this.list[name];
     },
 
+    // Fait défiler la liste des box
     moveLeft: function ()
     {
         var first = null;
@@ -191,6 +200,7 @@ ListBox.prototype =
         }
     },
 
+    // Fait défiler la liste des box
     moveRight: function ()
     {
         var last = null;

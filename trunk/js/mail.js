@@ -1,3 +1,4 @@
+// Envoi un mail
 function sendMail(form, from) {
     var recipient = form.recipient.value;
     var object = form.object.value;
@@ -8,9 +9,8 @@ function sendMail(form, from) {
         type: "POST",
         url: "inc/sendmail.php",
         data: "from=" + from + "&recipient=" + recipient + "&object=" + object + "&content=" + content,
-        success: function (msg) { // si l'appel a bien fonctionné
+        success: function (msg) {
             if (msg == 1) {
-                // Mettre la tache en fini
                 alert("Mail sent");
             }
             else
