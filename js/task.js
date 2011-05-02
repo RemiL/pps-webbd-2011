@@ -130,7 +130,9 @@ Task.prototype =
             $('input[name="type"]', this.form).attr('disabled', true);
 
             $('select[name="priority"]', this.form).val(xmlTask.getElementsByTagName('priority')[0].firstChild.nodeValue);
-            $('textarea[name="description"]', this.form).val(xmlTask.getElementsByTagName('description')[0].firstChild.nodeValue);
+
+            if (xmlTask.getElementsByTagName('description')[0].firstChild != null)
+                $('textarea[name="description"]', this.form).val(xmlTask.getElementsByTagName('description')[0].firstChild.nodeValue);
 
             // On supprime tous les champs d'activities sauf le premier
             $('input[name="activities[]"]:gt(0)', this.form).remove();
