@@ -345,17 +345,27 @@ Task.prototype =
         this.calendarEntry = root.entry;
         this.feedUri = this.calendarEntry.getSelfLink().getHref();
         this.id = this.feedUri.substring(this.feedUri.lastIndexOf('/') + 1, this.feedUri.length);
-        Task.tasks[this.id] = this;
         
-        // On met à jour les activities pour la première utilisation
-        try
+        /* L'API Google n'est pas synchrone et on ne peut pas forcer son
+         * utilisation pour qu'elle le soit, on essaie de contourner ce
+         * problème en vérifiant qu'à l'instant T où la tâche est reçue
+         * elle n'a pas déjà été créée par ailleurs. */
+        if (Task.tasks[this.id] == undefined)
         {
-            var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
-            var activities = xmlTask.getElementsByTagName('activity');
-            for (var i=0; i<activities.length; i++)
-                this.activities.push(activities[i].innerHTML);
-        } catch (e) { }
-        box.addTask(this, false);
+            Task.tasks[this.id] = this;
+            
+            // On met à jour les activities pour la première utilisation
+            try
+            {
+                var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
+                var activities = xmlTask.getElementsByTagName('activity');
+                for (var i=0; i<activities.length; i++)
+                    this.activities.push(activities[i].innerHTML);
+            } catch (e) { }
+            box.addTask(this, false);
+        }
+        else // On utilise la tâche précédement créée.
+            box.addTask(Task.tasks[this.id], false);
     },
 
     // Gestionnaire d'erreur
@@ -367,6 +377,11 @@ Task.prototype =
     getTitle: function ()
     {
         return this.calendarEntry.getTitle().getText();
+    },
+
+    getDate: function ()
+    {
+        return $.datepicker.formatDate("mm/dd/yy", this.calendarEntry.getTimes()[0].getStartTime().getDate());
     },
 
     getTimeSlot: function ()
