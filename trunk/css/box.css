@@ -17,11 +17,13 @@
 .versGaucheListeBox
 {
     float: left;
+    cursor: pointer;
 }
 
 .versDroiteListeBox
 {
     margin-left: 20px;
+    cursor: pointer;
 }
 
 #triTaches
@@ -68,6 +70,12 @@
 .ajouterTacheBox
 {
     float: left;
+    cursor: pointer;
+}
+
+.supprimerBox
+{
+    cursor: pointer;
 }
 
 .hautBox
@@ -89,6 +97,7 @@
 .deplacerTacheBox
 {
     margin: auto;
+    cursor: pointer;
 }
 
 .tacheBox
@@ -99,6 +108,7 @@
     height: 35px;
     padding: 2px;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .dateTache
@@ -122,9 +132,11 @@
 .versDroiteBox
 {
     float: right;
+    cursor: pointer;
 }
 
 .versGaucheBox
 {
     float: left;
+    cursor: pointer;
 }
