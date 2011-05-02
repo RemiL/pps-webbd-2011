@@ -11,7 +11,7 @@ function Task(_calendarEntry, _calendarDOMEntry)
     this.form = null;
 
     // Le type de la tâche
-    this.type = null;
+    this.type = Array();
     if (_calendarEntry)
     {
         try
