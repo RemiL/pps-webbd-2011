@@ -286,12 +286,12 @@ Task.prototype =
         if (Task.tasks[this.id].type == 'taskEmail')
         {
             // Crée l'onglet Mail
-            $("#" + divContent.id).tabs("add", "inc/mail.php?idTask=" + this.id, "Mail");
+            $(this.form.parentNode.parentNode.parentNode).tabs("add", "inc/mail.php?idTask=" + this.id, "Mail");
         }
         else if (Task.tasks[this.id].type == 'taskDoc')
         {
             // Crée l'onglet Text
-            $("#" + divContent.id).tabs("add", "inc/text.php?id=" + calendarService.getUserId() + "&name=" + this.id + "&idTask=" + this.id, "Text");
+            $(this.form.parentNode.parentNode.parentNode).tabs("add", "inc/text.php?id=" + calendarService.getUserId() + "&name=" + this.id + "&idTask=" + this.id, "Text");
         }
 
         // Ajout du bouton de suppression
