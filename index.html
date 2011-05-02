@@ -36,7 +36,7 @@
             Task.prototype.tabs = $("#action");
         }
         
-        google.load('gdata', '2.s');
+        google.load('gdata', '2.s', {packages: ['calendar']});
         google.setOnLoadCallback(onLoadCallback);
     </script>
     <link rel="stylesheet" media="screen" type="text/css" href="js/jquery/jquery-ui-1.8.11.custom/css/custom-theme/jquery-ui-1.8.11.custom.css" />
