@@ -69,7 +69,7 @@ Task.prototype =
     fillEditor: function ()
     {
         this.form = $('#formTask_' + this.id);
-        /* Workaround pour un bug de l'API Google :
+        /* HACK : Workaround pour un bug de l'API Google :
          * this.calendarService.getService().getCalendarEntry(this.feedUri, bind(this.onDataReceivedFillEditor, this), bind(this.gestErreur, this));
          * ne retourne pas un objet complet, il manque getTimes() ... donc on utilise la fonction générique. */
         this.calendarService.getService().getEntry(this.feedUri, bind(this.onDataReceivedFillEditor, this), bind(this.gestErreur, this), google.gdata.calendar.CalendarEventEntry, true);
@@ -358,10 +358,10 @@ Task.prototype =
         this.feedUri = this.calendarEntry.getSelfLink().getHref();
         this.id = this.feedUri.substring(this.feedUri.lastIndexOf('/') + 1, this.feedUri.length);
         
-        /* L'API Google n'est pas synchrone et on ne peut pas forcer son
-         * utilisation pour qu'elle le soit, on essaie de contourner ce
-         * problème en vérifiant qu'à l'instant T où la tâche est reçue
-         * elle n'a pas déjà été créée par ailleurs. */
+        /* HACK : L'API Google n'est pas synchrone et on ne peut pas forcer
+         * son utilisation pour qu'elle le soit, on essaie de contourner ce
+         * problème en vérifiant qu'à l'instant T où la tâche est reçue elle
+         * n'a pas déjà été créée par ailleurs. */
         if (Task.tasks[this.id] == undefined)
         {
             Task.tasks[this.id] = this;
