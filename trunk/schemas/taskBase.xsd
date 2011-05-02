@@ -36,7 +36,8 @@
         </xs:sequence>
       </xs:complexType>
     </xs:element>
-    <xs:element name="description" type="xs:string" />
+    <xs:attribute name="disabled" type="xs:boolean"/>
+    <xs:element name="completed" type="xs:string" />
   </xs:sequence>
 </xs:complexType>
 
