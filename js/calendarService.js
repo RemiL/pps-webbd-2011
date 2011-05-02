@@ -6,7 +6,7 @@ function CalendarService(autoconnect)
     // Objet de l'API Google
     this.calendarService = null;
     this.scope = 'https://www.google.com/calendar/feeds/';
-    this.appName = 'PPS-OneThingAtATime-0.01';
+    this.appName = 'PPS-OneThingAtATime-0.1';
     this.feedUri = 'https://www.google.com/calendar/feeds/default/owncalendars/full';
     this.userId = null;
     
@@ -26,8 +26,13 @@ CalendarService.prototype =
             this.calendarService.getOwnCalendarsFeed(this.feedUri, bind(this.onConnect, this), bind(this.gestErreur, this));
     },
 
+    // Réalise les initialisations nécessaires après la connection.
     onConnect: function (root)
     {
+        /* HACK : on ne peut normalement pas récupérer l'identifiant de l'utilisateur
+         * avec l'API Google, on en trouve un en récupérant l'identifiant du calendrier
+         * primaire de l'utilisateur qui est unique et correspond justement l'adresse
+         * mail du compte Google (l'important est surtout son unicité). */
         this.userId = root.feed.getEntries()[0].getId().getValue().replace('%40', '@');
         this.userId = this.userId.substring(this.userId.lastIndexOf('/') + 1, this.userId.length);
 

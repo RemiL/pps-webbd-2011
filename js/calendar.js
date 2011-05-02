@@ -14,6 +14,7 @@ function Calendar(_calendarService)
     this.calendarNowMarker.pos = null;
     this.calendarNowMarker.oldPos = null;
     
+    // Installation du sélecteur de date.
     $('#calendarDatePicker').datepicker({'onSelect': bind(this.dateSelected, this)}).hide().click(function(e) { e.stopPropagation(); });
     $('#calendarDay').click(bind(this.showDatePicker, this));
     $('body').click(function() { $('#calendarDatePicker').hide(); });
@@ -22,10 +23,12 @@ function Calendar(_calendarService)
 Calendar.prototype =
 {
     // Gestionnaire d'erreur
-    gestErreur: function (erreur) {
+    gestErreur: function (erreur)
+    {
         alert(erreur);
     },
 
+    // Retourne la date d'aujourd'hui à 00:00:00
     getTodayStart: function ()
     {
         var d = new Date();
@@ -37,6 +40,7 @@ Calendar.prototype =
         return d;
     },
 
+    // Retourne la date d'aujourd'hui à 23:59:59
     getTodayEnd: function ()
     {
         var d = new Date();
@@ -48,6 +52,8 @@ Calendar.prototype =
         return d;
     },
 
+    // Retourne vrai si et seulement si la date fournie
+    // est celle affichée par le calendrier.
     isDayShown: function (date)
     {
         var dayStart = this.getTodayStart();
@@ -58,8 +64,12 @@ Calendar.prototype =
         return (dayStart <= date && date <= dayEnd);
     },
 
-    getEvenements: function () {
-        if (this.calendarService.isLoggedIn()) {
+    // Lance la requête à l'API Google pour récupérer les
+    // tâches devant être affichées dans le calendrier.
+    getEvents: function ()
+    {
+        if (this.calendarService.isLoggedIn())
+        {
             // Préparation de la requête
             var query = new google.gdata.calendar.CalendarEventQuery(this.feedUri);
 
@@ -78,7 +88,9 @@ Calendar.prototype =
         }
     },
 
-    getHoraire: function (date) {
+    // Met en forme l'horaire au format hh:mm à partir d'une date.
+    getHoraire: function (date)
+    {
         var horaire = date.getHours() + 'h';
 
         if (date.getHours() < 10)
@@ -89,6 +101,7 @@ Calendar.prototype =
         return horaire + date.getMinutes();
     },
 
+    // Remplit le calendrier après que les données aient été reçues.
     fill: function (root)
     {
         // On vide les éventuelles entrées déjà présentes.
@@ -108,7 +121,8 @@ Calendar.prototype =
         this.showNowMarker(this.dayOffset == 0);
     },
 
-    createTask: function(entry)
+    // Crée une tâche dans le calendrier à partir de l'entrée Google Agenda.
+    createTask: function (entry)
     {
         var dayStart = this.getTodayStart();
         dayStart.setDate(dayStart.getDate() + this.dayOffset);
@@ -168,15 +182,18 @@ Calendar.prototype =
         
         return task;
     },
-    
-    loadDay: function (step) {
+
+    // Met à jour le calendrier après avoir effectué le mouvement step
+    loadDay: function (step)
+    {
         this.dayOffset += step;
         var day = new Date();
         day.setDate(day.getDate() + this.dayOffset);
         this.calendarDay.innerHTML = day.toLocaleDateString();
-        this.getEvenements();
+        this.getEvents();
     },
 
+    // Met à jour une tâche déjà affichée dans le calendrier.
     updateTask: function (entry, task)
     {
         var dayStart = this.getTodayStart();
@@ -223,18 +240,24 @@ Calendar.prototype =
         this.calendarAgenda.removeChild(task);
     },
 
-    showNowMarker: function (show) {
-        if (show) {
+    // Affiche ou non le marqueur d'heure courante dans le calendrier.
+    showNowMarker: function (show)
+    {
+        if (show)
+        {
             this.calendarAgenda.appendChild(this.calendarNowMarker);
 
             this.updateNowMarker();
+            // L'heure courante se met à jour toutes les 30 secondes.
             setInterval(bind(this.updateNowMarker, this), 30000);
         }
         else
             clearInterval(bind(this.updateNowMarker, this), 30000);
     },
 
-    updateNowMarker: function () {
+    // Met à jour la position du marqueur d'heure courante.
+    updateNowMarker: function ()
+    {
         var now = new Date();
         
         this.calendarNowMarker.oldPos = this.calendarNowMarker.pos;
@@ -246,13 +269,18 @@ Calendar.prototype =
             this.loadDay(0);
     },
 
-    showDatePicker: function (e) {
+    // Affiche le sélecteur de date
+    showDatePicker: function (e)
+    {
         e.stopPropagation();
         $('#calendarDatePicker').show().css({ 'left': e.clientX, 'top': e.clientY }).datepicker('setDate', this.dayOffset);
     },
 
-    dateSelected: function (date) {
+    // Charge le jour sélectionné dans le calendrier
+    dateSelected: function (date)
+    {
         $('#calendarDatePicker').hide();
+        // On a déjà un déplacement par rapport à aujourd'hui de dayOffset, il faut donc le prendre en compte.
         this.loadDay(Math.ceil((new Date(date) - new Date()) / (24 * 3600 * 1000)) - this.dayOffset);
     }
 }
