@@ -27,15 +27,18 @@ ListBox.prototype =
                 {
                     var name = $(this).find('name').text();
                     var index = Number($(this).find('index').text());
-                    var box = thisListBox.addBox(name, index);
-                    $(this).find('task').each(function ()
+                    if ($(this).find('task').size() > 0)
                     {
-                        var task = Task.tasks[$(this).text()];
-                        if (task)
-                            box.addTask(task, false);
-                        else
-                            Task.newTaskForBox($(this).text(), box);
-                    });
+                        var box = thisListBox.addBox(name, index);
+                        $(this).find('task').each(function ()
+                        {
+                            var task = Task.tasks[$(this).text()];
+                            if (task)
+                                box.addTask(task, false);
+                            else
+                                Task.newTaskForBox($(this).text(), box);
+                        });
+                    }
                 });
             },
             error: function (jqXHR, textStatus, errorThrown)
