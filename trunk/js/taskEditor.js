@@ -102,14 +102,19 @@ function editTask(form)
 // Supprime une tâche
 function deleteTask(button)
 {
-    var taskId = button.href.split('#')[1];
-    
-    Task.tasks[taskId].remove();
+    if (confirm("Delete this task ?"))
+    {
+        var taskId = button.href.split('#')[1];
+        Task.tasks[taskId].remove();
+    }
 }
 
 // Marque une tâche comme finie
 function markAsCompletedTask(button)
 {
-    var taskId = button.href.split('#')[1];
-    Task.tasks[taskId].complete();
+    if (confirm("Task complited ?"))
+    {
+        var taskId = button.href.split('#')[1];
+        Task.tasks[taskId].complete();
+    }
 }
