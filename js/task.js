@@ -23,6 +23,8 @@ function Task(_calendarEntry, _calendarDOMEntry)
 
     // Activities auxquelles la tâche est attachée
     this.activities = new Array();
+    // Par défaut une tâche est ouverte
+    this.completed = false;
     if (_calendarEntry)
     {
         try
@@ -32,21 +34,10 @@ function Task(_calendarEntry, _calendarDOMEntry)
             var activities = xmlTask.getElementsByTagName('activity');
             for (var i=0; i<activities.length; i++)
                 this.activities.push(activities[i].firstChild.nodeValue);
-        } catch (e) { }
-    }
-
-    // La tâche est-elle terminée
-    this.completed = false;
-    if (_calendarEntry)
-    {
-        try
-        {
-            var xmlTask = $.parseXML(this.calendarEntry.getContent().getText());
             var completedNode = xmlTask.getElementsByTagName('completed');
+            // La tâche est-elle terminée
             if(completedNode[0].firstChild.nodeValue == 'true')
                 this.completed = true;
-            else
-                this.completed = false;
         } catch (e) { }
     }
 
@@ -144,12 +135,36 @@ Task.prototype =
                     addInputActivities(button);
                 $('input[name="activities[]"]:last', this.form).val(activities[i].firstChild.nodeValue);
             }
+            
+            this.fillEmailEditor(xmlTask);
         } catch (e) // en cas d'échec, on doit avoir une tâche créée directement avec Calendar, elle sera convertie au prochain enregistrement.
         {
             $('textarea[name="description"]', this.form).val(this.calendarEntry.getContent().getText());
         }
 
         this.completedForm();
+    },
+
+    fillEmailEditor: function (xmlTask)
+    {
+        try
+        {
+            if (!xmlTask)
+                xmlTask = $.parseXML(this.calendarEntry.getContent().getText());
+            
+            if (this.type[0] == 'taskEmail')
+            {
+                var recipients = xmlTask.getElementsByTagName('recipient');
+                var recipientsStr = '';
+                for (var i = 0; i < recipients.length; i++)
+                    recipientsStr += recipients[i].firstChild.nodeValue + ((i<recipients.length-1) ? ', ' : '');
+                $('input[name="recipient"]', '#formEmail_'+this.id).val(recipientsStr);
+                if (xmlTask.getElementsByTagName('object')[0].firstChild != null)
+                    $('input[name="object"]', '#formEmail_'+this.id).val(xmlTask.getElementsByTagName('object')[0].firstChild.nodeValue);
+                if (xmlTask.getElementsByTagName('body')[0].firstChild != null)
+                    $('textarea[name="content"]', '#formEmail_'+this.id).val(xmlTask.getElementsByTagName('body')[0].firstChild.nodeValue);
+            }
+        } catch (e) { }
     },
 
     closeEditor: function ()
@@ -241,8 +256,32 @@ Task.prototype =
 
         var description = doc.createElement('description');
         description.appendChild(doc.createTextNode($('textarea[name="description"]', this.form).val()));
-
         taskXML.appendChild(description);
+
+        if (this.type[0] == 'taskEmail')
+        {
+            var email = doc.createElement('email');
+            var recipients = doc.createElement('recipients');
+            var r = $('input[name="recipient"]', '#formEmail_'+this.id).val().split(',');
+            for (i in r)
+            {
+                r[i] = $.trim(r[i]);
+                if (r[i])
+                {
+                    var recipient = doc.createElement('recipient');
+                    recipient.appendChild(doc.createTextNode(r[i]));
+                    recipients.appendChild(recipient);
+                }
+            }
+            email.appendChild(recipients);
+            var object = doc.createElement('object');
+            object.appendChild(doc.createTextNode($('input[name="object"]', '#formEmail_'+this.id).val()));
+            email.appendChild(object);
+            var body = doc.createElement('body');
+            body.appendChild(doc.createTextNode($('textarea[name="content"]', '#formEmail_'+this.id).val()));
+            email.appendChild(body);
+            taskXML.appendChild(email);
+        }
 
         return taskXML;
     },
