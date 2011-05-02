@@ -14,3 +14,11 @@
         </div>
     </form>
 </div>
+<script type="text/javascript">
+<?php
+    if (isset($_GET['idTask']))
+    {
+        echo "Task.tasks['{$_GET['idTask']}'].completedForm();";
+    }
+?>
+</script>

@@ -111,6 +111,5 @@ function deleteTask(button)
 function markAsCompletedTask(button)
 {
     var taskId = button.href.split('#')[1];
-    
     Task.tasks[taskId].complete();
 }
