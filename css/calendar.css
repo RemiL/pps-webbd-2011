@@ -68,6 +68,7 @@
     width: 216px;
     background-color: #E2E2E2;
     overflow: hidden;
+    cursor: pointer;
 }
 
 .titreTacheCalendar

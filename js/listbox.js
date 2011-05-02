@@ -82,7 +82,7 @@ ListBox.prototype =
         optionsBox.appendChild(ajouterTacheBox);
 
         var supprimerBox = document.createElement('span');
-        supprimerBox.className = "ui-icon ui-icon-closethick";
+        supprimerBox.className = "supprimerBox ui-icon ui-icon-closethick";
         supprimerBox.onclick = function () { box.close(); };
         optionsBox.appendChild(supprimerBox);
 
