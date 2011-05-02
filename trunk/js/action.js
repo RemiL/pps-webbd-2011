@@ -87,15 +87,18 @@ function addTab(title, id, idpostit, namebox)
     return $("#action").tabs('option', 'selected');
 }
 
+// Fermeture d'un onglet
 function closeTab(event, ui)
 {
     if (ui.panel)
     {
         var task = Task.tasks[$('form', ui.panel).attr('id').split('_')[1]];
-        if (task)
+        if (task) // Si on trouve une tâche attachée à l'onglet
         {
+            // On la notifie de la fermeture
             var closed = task.closeEditor();
-            
+            // et on notifie les autres tâches que leur onglet
+            // respectif peut avoir été déplacé.
             for (id in Task.tasks)
                 Task.tasks[id].updateTabIndexAfterTabClosed(closed);
         }

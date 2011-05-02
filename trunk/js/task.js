@@ -24,12 +24,13 @@ function Task(_calendarEntry, _calendarDOMEntry)
                 this.activities.push(activities[i].innerHTML);
         } catch (e) { }
     }
-    // Sauvegarde
+    // Sauvegarde pour pouvoir connaitre les changements effectués.
     this.newActivities = null;
 
     Task.tasks[this.id] = this;
 }
 
+// Tableaux stockant toutes les tâches chargées
 Task.tasks = new Array();
 
 Task.getId = function (calendarEntry)
@@ -39,6 +40,10 @@ Task.getId = function (calendarEntry)
     return feedUri.substring(feedUri.lastIndexOf('/') + 1, feedUri.length);
 }
 
+/*
+Crée une tâche dans l'optique de l'afficher dans une ou plusieurs box
+sans qu'elle soit affichée dans le calendrier.
+*/
 Task.newTaskForBox = function (id, box)
 {
     var task = new Task();
@@ -55,9 +60,9 @@ Task.prototype =
 
     showEditor: function ()
     {
-        if (this.tabIndex == null)
+        if (this.tabIndex == null) // Si on n'a pas d'onglet ouvert pour afficher l'éditeur
             this.tabIndex = addTab(this.calendarEntry.getTitle().getText(), this.id);
-        else
+        else // sinon on sélectionne l'onglet déjà crée.
             this.tabs.tabs('select', this.tabIndex);
     },
 
@@ -66,10 +71,11 @@ Task.prototype =
         this.form = $('#formTask_' + this.id);
         /* Workaround pour un bug de l'API Google :
          * this.calendarService.getService().getCalendarEntry(this.feedUri, bind(this.onDataReceivedFillEditor, this), bind(this.gestErreur, this));
-         * ne retourne pas un objet complet, il manque getTimes() ... donc on utilise la fonction générique */
+         * ne retourne pas un objet complet, il manque getTimes() ... donc on utilise la fonction générique. */
         this.calendarService.getService().getEntry(this.feedUri, bind(this.onDataReceivedFillEditor, this), bind(this.gestErreur, this), google.gdata.calendar.CalendarEventEntry, true);
     },
 
+    // Remplit le formulaire après que les données aient été reçues.
     onDataReceivedFillEditor: function (root)
     {
         this.calendarEntry = root.entry;
@@ -79,7 +85,7 @@ Task.prototype =
         $('input[name="beginTime"]', this.form).val(this.calendarEntry.getTimes()[0].getStartTime().getDate().toTimeString().substr(0, 5));
         $('input[name="endDate"]', this.form).val($.datepicker.formatDate("mm/dd/yy", this.calendarEntry.getTimes()[0].getEndTime().getDate()));
         $('input[name="endTime"]', this.form).val(this.calendarEntry.getTimes()[0].getEndTime().getDate().toTimeString().substr(0, 5));
-        // Si les dates sont identiques alors on a un tâche avec une date limite
+        // Si les dates sont identiques alors on a une tâche avec une date limite
         if (this.calendarEntry.getTimes()[0].getStartTime().getDate().getTime() == this.calendarEntry.getTimes()[0].getEndTime().getDate().getTime())
         {
             $('select[name="dateType"]', this.form).val('d');
@@ -87,6 +93,7 @@ Task.prototype =
         }
         $('input[name="location"]', this.form).val(this.calendarEntry.getLocations()[0].getValueString());
         
+        // On essaie de parser le xml qui devrait être contenu à la place de la description
         try
         {
             var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
@@ -103,7 +110,7 @@ Task.prototype =
                     addInputActivities(button);
                 $('input[name="activities[]"]:last', this.form).val(activities[i].innerHTML);
             }
-        } catch (e)
+        } catch (e) // en cas d'échec, on doit avoir une tâche créée directement avec Calendar, elle sera convertie au prochain enregistrement.
         {
             $('textarea[name="description"]', this.form).val(this.calendarEntry.getContent().getText());
         }
@@ -119,10 +126,12 @@ Task.prototype =
 
     updateTabIndexAfterTabClosed: function (closed)
     {
+        // Si on est après l'onglet fermé, notre numéro d'onglet est décalé d'un.
         if (this.tabIndex > closed)
             this.tabIndex--;
     },
 
+    // Met à jour la tâche depuis le formulaire.
     updateFromFrom: function ()
     {
         this.calendarEntry.getTitle().setText($('input[name="title"]', this.form).val());
@@ -142,6 +151,7 @@ Task.prototype =
         this.calendarEntry.getTimes()[0].setEndTime(end);
         this.calendarEntry.getLocations()[0].setValueString($('input[name="location"]', this.form).val());
         
+        // Consulte tous les champs des activities et crée un tableau contenant le contenu de chacun.
         this.newActivities = $('input[name="activities[]"]', this.form).map( function(i) { if ($(this).val()) return $(this).val(); else { if (i) $(this).remove(); return null; } } ).get();
         
         this.calendarEntry.getContent().setText(xmlToString(this.createXML()));
@@ -195,6 +205,7 @@ Task.prototype =
     create: function (_from)
     {
         this.form = _from;
+        // Quand on valide la création d'une tâche, l'onglet correspondant est celui sélectionné actuellement.
         this.tabIndex = this.tabs.tabs('option', 'selected');
         this.calendarEntry = new google.gdata.calendar.CalendarEventEntry();
         this.calendarEntry.setTitle(new google.gdata.atom.Text());
@@ -264,7 +275,6 @@ Task.prototype =
     
     update: function ()
     {
-        this.tabIndex = this.tabs.tabs('option', 'selected');
         this.updateFromFrom();
         
         this.calendarEntry.updateEntry(bind(this.onUpdateCompleted, this), bind(this.gestErreur, this));

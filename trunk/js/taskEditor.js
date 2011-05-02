@@ -1,4 +1,6 @@
-function addInputActivities(button) {
+// Ajoute un champ pour les activities
+function addInputActivities(button)
+{
     var div = button.parentNode;
     var input = document.createElement("input");
     input.name = "activities[]";
@@ -6,8 +8,8 @@ function addInputActivities(button) {
     div.appendChild(input);
     div.appendChild(button);
 
+    // Autocomplétion
     var activitiesNames = new Array();
-
     for (var name in listBox.list)
         activitiesNames.push(name);
     $(input).autocomplete({
@@ -15,7 +17,8 @@ function addInputActivities(button) {
     });
 }
 
-function addInputDependencies(button) {
+function addInputDependencies(button)
+{
     var div = button.parentNode;
     var input = document.createElement("input");
     input.name = "dependencies[]";
@@ -57,16 +60,11 @@ function changeDateType(elem, event)
 {
     var code = -1;
     if (!event)
-    {
         event = window.event;
-    }
     if (event.which)
-    {
         code = event.which;
-    } else if (event.keyCode)
-    {
+    else if (event.keyCode)
         code = event.keyCode;
-    }
 
     if (code == -1 || code == 38 ||code == 40 || code == 39 || code == 37)
     {
@@ -82,28 +80,23 @@ function changeDateType(elem, event)
 // Edite une tâche
 function editTask(form)
 {
-    if(form.title.value != "" && form.beginDate.value != "" && form.beginTime.value != "" && form.endDate.value != "" && form.endTime.value != "")
+    if (form.title.value != "" && form.beginDate.value != "" && form.beginTime.value != "" && form.endDate.value != "" && form.endTime.value != "")
     {
         var taskId = form.id.split('_')[1];
         var task = taskId ? Task.tasks[taskId] : null;
     
-        if (task)
-        {
+        if (task) // Mise à jour
             task.update();
-            // TBC
-        }
-        else // new task
+        else // Nouvelle tâche
         {
             task = new Task();
             task.create(form);
         }
-    
+        // On met à jour le titre de l'onglet.
         $('.ui-tabs-selected .titreOnglet', Task.tabs).html(task.getTitle());
     }
     else
-    {
-        alert("Title and dates must not be empty");
-    }
+        alert("Title and date(s) must not be empty !");
 }
 
 // Supprime une tâche
@@ -114,7 +107,7 @@ function deleteTask(button)
     Task.tasks[taskId].delete();
 }
 
-// Marque une task comme finie
+// Marque une tâche comme finie
 function markAsCompletedTask(button)
 {
     var taskId = button.href.split('#')[1];
