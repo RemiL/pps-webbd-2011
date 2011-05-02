@@ -1,3 +1,4 @@
+// Représente une boîte activity
 function Box(name, index, body, listTask, panel)
 {
     this.name = name;
@@ -16,6 +17,7 @@ Box.nextId = 0;
 
 Box.prototype =
 {
+    // Ajoute une tâche à la boîte
     addTask: function (task, save)
     {
         if (!this.list[task.id]) // On n'ajoute pas deux fois la même tâche.
@@ -66,6 +68,7 @@ Box.prototype =
         }
     },
 
+    // Met à jour l'affichage d'une task
     updateTask: function (task)
     {
         // Date
@@ -74,6 +77,7 @@ Box.prototype =
         this.listBody[task.id].childNodes[1].innerHTML = task.getTitle();
     },
 
+    // Supprime une task de la box
     removeTask: function (task)
     {
         this.listTask.removeChild(this.listBody[task.id]);
@@ -100,6 +104,7 @@ Box.prototype =
         });
     },
 
+    // Déplace la box vers la gauche
     moveLeft: function ()
     {
         if (this.body.offsetLeft % 207 == 0)
@@ -110,6 +115,7 @@ Box.prototype =
                 if (this.panel.list[i].id == (this.id - 1))
                     previous = this.panel.list[i];
             }
+            // Si le déplacement peut se faire
             if (previous != null)
             {
                 this.body.style.zIndex = 2;
@@ -139,6 +145,7 @@ Box.prototype =
         }
     },
 
+    // Déplace la box vers la droite
     moveRight: function ()
     {
         if (this.body.offsetLeft % 207 == 0)
@@ -149,6 +156,7 @@ Box.prototype =
                 if (this.panel.list[i].id == (this.id + 1))
                     next = this.panel.list[i];
             }
+            // Si le déplacement peut se faire
             if (next != null)
             {
                 this.body.style.zIndex = 2;
@@ -178,6 +186,7 @@ Box.prototype =
         }
     },
 
+    // Fait défiler les tasks dans la box
     moveTaskTop: function ()
     {
         if (this.body.offsetLeft % 207 == 0 && Number($(this.listTask).css("marginTop").replace(/px/, '')) % 44 == 0 && Number($(this.listTask).css("marginTop").replace(/px/, '')) < 0)
@@ -186,6 +195,7 @@ Box.prototype =
         }
     },
 
+    // Fait défiler les tasks dans la box
     moveTaskBottom: function ()
     {
         if (this.body.offsetLeft % 207 == 0 && Number($(this.listTask).css("marginTop").replace(/px/, '')) % 44 == 0 && ($(this.listTask).height() + Number($(this.listTask).css("marginTop").replace(/px/, ''))) > $(".corpsBox", this.body).height())
@@ -194,6 +204,7 @@ Box.prototype =
         }
     },
 
+    // Crée une task à partir de l'activity
     createTask: function ()
     {
         if (this.body.offsetLeft % 207 == 0)
@@ -202,6 +213,7 @@ Box.prototype =
         }
     },
 
+    // Ferme l'activity, supprime toutes traces du tag dans les tasks
     close: function ()
     {
         if (this.body.offsetLeft % 207 == 0)
@@ -235,8 +247,11 @@ Box.prototype =
                     boxMove = this.panel.list[i];
             }
 
+            // Supprime la box et recolle les autres
             if (boxMove != null)
             {
+                // Si la liste des box sort vers la gauche
+                // Les box à gauche vont vers la droite
                 if (index < this.id)
                 {
                     for (var i in this.panel.list)
@@ -247,6 +262,7 @@ Box.prototype =
                             this.panel.list[i].id--;
                     }
                 }
+                // Sinon ce sont les box de droite qui vont à gauche
                 else
                 {
                     for (var i in this.panel.list)

@@ -1,11 +1,15 @@
-function exportText(form, id) {
+// Sauvegarde le document et l'export pour le télécharger
+function exportText(form, id)
+{
     var idTask = form.parentNode.parentNode.parentNode.id.split('-')[3];
     var text = form.text.value;
     saveText(form, id);
-    window.open('inc/exportText.php?id='+id+'&name='+idTask, 'pop_up', 'width=300, height=200, toolbar=no status=no');
+    window.open('inc/exportText.php?id=' + id + '&name=' + idTask, 'pop_up', 'width=300, height=200, toolbar=no status=no');
 }
 
-function saveText(form, id) {
+// Sauvegarde le document
+function saveText(form, id)
+{
     var idTask = form.parentNode.parentNode.parentNode.id.split('-')[3];
     var text = form.text.value;
 
@@ -13,13 +17,15 @@ function saveText(form, id) {
         type: "POST",
         url: "inc/saveText.php",
         data: "text=" + text + "&name=" + idTask + "&id=" + id,
-        success: function (msg) { // si l'appel a bien fonctionné
+        success: function (msg)
+        {
             if (msg == 1)
                 alert("Text saved");
             else
                 alert("An error has occured");
         },
-        error: function (jqXHR, textStatus, errorThrown) {
+        error: function (jqXHR, textStatus, errorThrown)
+        {
             alert("An error has occured");
         }
     });
