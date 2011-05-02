@@ -29,7 +29,7 @@ Box.prototype =
 
             var date = document.createElement('div');
             date.className = "dateTache";
-            date.appendChild(document.createTextNode(task.getTimeSlot()));
+            date.appendChild(document.createTextNode(task.getDate()+' | '+task.getTimeSlot()));
 
             var titre = document.createElement('div');
             titre.className = "titreTache";
@@ -40,7 +40,7 @@ Box.prototype =
 
             this.listTask.appendChild(divTask);
 
-            // TODO divTask.ondblclick = function () { task.showEditor() };
+            divTask.ondblclick = function () { task.showEditor() };
 
             this.listBody[task.id] = divTask;
             
