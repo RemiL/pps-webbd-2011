@@ -68,7 +68,7 @@ Task.prototype =
 
     fillEditor: function ()
     {
-        this.form = $('#formTask_' + this.id);
+        this.form = $('#formTask_' + this.id).get( 0 );
         /* HACK : Workaround pour un bug de l'API Google :
          * this.calendarService.getService().getCalendarEntry(this.feedUri, bind(this.onDataReceivedFillEditor, this), bind(this.gestErreur, this));
          * ne retourne pas un objet complet, il manque getTimes() ... donc on utilise la fonction générique. */
@@ -117,6 +117,14 @@ Task.prototype =
         } catch (e) // en cas d'échec, on doit avoir une tâche créée directement avec Calendar, elle sera convertie au prochain enregistrement.
         {
             $('textarea[name="description"]', this.form).val(this.calendarEntry.getContent().getText());
+        }
+
+        if(this.completed)
+        {
+            $('input', this.form.parentNode.parentNode.parentNode).attr("disabled", true);
+            $('textarea', this.form.parentNode.parentNode.parentNode).attr("disabled", true);
+            $('select', this.form.parentNode.parentNode.parentNode).attr("disabled", true);
+            $('.buttonAddInput', this.form).remove();
         }
     },
 
@@ -199,9 +207,14 @@ Task.prototype =
             }
         }
         taskXML.appendChild(activities);
-        
+
+        var completed = doc.createElement('completed');
+        completed.appendChild(doc.createTextNode(this.completed));
+        taskXML.appendChild(completed);
+
         var description = doc.createElement('description');
         description.appendChild(doc.createTextNode($('textarea[name="description"]', this.form).val()));
+
         taskXML.appendChild(description);
         
         return taskXML;
@@ -308,9 +321,12 @@ Task.prototype =
         this.newActivities = new Array();
     },
 
-    complete: function ()
+    complete: function (form)
     {
         this.completed = true;
+        this.update();
+
+        alert("Task completed");
     },
 
     onRemoveCompleted: function ()
