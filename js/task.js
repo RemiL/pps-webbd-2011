@@ -21,7 +21,7 @@ function Task(_calendarEntry, _calendarDOMEntry)
             var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
             var activities = xmlTask.getElementsByTagName('activity');
             for (var i=0; i<activities.length; i++)
-                this.activities.push(activities[i].innerHTML);
+                this.activities.push(activities[i].firstChild.nodeValue);
         } catch (e) { }
     }
     // Sauvegarde pour pouvoir connaitre les changements effectués.
@@ -97,8 +97,12 @@ Task.prototype =
         try
         {
             var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
-            $('select[name="priority"]', this.form).val(xmlTask.getElementsByTagName('priority')[0].innerHTML);
-            $('textarea[name="description"]', this.form).val(xmlTask.getElementsByTagName('description')[0].innerHTML);
+            
+            // Le type peut être déterminé grâce au noeud racine.
+            $('input[name="type"]', this.form).val([xmlTask.firstChild.nodeName]);
+            
+            $('select[name="priority"]', this.form).val(xmlTask.getElementsByTagName('priority')[0].firstChild.nodeValue);
+            $('textarea[name="description"]', this.form).val(xmlTask.getElementsByTagName('description')[0].firstChild.nodeValue);
             
             // On supprime tous les champs d'activities sauf le premier
             $('input[name="activities[]"]:gt(0)', this.form).remove();
@@ -108,7 +112,7 @@ Task.prototype =
             {
                 if (i > 0) // Si on a plus d'une activity on rajoute des champs.
                     addInputActivities(button);
-                $('input[name="activities[]"]:last', this.form).val(activities[i].innerHTML);
+                $('input[name="activities[]"]:last', this.form).val(activities[i].firstChild.nodeValue);
             }
         } catch (e) // en cas d'échec, on doit avoir une tâche créée directement avec Calendar, elle sera convertie au prochain enregistrement.
         {
@@ -159,27 +163,28 @@ Task.prototype =
 
     createXML: function ()
     {
-        var taskXML = document.createElement('task');
-        var title = document.createElement('title');
-        title.appendChild(document.createTextNode(this.calendarEntry.getTitle().getText()));
+        var doc = newDocument();
+        var taskXML = doc.createElement($('input[name="type"]:checked', this.form).val());
+        var title = doc.createElement('title');
+        title.appendChild(doc.createTextNode(this.calendarEntry.getTitle().getText()));
         taskXML.appendChild(title);
         
-        var beginDate = document.createElement('beginDate');
-        beginDate.appendChild(document.createTextNode(google.gdata.DateTime.toIso8601(this.calendarEntry.getTimes()[0].getStartTime())));
+        var beginDate = doc.createElement('beginDate');
+        beginDate.appendChild(doc.createTextNode(google.gdata.DateTime.toIso8601(this.calendarEntry.getTimes()[0].getStartTime())));
         taskXML.appendChild(beginDate);
-        var endDate = document.createElement('endDate');
-        endDate.appendChild(document.createTextNode(google.gdata.DateTime.toIso8601(this.calendarEntry.getTimes()[0].getEndTime())));
+        var endDate = doc.createElement('endDate');
+        endDate.appendChild(doc.createTextNode(google.gdata.DateTime.toIso8601(this.calendarEntry.getTimes()[0].getEndTime())));
         taskXML.appendChild(endDate);
         
-        var location = document.createElement('location');
-        location.appendChild(document.createTextNode(this.calendarEntry.getLocations()[0].getValueString()));
+        var location = doc.createElement('location');
+        location.appendChild(doc.createTextNode(this.calendarEntry.getLocations()[0].getValueString()));
         taskXML.appendChild(location);
         
-        var priority = document.createElement('priority');
-        priority.appendChild(document.createTextNode($('select[name="priority"]', this.form).val()));
+        var priority = doc.createElement('priority');
+        priority.appendChild(doc.createTextNode($('select[name="priority"]', this.form).val()));
         taskXML.appendChild(priority);
         
-        var activities = document.createElement('activities');
+        var activities = doc.createElement('activities');
         var counts = new Array();
         var activity;
         for (i in this.newActivities)
@@ -188,15 +193,15 @@ Task.prototype =
             {
                 counts[this.newActivities[i]] = 1;
                 
-                activity = document.createElement('activity');
-                activity.appendChild(document.createTextNode(this.newActivities[i]));
+                activity = doc.createElement('activity');
+                activity.appendChild(doc.createTextNode(this.newActivities[i]));
                 activities.appendChild(activity);
             }
         }
         taskXML.appendChild(activities);
         
-        var description = document.createElement('description');
-        description.appendChild(document.createTextNode($('textarea[name="description"]', this.form).val()));
+        var description = doc.createElement('description');
+        description.appendChild(doc.createTextNode($('textarea[name="description"]', this.form).val()));
         taskXML.appendChild(description);
         
         return taskXML;
@@ -296,9 +301,9 @@ Task.prototype =
         alert('Edition completed');
     },
 
-    delete: function ()
+    remove: function ()
     {
-        this.calendarEntry.deleteEntry(bind(this.onDeleteCompleted, this), bind(this.gestErreur, this));
+        this.calendarEntry.deleteEntry(bind(this.onRemoveCompleted, this), bind(this.gestErreur, this));
         // On enlève les activities de la tâche.
         this.newActivities = new Array();
     },
@@ -308,7 +313,7 @@ Task.prototype =
         this.completed = true;
     },
 
-    onDeleteCompleted: function ()
+    onRemoveCompleted: function ()
     {
         delete Task.tasks[this.id];
         this.tabs.tabs('remove',  this.tabs.tabs('option', 'selected'));
@@ -372,7 +377,7 @@ Task.prototype =
                 var xmlTask = $.parseXML( this.calendarEntry.getContent().getText() );
                 var activities = xmlTask.getElementsByTagName('activity');
                 for (var i=0; i<activities.length; i++)
-                    this.activities.push(activities[i].innerHTML);
+                    this.activities.push(activities[i].firstChild.nodeValue);
             } catch (e) { }
             box.addTask(this, false);
         }

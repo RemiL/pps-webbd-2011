@@ -104,7 +104,7 @@ function deleteTask(button)
 {
     var taskId = button.href.split('#')[1];
     
-    Task.tasks[taskId].delete();
+    Task.tasks[taskId].remove();
 }
 
 // Marque une tâche comme finie
