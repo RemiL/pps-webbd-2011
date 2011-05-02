@@ -127,6 +127,7 @@ Task.prototype =
             // Le type peut être déterminé grâce au noeud racine.
             this.type = [xmlTask.firstChild.nodeName];
             $('input[name="type"]', this.form).val(this.type);
+            $('input[name="type"]', this.form).attr('disabled', true);
 
             $('select[name="priority"]', this.form).val(xmlTask.getElementsByTagName('priority')[0].firstChild.nodeValue);
             $('textarea[name="description"]', this.form).val(xmlTask.getElementsByTagName('description')[0].firstChild.nodeValue);
@@ -285,7 +286,7 @@ Task.prototype =
             // Crée l'onglet Mail
             $("#" + divContent.id).tabs("add", "inc/mail.php?idTask=" + this.id, "Mail");
         }
-        else if(Task.tasks[this.id].type == 'taskDoc')
+        else if (Task.tasks[this.id].type == 'taskDoc')
         {
             // Crée l'onglet Text
             $("#" + divContent.id).tabs("add", "inc/text.php?id=" + calendarService.getUserId() + "&name=" + this.id + "&idTask=" + this.id, "Text");
