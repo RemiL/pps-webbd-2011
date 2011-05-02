@@ -321,13 +321,15 @@ Task.prototype =
         for (i in this.newActivities)
         {
             if ($.inArray(this.newActivities[i], this.activities) == -1)
-            {
+            { // Nouvelle activity pour cette tâche
                 box = this.boxList.getBox(this.newActivities[i])
                 if (!box)
                     box = this.boxList.addBox(this.newActivities[i]);
                 
                 box.addTask(this);
             }
+            else // On met à jour
+                this.boxList.getBox(this.newActivities[i]).updateTask(this);
         }
         
         // Suppression de la tâche des activities plus utilisées
