@@ -106,7 +106,7 @@ Task.prototype =
         if (this.calendarEntry.getTimes()[0].getStartTime().getDate().getTime() == this.calendarEntry.getTimes()[0].getEndTime().getDate().getTime())
         {
             $('select[name="dateType"]', this.form).val('d');
-            $('span', this.form).css('visibility', 'hidden');
+            $('span:first', this.form).css('visibility', 'hidden');
         }
         $('input[name="location"]', this.form).val(this.calendarEntry.getLocations()[0].getValueString());
 
