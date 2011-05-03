@@ -42,7 +42,7 @@
             <span class="buttonAddInput buttonAddInputActivities"></span>
         </div>
         <div>
-            <label>Task type : <br /><br /><br /></label>
+            <label>Task type</label>
             <div>
                 <input type="radio" checked="checked" name="type" value="task" /> Basic
                 <input type="radio" name="type" value="taskDoc" /> Text
