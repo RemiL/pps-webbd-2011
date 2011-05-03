@@ -1,5 +1,5 @@
 <div class="contentMenuAction">
-    <form name="text" class="taskEditor" onsubmit="saveText(this, calendarService.getUserId()); return false;">
+    <form <?php if (isset($_GET['idTask'])) echo "id='formText_{$_GET['idTask']}'"; ?> name="text" class="taskEditor" onsubmit="saveText(this, calendarService.getUserId()); return false;">
         <textarea class="champTexte" name="text"><?php
                 // Charge le texte déjà enregistré
                 if (isset($_GET['id']) && isset($_GET['name']))
@@ -12,7 +12,7 @@
         ?></textarea>
         <div class="button">
             <input type="Submit" name="save" value="Save" />
-            <input type="button" value="Export" onClick="exportText(this.parentNode, calendarService.getUserId());" />
+            <input type="button" value="Export" onClick="exportText(this.parentNode.parentNode, calendarService.getUserId());" />
         </div>
     </form>
 </div>
