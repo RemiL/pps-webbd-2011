@@ -1,7 +1,7 @@
 // Sauvegarde le document et l'export pour le télécharger
 function exportText(form, id)
 {
-    var idTask = form.parentNode.parentNode.parentNode.id.split('-')[3];
+    var idTask = form.id.split('_')[1];
     var text = form.text.value;
     saveText(form, id);
     window.open('inc/exportText.php?id=' + id + '&name=' + idTask, 'pop_up', 'width=300, height=200, toolbar=no status=no');
@@ -10,7 +10,7 @@ function exportText(form, id)
 // Sauvegarde le document
 function saveText(form, id)
 {
-    var idTask = form.parentNode.parentNode.parentNode.id.split('-')[3];
+    var idTask = form.id.split('_')[1];
     var text = form.text.value;
 
     $.ajax({
