@@ -52,7 +52,7 @@ function changeDateType(elem, event)
 // Edite une tâche
 function editTask(form)
 {
-    if (form.title.value != "" && form.beginDate.value != "" && form.beginTime.value != "" && form.endDate.value != "" && form.endTime.value != "")
+    if (form.title.value != "" && form.beginDate.value != "" && form.beginTime.value != "" && (form.dateType.value == "d" || (form.endDate.value != "" && form.endTime.value != "")))
     {
         var taskId = form.id.split('_')[1];
         var task = taskId ? Task.tasks[taskId] : null;
